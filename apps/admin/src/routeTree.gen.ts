@@ -9,14 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsersRouteImport } from './routes/users'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UsersCreateRouteImport } from './routes/users/create'
+import { Route as UsersActiveRouteImport } from './routes/users/active'
 import { Route as AuthSigninRouteImport } from './routes/auth/signin'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 
+const UsersRoute = UsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const UsersCreateRoute = UsersCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => UsersRoute,
+} as any)
+const UsersActiveRoute = UsersActiveRouteImport.update({
+  id: '/active',
+  path: '/active',
+  getParentRoute: () => UsersRoute,
 } as any)
 const AuthSigninRoute = AuthSigninRouteImport.update({
   id: '/auth/signin',
@@ -31,42 +55,106 @@ const AuthRegisterRoute = AuthRegisterRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/users': typeof UsersRouteWithChildren
   '/auth/register': typeof AuthRegisterRoute
   '/auth/signin': typeof AuthSigninRoute
+  '/users/active': typeof UsersActiveRoute
+  '/users/create': typeof UsersCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/users': typeof UsersRouteWithChildren
   '/auth/register': typeof AuthRegisterRoute
   '/auth/signin': typeof AuthSigninRoute
+  '/users/active': typeof UsersActiveRoute
+  '/users/create': typeof UsersCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/users': typeof UsersRouteWithChildren
   '/auth/register': typeof AuthRegisterRoute
   '/auth/signin': typeof AuthSigninRoute
+  '/users/active': typeof UsersActiveRoute
+  '/users/create': typeof UsersCreateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth/register' | '/auth/signin'
+  fullPaths:
+    | '/'
+    | '/settings'
+    | '/users'
+    | '/auth/register'
+    | '/auth/signin'
+    | '/users/active'
+    | '/users/create'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/register' | '/auth/signin'
-  id: '__root__' | '/' | '/auth/register' | '/auth/signin'
+  to:
+    | '/'
+    | '/settings'
+    | '/users'
+    | '/auth/register'
+    | '/auth/signin'
+    | '/users/active'
+    | '/users/create'
+  id:
+    | '__root__'
+    | '/'
+    | '/settings'
+    | '/users'
+    | '/auth/register'
+    | '/auth/signin'
+    | '/users/active'
+    | '/users/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SettingsRoute: typeof SettingsRoute
+  UsersRoute: typeof UsersRouteWithChildren
   AuthRegisterRoute: typeof AuthRegisterRoute
   AuthSigninRoute: typeof AuthSigninRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/users/create': {
+      id: '/users/create'
+      path: '/create'
+      fullPath: '/users/create'
+      preLoaderRoute: typeof UsersCreateRouteImport
+      parentRoute: typeof UsersRoute
+    }
+    '/users/active': {
+      id: '/users/active'
+      path: '/active'
+      fullPath: '/users/active'
+      preLoaderRoute: typeof UsersActiveRouteImport
+      parentRoute: typeof UsersRoute
     }
     '/auth/signin': {
       id: '/auth/signin'
@@ -85,8 +173,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface UsersRouteChildren {
+  UsersActiveRoute: typeof UsersActiveRoute
+  UsersCreateRoute: typeof UsersCreateRoute
+}
+
+const UsersRouteChildren: UsersRouteChildren = {
+  UsersActiveRoute: UsersActiveRoute,
+  UsersCreateRoute: UsersCreateRoute,
+}
+
+const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SettingsRoute: SettingsRoute,
+  UsersRoute: UsersRouteWithChildren,
   AuthRegisterRoute: AuthRegisterRoute,
   AuthSigninRoute: AuthSigninRoute,
 }
