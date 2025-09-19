@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@daveyplate/better-auth-ui/css";
 @source "../../../apps/**/*.{ts,tsx}";
 @source "../../../components/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
