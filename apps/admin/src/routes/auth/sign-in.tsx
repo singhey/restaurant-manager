@@ -6,5 +6,5 @@ export const Route = createFileRoute('/auth/sign-in')({
 })
 
 function RouteComponent() {
-  return <AuthView view="SIGN_IN" redirectTo="/dashboard" />
+  return <AuthView view="SIGN_IN" redirectTo="/restaurant/selector" />
 }

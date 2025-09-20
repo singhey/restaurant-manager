@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RestaurantRouteImport } from './routes/restaurant'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RestaurantRestaurantIdRouteImport } from './routes/restaurant/$restaurantId'
+import { Route as RestaurantSelectorRouteImport } from './routes/restaurant/selector'
+import { Route as RestaurantCreateRouteImport } from './routes/restaurant/create'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as RestaurantRestaurantIdIndexRouteImport } from './routes/restaurant/$restaurantId/index'
@@ -20,6 +22,11 @@ import { Route as RestaurantRestaurantIdUsersCreateRouteImport } from './routes/
 import { Route as RestaurantRestaurantIdUsersActiveRouteImport } from './routes/restaurant/$restaurantId/users/active'
 import { Route as RestaurantRestaurantIdMenuEditRouteImport } from './routes/restaurant/$restaurantId/menu/edit'
 
+const RestaurantRoute = RestaurantRouteImport.update({
+  id: '/restaurant',
+  path: '/restaurant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -30,10 +37,15 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RestaurantRestaurantIdRoute = RestaurantRestaurantIdRouteImport.update({
-  id: '/restaurant/$restaurantId',
-  path: '/restaurant/$restaurantId',
-  getParentRoute: () => rootRouteImport,
+const RestaurantSelectorRoute = RestaurantSelectorRouteImport.update({
+  id: '/selector',
+  path: '/selector',
+  getParentRoute: () => RestaurantRoute,
+} as any)
+const RestaurantCreateRoute = RestaurantCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => RestaurantRoute,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
   id: '/sign-up',
@@ -47,27 +59,27 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
 } as any)
 const RestaurantRestaurantIdIndexRoute =
   RestaurantRestaurantIdIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => RestaurantRestaurantIdRoute,
+    id: '/$restaurantId/',
+    path: '/$restaurantId/',
+    getParentRoute: () => RestaurantRoute,
   } as any)
 const RestaurantRestaurantIdMenuRoute =
   RestaurantRestaurantIdMenuRouteImport.update({
-    id: '/menu',
-    path: '/menu',
-    getParentRoute: () => RestaurantRestaurantIdRoute,
+    id: '/$restaurantId/menu',
+    path: '/$restaurantId/menu',
+    getParentRoute: () => RestaurantRoute,
   } as any)
 const RestaurantRestaurantIdUsersCreateRoute =
   RestaurantRestaurantIdUsersCreateRouteImport.update({
-    id: '/users/create',
-    path: '/users/create',
-    getParentRoute: () => RestaurantRestaurantIdRoute,
+    id: '/$restaurantId/users/create',
+    path: '/$restaurantId/users/create',
+    getParentRoute: () => RestaurantRoute,
   } as any)
 const RestaurantRestaurantIdUsersActiveRoute =
   RestaurantRestaurantIdUsersActiveRouteImport.update({
-    id: '/users/active',
-    path: '/users/active',
-    getParentRoute: () => RestaurantRestaurantIdRoute,
+    id: '/$restaurantId/users/active',
+    path: '/$restaurantId/users/active',
+    getParentRoute: () => RestaurantRoute,
   } as any)
 const RestaurantRestaurantIdMenuEditRoute =
   RestaurantRestaurantIdMenuEditRouteImport.update({
@@ -79,11 +91,13 @@ const RestaurantRestaurantIdMenuEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/restaurant': typeof RestaurantRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
-  '/restaurant/$restaurantId': typeof RestaurantRestaurantIdRouteWithChildren
+  '/restaurant/create': typeof RestaurantCreateRoute
+  '/restaurant/selector': typeof RestaurantSelectorRoute
   '/restaurant/$restaurantId/menu': typeof RestaurantRestaurantIdMenuRouteWithChildren
-  '/restaurant/$restaurantId/': typeof RestaurantRestaurantIdIndexRoute
+  '/restaurant/$restaurantId': typeof RestaurantRestaurantIdIndexRoute
   '/restaurant/$restaurantId/menu/edit': typeof RestaurantRestaurantIdMenuEditRoute
   '/restaurant/$restaurantId/users/active': typeof RestaurantRestaurantIdUsersActiveRoute
   '/restaurant/$restaurantId/users/create': typeof RestaurantRestaurantIdUsersCreateRoute
@@ -91,8 +105,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/restaurant': typeof RestaurantRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/restaurant/create': typeof RestaurantCreateRoute
+  '/restaurant/selector': typeof RestaurantSelectorRoute
   '/restaurant/$restaurantId/menu': typeof RestaurantRestaurantIdMenuRouteWithChildren
   '/restaurant/$restaurantId': typeof RestaurantRestaurantIdIndexRoute
   '/restaurant/$restaurantId/menu/edit': typeof RestaurantRestaurantIdMenuEditRoute
@@ -103,9 +120,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/restaurant': typeof RestaurantRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
-  '/restaurant/$restaurantId': typeof RestaurantRestaurantIdRouteWithChildren
+  '/restaurant/create': typeof RestaurantCreateRoute
+  '/restaurant/selector': typeof RestaurantSelectorRoute
   '/restaurant/$restaurantId/menu': typeof RestaurantRestaurantIdMenuRouteWithChildren
   '/restaurant/$restaurantId/': typeof RestaurantRestaurantIdIndexRoute
   '/restaurant/$restaurantId/menu/edit': typeof RestaurantRestaurantIdMenuEditRoute
@@ -117,11 +136,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/restaurant'
     | '/auth/sign-in'
     | '/auth/sign-up'
-    | '/restaurant/$restaurantId'
+    | '/restaurant/create'
+    | '/restaurant/selector'
     | '/restaurant/$restaurantId/menu'
-    | '/restaurant/$restaurantId/'
+    | '/restaurant/$restaurantId'
     | '/restaurant/$restaurantId/menu/edit'
     | '/restaurant/$restaurantId/users/active'
     | '/restaurant/$restaurantId/users/create'
@@ -129,8 +150,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/restaurant'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/restaurant/create'
+    | '/restaurant/selector'
     | '/restaurant/$restaurantId/menu'
     | '/restaurant/$restaurantId'
     | '/restaurant/$restaurantId/menu/edit'
@@ -140,9 +164,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/restaurant'
     | '/auth/sign-in'
     | '/auth/sign-up'
-    | '/restaurant/$restaurantId'
+    | '/restaurant/create'
+    | '/restaurant/selector'
     | '/restaurant/$restaurantId/menu'
     | '/restaurant/$restaurantId/'
     | '/restaurant/$restaurantId/menu/edit'
@@ -153,11 +179,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
-  RestaurantRestaurantIdRoute: typeof RestaurantRestaurantIdRouteWithChildren
+  RestaurantRoute: typeof RestaurantRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/restaurant': {
+      id: '/restaurant'
+      path: '/restaurant'
+      fullPath: '/restaurant'
+      preLoaderRoute: typeof RestaurantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -172,12 +205,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/restaurant/$restaurantId': {
-      id: '/restaurant/$restaurantId'
-      path: '/restaurant/$restaurantId'
-      fullPath: '/restaurant/$restaurantId'
-      preLoaderRoute: typeof RestaurantRestaurantIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/restaurant/selector': {
+      id: '/restaurant/selector'
+      path: '/selector'
+      fullPath: '/restaurant/selector'
+      preLoaderRoute: typeof RestaurantSelectorRouteImport
+      parentRoute: typeof RestaurantRoute
+    }
+    '/restaurant/create': {
+      id: '/restaurant/create'
+      path: '/create'
+      fullPath: '/restaurant/create'
+      preLoaderRoute: typeof RestaurantCreateRouteImport
+      parentRoute: typeof RestaurantRoute
     }
     '/auth/sign-up': {
       id: '/auth/sign-up'
@@ -195,31 +235,31 @@ declare module '@tanstack/react-router' {
     }
     '/restaurant/$restaurantId/': {
       id: '/restaurant/$restaurantId/'
-      path: '/'
-      fullPath: '/restaurant/$restaurantId/'
+      path: '/$restaurantId'
+      fullPath: '/restaurant/$restaurantId'
       preLoaderRoute: typeof RestaurantRestaurantIdIndexRouteImport
-      parentRoute: typeof RestaurantRestaurantIdRoute
+      parentRoute: typeof RestaurantRoute
     }
     '/restaurant/$restaurantId/menu': {
       id: '/restaurant/$restaurantId/menu'
-      path: '/menu'
+      path: '/$restaurantId/menu'
       fullPath: '/restaurant/$restaurantId/menu'
       preLoaderRoute: typeof RestaurantRestaurantIdMenuRouteImport
-      parentRoute: typeof RestaurantRestaurantIdRoute
+      parentRoute: typeof RestaurantRoute
     }
     '/restaurant/$restaurantId/users/create': {
       id: '/restaurant/$restaurantId/users/create'
-      path: '/users/create'
+      path: '/$restaurantId/users/create'
       fullPath: '/restaurant/$restaurantId/users/create'
       preLoaderRoute: typeof RestaurantRestaurantIdUsersCreateRouteImport
-      parentRoute: typeof RestaurantRestaurantIdRoute
+      parentRoute: typeof RestaurantRoute
     }
     '/restaurant/$restaurantId/users/active': {
       id: '/restaurant/$restaurantId/users/active'
-      path: '/users/active'
+      path: '/$restaurantId/users/active'
       fullPath: '/restaurant/$restaurantId/users/active'
       preLoaderRoute: typeof RestaurantRestaurantIdUsersActiveRouteImport
-      parentRoute: typeof RestaurantRestaurantIdRoute
+      parentRoute: typeof RestaurantRoute
     }
     '/restaurant/$restaurantId/menu/edit': {
       id: '/restaurant/$restaurantId/menu/edit'
@@ -257,33 +297,34 @@ const RestaurantRestaurantIdMenuRouteWithChildren =
     RestaurantRestaurantIdMenuRouteChildren,
   )
 
-interface RestaurantRestaurantIdRouteChildren {
+interface RestaurantRouteChildren {
+  RestaurantCreateRoute: typeof RestaurantCreateRoute
+  RestaurantSelectorRoute: typeof RestaurantSelectorRoute
   RestaurantRestaurantIdMenuRoute: typeof RestaurantRestaurantIdMenuRouteWithChildren
   RestaurantRestaurantIdIndexRoute: typeof RestaurantRestaurantIdIndexRoute
   RestaurantRestaurantIdUsersActiveRoute: typeof RestaurantRestaurantIdUsersActiveRoute
   RestaurantRestaurantIdUsersCreateRoute: typeof RestaurantRestaurantIdUsersCreateRoute
 }
 
-const RestaurantRestaurantIdRouteChildren: RestaurantRestaurantIdRouteChildren =
-  {
-    RestaurantRestaurantIdMenuRoute:
-      RestaurantRestaurantIdMenuRouteWithChildren,
-    RestaurantRestaurantIdIndexRoute: RestaurantRestaurantIdIndexRoute,
-    RestaurantRestaurantIdUsersActiveRoute:
-      RestaurantRestaurantIdUsersActiveRoute,
-    RestaurantRestaurantIdUsersCreateRoute:
-      RestaurantRestaurantIdUsersCreateRoute,
-  }
+const RestaurantRouteChildren: RestaurantRouteChildren = {
+  RestaurantCreateRoute: RestaurantCreateRoute,
+  RestaurantSelectorRoute: RestaurantSelectorRoute,
+  RestaurantRestaurantIdMenuRoute: RestaurantRestaurantIdMenuRouteWithChildren,
+  RestaurantRestaurantIdIndexRoute: RestaurantRestaurantIdIndexRoute,
+  RestaurantRestaurantIdUsersActiveRoute:
+    RestaurantRestaurantIdUsersActiveRoute,
+  RestaurantRestaurantIdUsersCreateRoute:
+    RestaurantRestaurantIdUsersCreateRoute,
+}
 
-const RestaurantRestaurantIdRouteWithChildren =
-  RestaurantRestaurantIdRoute._addFileChildren(
-    RestaurantRestaurantIdRouteChildren,
-  )
+const RestaurantRouteWithChildren = RestaurantRoute._addFileChildren(
+  RestaurantRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
-  RestaurantRestaurantIdRoute: RestaurantRestaurantIdRouteWithChildren,
+  RestaurantRoute: RestaurantRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

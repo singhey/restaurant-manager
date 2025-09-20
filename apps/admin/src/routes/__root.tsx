@@ -19,8 +19,9 @@ const RootLayout = () => {
       <SidebarProvider>
         <RestaurantRouteWrapper>
           <Sidebar>
-            <SidebarHeader>
-              <div className="flex items-center gap-2 px-2 py-2">
+            <div className='bg-background h-full'>
+            <SidebarHeader className='border-b h-16 justify-center'>
+              <div className="flex items-center gap-2 px-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <span className="text-sm font-bold">A</span>
                 </div>
@@ -37,6 +38,7 @@ const RootLayout = () => {
                 </SidebarGroupContent>
               </SidebarGroup>
             </SidebarContent>
+            </div>
           </Sidebar>
         </RestaurantRouteWrapper>
         <SidebarInset>

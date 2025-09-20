@@ -276,6 +276,14 @@ const metadata = {
                     isDataModel: true,
                     isOptional: true,
                     backLink: 'organization',
+                }, metaData: {
+                    name: "metaData",
+                    type: "String",
+                    isOptional: true,
+                }, address: {
+                    name: "address",
+                    type: "String",
+                    isOptional: true,
                 },
             }, uniqueConstraints: {
                 id: {
