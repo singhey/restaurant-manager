@@ -5,6 +5,7 @@
 
 
 
+
   - Create `useAuth` hook that wraps Better Auth functionality for session management
   - Implement authentication state management with loading and error states
   - Create route guard utilities for protecting authenticated and public routes

@@ -1,15 +1,19 @@
-import { 
-  Home, 
-  Users, 
-  Settings, 
-  FileText, 
-  BarChart3, 
-  Shield,
-  UserPlus,
-  UserCheck,
-  Cog,
-  Database,
-  Bell
+import {
+  Home,
+  Users,
+  Store,
+  Receipt,
+  ShoppingCart,
+  ChefHat,
+  History,
+  Globe,
+  Building2,
+  User,
+  Edit3,
+  Plus,
+  Gift,
+  Tag,
+  Eye
 } from 'lucide-react'
 import type { NavigationItem, NavigationConfig } from '../types/navigation'
 
@@ -26,93 +30,90 @@ export const navigationConfig: NavigationConfig = {
       icon: Home
     },
     {
-      id: 'users',
-      label: 'Users',
-      href: '/users',
-      icon: Users,
-      badge: '12',
+      id: 'bill-menu',
+      label: 'Bill Menu',
+      href: '/menu/billing',
+      icon: Receipt
+    },
+    {
+      id: 'live-orders',
+      label: 'Live Orders',
+      href: '/orders/live',
+      icon: ShoppingCart
+    },
+    {
+      id: 'kitchen-display',
+      label: 'Kitchen Display System',
+      href: '/orders/kitchen',
+      icon: ChefHat
+    },
+    {
+      id: 'outlet-history',
+      label: 'Outlet Order History',
+      href: '/orders/outlet-history',
+      icon: History
+    },
+    {
+      id: 'online-history',
+      label: 'Online Order History',
+      href: '/orders/online-history',
+      icon: Globe
+    },
+    {
+      id: 'customers',
+      label: 'Customers',
+      href: '/customers',
+      icon: Users
+    },
+    {
+      id: 'management',
+      label: 'Management',
+      href: '/management',
+      icon: Edit3,
       children: [
         {
-          id: 'users-list',
-          label: 'All Users',
-          href: '/users'
+          id: 'edit-menu',
+          label: 'Edit Menu',
+          href: '/menu/edit',
+          icon: Edit3
         },
         {
-          id: 'users-create',
-          label: 'Create User',
-          href: '/users/create',
-          icon: UserPlus
+          id: 'edit-addons',
+          label: 'Edit Addons',
+          href: '/menu/addons',
+          icon: Plus
         },
         {
-          id: 'users-active',
-          label: 'Active Users',
-          href: '/users/active',
-          icon: UserCheck
+          id: 'edit-vouchers',
+          label: 'Edit Vouchers',
+          href: '/menu/vouchers',
+          icon: Gift
+        },
+        {
+          id: 'add-offers',
+          label: 'Add Offers',
+          href: '/menu/offers',
+          icon: Tag
         }
       ]
     },
     {
-      id: 'content',
-      label: 'Content',
-      href: '/content',
-      icon: FileText,
-      children: [
-        {
-          id: 'content-posts',
-          label: 'Posts',
-          href: '/content/posts'
-        },
-        {
-          id: 'content-pages',
-          label: 'Pages',
-          href: '/content/pages'
-        },
-        {
-          id: 'content-media',
-          label: 'Media Library',
-          href: '/content/media'
-        }
-      ]
+      id: 'account',
+      label: 'Account',
+      href: '/account',
+      icon: User
     },
     {
-      id: 'analytics',
-      label: 'Analytics',
-      href: '/analytics',
-      icon: BarChart3,
-      badge: 'New'
+      id: 'store-details',
+      label: 'Store Details',
+      href: '/store/details',
+      icon: Store
     },
     {
-      id: 'system',
-      label: 'System',
-      href: '/system',
-      icon: Database,
-      children: [
-        {
-          id: 'system-settings',
-          label: 'Settings',
-          href: '/system/settings',
-          icon: Cog
-        },
-        {
-          id: 'system-security',
-          label: 'Security',
-          href: '/system/security',
-          icon: Shield
-        },
-        {
-          id: 'system-notifications',
-          label: 'Notifications',
-          href: '/system/notifications',
-          icon: Bell,
-          badge: 3
-        }
-      ]
-    },
-    {
-      id: 'settings',
-      label: 'Settings',
-      href: '/settings',
-      icon: Settings
+      id: 'all-stores',
+      label: 'All Stores',
+      href: '/stores',
+      icon: Building2
     }
   ]
 }
@@ -161,13 +162,13 @@ export function getNavigationParents(href: string, items: NavigationItem[] = nav
  */
 export function flattenNavigationItems(items: NavigationItem[] = navigationConfig.items): NavigationItem[] {
   const flattened: NavigationItem[] = []
-  
+
   for (const item of items) {
     flattened.push(item)
     if (item.children) {
       flattened.push(...flattenNavigationItems(item.children))
     }
   }
-  
+
   return flattened
 }

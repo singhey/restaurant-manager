@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Provider as ZenStackHooksProvider } from '../hooks';
+import { Provider as ZenStackHooksProvider } from '../hooks/trpc';
 import type { FetchFn } from '@zenstackhq/tanstack-query/runtime';
 import { AuthProvider } from './AuthProvider';
 
