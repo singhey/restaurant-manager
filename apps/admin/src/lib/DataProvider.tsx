@@ -10,6 +10,7 @@ const myFetch: FetchFn = (url, options) => {
         ...options.headers,
         'x-my-custom-header': 'hello world',
     };
+    options.credentials = 'include'
     return fetch(url, options);
 };
 
@@ -19,7 +20,7 @@ function DataProvider({ children }: {children: React.ReactNode}): React.ReactNod
     return (
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
-            <ZenStackHooksProvider value={{ endpoint: '/api/model', fetch: myFetch }}>
+            <ZenStackHooksProvider value={{ endpoint: 'http://localhost:3000/api/model', fetch: myFetch }}>
               {children}
             </ZenStackHooksProvider>
         </QueryClientProvider>

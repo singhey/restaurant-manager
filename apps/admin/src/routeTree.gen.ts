@@ -11,10 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsersRouteImport } from './routes/users'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as MenuRouteImport } from './routes/menu'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UsersCreateRouteImport } from './routes/users/create'
 import { Route as UsersActiveRouteImport } from './routes/users/active'
+import { Route as MenuEditRouteImport } from './routes/menu/edit'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 
@@ -26,6 +28,11 @@ const UsersRoute = UsersRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -48,6 +55,11 @@ const UsersActiveRoute = UsersActiveRouteImport.update({
   path: '/active',
   getParentRoute: () => UsersRoute,
 } as any)
+const MenuEditRoute = MenuEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => MenuRoute,
+} as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
   id: '/sign-up',
   path: '/sign-up',
@@ -62,20 +74,24 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/menu': typeof MenuRouteWithChildren
   '/settings': typeof SettingsRoute
   '/users': typeof UsersRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/menu/edit': typeof MenuEditRoute
   '/users/active': typeof UsersActiveRoute
   '/users/create': typeof UsersCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/menu': typeof MenuRouteWithChildren
   '/settings': typeof SettingsRoute
   '/users': typeof UsersRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/menu/edit': typeof MenuEditRoute
   '/users/active': typeof UsersActiveRoute
   '/users/create': typeof UsersCreateRoute
 }
@@ -83,10 +99,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/menu': typeof MenuRouteWithChildren
   '/settings': typeof SettingsRoute
   '/users': typeof UsersRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
+  '/menu/edit': typeof MenuEditRoute
   '/users/active': typeof UsersActiveRoute
   '/users/create': typeof UsersCreateRoute
 }
@@ -95,30 +113,36 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/menu'
     | '/settings'
     | '/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/menu/edit'
     | '/users/active'
     | '/users/create'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/menu'
     | '/settings'
     | '/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/menu/edit'
     | '/users/active'
     | '/users/create'
   id:
     | '__root__'
     | '/'
     | '/auth'
+    | '/menu'
     | '/settings'
     | '/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
+    | '/menu/edit'
     | '/users/active'
     | '/users/create'
   fileRoutesById: FileRoutesById
@@ -126,6 +150,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  MenuRoute: typeof MenuRouteWithChildren
   SettingsRoute: typeof SettingsRoute
   UsersRoute: typeof UsersRouteWithChildren
 }
@@ -144,6 +169,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -174,6 +206,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersActiveRouteImport
       parentRoute: typeof UsersRoute
     }
+    '/menu/edit': {
+      id: '/menu/edit'
+      path: '/edit'
+      fullPath: '/menu/edit'
+      preLoaderRoute: typeof MenuEditRouteImport
+      parentRoute: typeof MenuRoute
+    }
     '/auth/sign-up': {
       id: '/auth/sign-up'
       path: '/sign-up'
@@ -203,6 +242,16 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface MenuRouteChildren {
+  MenuEditRoute: typeof MenuEditRoute
+}
+
+const MenuRouteChildren: MenuRouteChildren = {
+  MenuEditRoute: MenuEditRoute,
+}
+
+const MenuRouteWithChildren = MenuRoute._addFileChildren(MenuRouteChildren)
+
 interface UsersRouteChildren {
   UsersActiveRoute: typeof UsersActiveRoute
   UsersCreateRoute: typeof UsersCreateRoute
@@ -218,6 +267,7 @@ const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  MenuRoute: MenuRouteWithChildren,
   SettingsRoute: SettingsRoute,
   UsersRoute: UsersRouteWithChildren,
 }
