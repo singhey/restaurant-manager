@@ -1,6 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
+  beforeLoad: () => {
+    // Redirect to a default restaurant - you can modify this logic
+    throw redirect({
+      to: '/restaurant/$restaurantId',
+      params: { restaurantId: 'default' }
+    })
+  },
   component: Index,
 })
 

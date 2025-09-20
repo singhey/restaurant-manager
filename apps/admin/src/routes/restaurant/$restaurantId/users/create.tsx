@@ -23,6 +23,6 @@ function CreateUserPage() {
   )
 }
 
-export const Route = createFileRoute('/users/create')({
+export const Route = createFileRoute('/restaurant/$restaurantId/users/create')({
   component: CreateUserPage,
 })

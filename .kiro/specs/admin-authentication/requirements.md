@@ -74,3 +74,15 @@ This feature implements a complete authentication system for the admin applicati
 2. WHEN a user's session expires THEN they SHALL be redirected to the sign-in page
 3. WHEN a user accesses protected routes without authentication THEN they SHALL be redirected to sign-in
 4. WHEN authentication state changes THEN the navigation SHALL update immediately to reflect the new state
+
+### Requirement 7
+
+**User Story:** As an admin user, I want a clean authentication experience without distracting navigation elements, so that I can focus on signing in or registering.
+
+#### Acceptance Criteria
+
+1. WHEN a user is on the sign-in page THEN the sidebar SHALL be hidden from view
+2. WHEN a user is on the sign-up page THEN the sidebar SHALL be hidden from view
+3. WHEN a user navigates away from auth pages THEN the sidebar SHALL be visible again
+4. WHEN the sidebar is hidden THEN the main content SHALL expand to use the full width
+5. WHEN a user is on auth pages THEN only the sign-in and sign-up pages SHALL be accessible without authentication

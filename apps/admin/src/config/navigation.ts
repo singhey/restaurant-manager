@@ -26,93 +26,113 @@ export const navigationConfig: NavigationConfig = {
     {
       id: 'dashboard',
       label: 'Dashboard',
-      href: '/',
+      href: '/restaurant/$restaurantId',
       icon: Home
     },
     {
       id: 'bill-menu',
       label: 'Bill Menu',
-      href: '/menu/billing',
+      href: '/restaurant/$restaurantId/menu/billing',
       icon: Receipt
     },
     {
       id: 'live-orders',
       label: 'Live Orders',
-      href: '/orders/live',
+      href: '/restaurant/$restaurantId/orders/live',
       icon: ShoppingCart
     },
     {
       id: 'kitchen-display',
       label: 'Kitchen Display System',
-      href: '/orders/kitchen',
+      href: '/restaurant/$restaurantId/orders/kitchen',
       icon: ChefHat
     },
     {
       id: 'outlet-history',
       label: 'Outlet Order History',
-      href: '/orders/outlet-history',
+      href: '/restaurant/$restaurantId/orders/outlet-history',
       icon: History
     },
     {
       id: 'online-history',
       label: 'Online Order History',
-      href: '/orders/online-history',
+      href: '/restaurant/$restaurantId/orders/online-history',
       icon: Globe
     },
     {
       id: 'customers',
       label: 'Customers',
-      href: '/customers',
+      href: '/restaurant/$restaurantId/customers',
       icon: Users
     },
     {
       id: 'management',
       label: 'Management',
-      href: '/management',
+      href: '/restaurant/$restaurantId/management',
       icon: Edit3,
       children: [
         {
           id: 'edit-menu',
           label: 'Edit Menu',
-          href: '/menu/edit',
+          href: '/restaurant/$restaurantId/menu/edit',
           icon: Edit3
         },
         {
           id: 'edit-addons',
           label: 'Edit Addons',
-          href: '/menu/addons',
+          href: '/restaurant/$restaurantId/menu/addons',
           icon: Plus
         },
         {
           id: 'edit-vouchers',
           label: 'Edit Vouchers',
-          href: '/menu/vouchers',
+          href: '/restaurant/$restaurantId/menu/vouchers',
           icon: Gift
         },
         {
           id: 'add-offers',
           label: 'Add Offers',
-          href: '/menu/offers',
+          href: '/restaurant/$restaurantId/menu/offers',
           icon: Tag
+        }
+      ]
+    },
+    {
+      id: 'users',
+      label: 'Users',
+      href: '/restaurant/$restaurantId/users',
+      icon: Users,
+      children: [
+        {
+          id: 'users-active',
+          label: 'Active Users',
+          href: '/restaurant/$restaurantId/users/active',
+          icon: Eye
+        },
+        {
+          id: 'users-create',
+          label: 'Create User',
+          href: '/restaurant/$restaurantId/users/create',
+          icon: Plus
         }
       ]
     },
     {
       id: 'account',
       label: 'Account',
-      href: '/account',
+      href: '/restaurant/$restaurantId/account',
       icon: User
     },
     {
       id: 'store-details',
       label: 'Store Details',
-      href: '/store/details',
+      href: '/restaurant/$restaurantId/store/details',
       icon: Store
     },
     {
       id: 'all-stores',
       label: 'All Stores',
-      href: '/stores',
+      href: '/restaurant/$restaurantId/stores',
       icon: Building2
     }
   ]

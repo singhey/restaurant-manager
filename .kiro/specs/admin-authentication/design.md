@@ -12,38 +12,50 @@ The system will enhance the existing Topbar component to show authentication sta
 ```mermaid
 graph TD
     A[User Access] --> B{Authenticated?}
-    B -->|No| C[Show Sign In Button]
-    B -->|Yes| D[Show Account Menu]
-    C --> E[Navigate to /auth/signin]
-    E --> F[Better Auth UI Sign In]
-    F --> G{Valid Credentials?}
-    G -->|No| H[Show Error]
-    G -->|Yes| I[Establish Session]
-    H --> F
-    I --> J[Redirect to Dashboard]
-    D --> K[Account Dropdown]
-    K --> L[Account/Logout Options]
-    L --> M{Action?}
-    M -->|Account| N[Navigate to Account Page]
-    M -->|Logout| O[Better Auth Logout]
-    O --> P[Clear Session]
-    P --> Q[Redirect to Sign In]
+    B -->|No| C{On Auth Page?}
+    B -->|Yes| D{On Auth Page?}
+    C -->|No| E[Redirect to Sign In]
+    C -->|Yes| F[Show Auth Page + Hide Sidebar]
+    D -->|Yes| G[Redirect to Dashboard]
+    D -->|No| H[Show App + Sidebar + Account Menu]
+    E --> F
+    F --> I[Better Auth UI Sign In/Up]
+    I --> J{Valid Credentials?}
+    J -->|No| K[Show Error]
+    J -->|Yes| L[Establish Session]
+    K --> I
+    L --> M[Redirect to Dashboard]
+    H --> N[Account Dropdown]
+    N --> O[Account/Logout Options]
+    O --> P{Action?}
+    P -->|Account| Q[Navigate to Account Page]
+    P -->|Logout| R[Better Auth Logout]
+    R --> S[Clear Session]
+    S --> T[Redirect to Sign In]
 ```
 
 ### Component Architecture
 ```mermaid
 graph TD
-    A[AuthProvider] --> B[Topbar]
+    A[AuthProvider] --> B[RootLayout]
     A --> C[Auth Routes]
-    B --> D[AuthenticatedNav]
-    B --> E[UnauthenticatedNav]
-    C --> F[SignInPage]
-    C --> G[RegisterPage]
-    F --> H[Better Auth UI SignIn]
-    G --> I[Better Auth UI SignUp]
-    D --> J[AccountDropdown]
-    J --> K[AccountButton]
-    J --> L[LogoutButton]
+    B --> D[AuthGuard]
+    B --> E[LayoutController]
+    D --> F{Authenticated?}
+    F -->|No| G[Redirect to Auth]
+    F -->|Yes| H[Allow Access]
+    E --> I{On Auth Page?}
+    I -->|Yes| J[Hide Sidebar + Show Auth Layout]
+    I -->|No| K[Show Full Layout + Sidebar]
+    K --> L[Topbar with AuthenticatedNav]
+    J --> M[Topbar with UnauthenticatedNav]
+    C --> N[SignInPage]
+    C --> O[RegisterPage]
+    N --> P[Better Auth UI SignIn]
+    O --> Q[Better Auth UI SignUp]
+    L --> R[AccountDropdown]
+    R --> S[AccountButton]
+    R --> T[LogoutButton]
 ```
 
 ## Components and Interfaces
@@ -97,13 +109,27 @@ Custom hook that wraps Better Auth functionality:
 - Manages session persistence
 - Provides loading and error states
 
-### 5. Route Protection
+### 5. Route Protection and Layout Control
 **Location:** `apps/admin/src/lib/routeGuards.ts`
 
 Utility functions for protecting routes:
 - Redirect unauthenticated users to sign-in
 - Redirect authenticated users away from auth pages
 - Handle session expiration
+
+**Location:** `apps/admin/src/components/layout/AuthGuard.tsx`
+
+Component that wraps protected routes:
+- Uses Better Auth's `useSession` hook to check authentication
+- Provides loading states during session checks
+- Handles redirects for unauthenticated access
+
+**Location:** `apps/admin/src/components/layout/LayoutController.tsx`
+
+Component that controls sidebar visibility:
+- Detects when user is on auth pages (`/auth/*`)
+- Conditionally renders sidebar based on current route
+- Manages layout transitions between auth and app views
 
 ## Data Models
 
@@ -137,6 +163,15 @@ interface NavigationAuthState {
 }
 ```
 
+### Layout State
+```typescript
+interface LayoutState {
+  showSidebar: boolean
+  isAuthPage: boolean
+  isLoading: boolean
+}
+```
+
 ## Error Handling
 
 ### Authentication Errors
@@ -154,6 +189,26 @@ interface NavigationAuthState {
 - Implement toast notifications for session-related errors
 - Provide clear feedback for all user actions
 
+## Layout and UI Considerations
+
+### Sidebar Management
+- **Auth Pages:** Sidebar is completely hidden, content uses full width
+- **Protected Pages:** Sidebar is visible with normal layout
+- **Transition Handling:** Smooth transitions between auth and app layouts
+- **Responsive Behavior:** Layout adapts properly on different screen sizes
+
+### Authentication UI Integration
+- Better Auth UI components integrate seamlessly with existing design system
+- Auth pages maintain consistent styling with the rest of the application
+- Loading states are handled gracefully during authentication checks
+- Error messages are displayed using consistent UI patterns
+
+### Route-Based Layout Control
+- Layout changes are determined by current route path
+- Auth routes (`/auth/*`) trigger sidebar hiding automatically
+- Non-auth routes restore full layout with sidebar
+- Layout state is managed at the root level for consistency
+
 ## Security Considerations
 
 ### Session Management
@@ -165,6 +220,7 @@ interface NavigationAuthState {
 - Implement client-side route guards for UX
 - Ensure server-side validation for all protected endpoints
 - Handle authentication state synchronization
+- Protect all non-auth routes from unauthenticated access
 
 ### Input Validation
 - Use Better Auth UI's built-in validation

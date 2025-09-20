@@ -1,15 +1,11 @@
 # Implementation Plan
 
-- [ ] 1. Create authentication hooks and utilities
-
-
-
-
-
+- [X] 1. Create authentication hooks and utilities
   - Create `useAuth` hook that wraps Better Auth functionality for session management
   - Implement authentication state management with loading and error states
   - Create route guard utilities for protecting authenticated and public routes
-  - _Requirements: 6.1, 6.2, 6.3, 6.4_
+  - Create layout utilities for detecting auth pages and controlling sidebar visibility
+  - _Requirements: 6.1, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3_
 
 - [ ] 2. Create authentication navigation components
   - [ ] 2.1 Create UnauthenticatedNav component
@@ -53,44 +49,65 @@
     - Add proper error handling and loading states using Better Auth UI
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 5. Implement route protection
-  - Add route guards to protected routes to redirect unauthenticated users
-  - Implement redirect logic for authenticated users accessing auth pages
-  - Handle session expiration with proper redirects to sign-in page
-  - Ensure authentication state persistence across browser sessions
-  - _Requirements: 6.1, 6.2, 6.3, 1.5, 2.5_
+- [ ] 5. Create layout control components
+  - [ ] 5.1 Create AuthGuard component
+    - Implement component that wraps protected routes and checks authentication
+    - Add loading states during session verification
+    - Handle redirects for unauthenticated users to sign-in page
+    - Implement redirect logic for authenticated users accessing auth pages
+    - _Requirements: 6.2, 6.3, 1.5, 2.5, 7.5_
 
-- [ ] 6. Add authentication state integration to AuthProvider
+  - [ ] 5.2 Create LayoutController component
+    - Implement component that detects auth pages using route path
+    - Control sidebar visibility based on current route
+    - Handle layout transitions between auth and app views
+    - Ensure content expands to full width when sidebar is hidden
+    - _Requirements: 7.1, 7.2, 7.3, 7.4_
+
+- [ ] 6. Update root layout with authentication and layout controls
+  - Integrate AuthGuard component to protect non-auth routes
+  - Integrate LayoutController to manage sidebar visibility
+  - Update RootLayout to conditionally render sidebar based on auth page detection
+  - Ensure smooth transitions between auth and protected layouts
+  - Handle session expiration with proper redirects to sign-in page
+  - _Requirements: 6.1, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3, 7.4_
+
+- [ ] 7. Add authentication state integration to AuthProvider
   - Enhance existing AuthProvider to handle session state changes properly
   - Ensure navigation updates immediately when authentication state changes
   - Implement proper session persistence and expiration handling
   - Add error handling for authentication state synchronization
   - _Requirements: 6.1, 6.2, 6.3, 6.4, 4.5_
 
-- [ ] 7. Create account management page
+- [ ] 8. Create account management page
   - Create basic account page component at `/account` route
   - Display user information and basic account management options
   - Ensure page is properly protected and accessible from account dropdown
   - Style page to match existing admin application design
   - _Requirements: 4.4_
 
-- [ ] 8. Write comprehensive tests for authentication system
-  - [ ] 8.1 Write unit tests for authentication hooks
+- [ ] 9. Write comprehensive tests for authentication system
+  - [ ] 9.1 Write unit tests for authentication hooks and utilities
     - Test `useAuth` hook with various authentication states
     - Test route guard utilities with different session scenarios
+    - Test layout utilities for auth page detection and sidebar control
     - Test error handling and loading states
     - _Requirements: All requirements - testing coverage_
 
-  - [ ] 8.2 Write component tests for navigation components
+  - [ ] 9.2 Write component tests for navigation and layout components
     - Test UnauthenticatedNav rendering and navigation behavior
     - Test AuthenticatedNav dropdown functionality and logout
     - Test Topbar authentication state integration
+    - Test AuthGuard component redirect logic
+    - Test LayoutController sidebar visibility logic
     - Test auth route components with redirect logic
     - _Requirements: All requirements - testing coverage_
 
-  - [ ] 8.3 Write integration tests for authentication flows
+  - [ ] 9.3 Write integration tests for authentication and layout flows
     - Test complete sign-in workflow from navigation to dashboard
     - Test complete registration workflow with proper redirects
     - Test logout flow and navigation state reset
     - Test session persistence across browser restarts
+    - Test sidebar hiding on auth pages and showing on protected pages
+    - Test layout transitions between auth and app views
     - _Requirements: All requirements - testing coverage_

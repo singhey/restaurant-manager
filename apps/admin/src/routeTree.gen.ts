@@ -9,32 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as MenuRouteImport } from './routes/menu'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as UsersCreateRouteImport } from './routes/users/create'
-import { Route as UsersActiveRouteImport } from './routes/users/active'
-import { Route as MenuEditRouteImport } from './routes/menu/edit'
+import { Route as RestaurantRestaurantIdRouteImport } from './routes/restaurant/$restaurantId'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as RestaurantRestaurantIdIndexRouteImport } from './routes/restaurant/$restaurantId/index'
+import { Route as RestaurantRestaurantIdMenuRouteImport } from './routes/restaurant/$restaurantId/menu'
+import { Route as RestaurantRestaurantIdUsersCreateRouteImport } from './routes/restaurant/$restaurantId/users/create'
+import { Route as RestaurantRestaurantIdUsersActiveRouteImport } from './routes/restaurant/$restaurantId/users/active'
+import { Route as RestaurantRestaurantIdMenuEditRouteImport } from './routes/restaurant/$restaurantId/menu/edit'
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MenuRoute = MenuRouteImport.update({
-  id: '/menu',
-  path: '/menu',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -45,20 +30,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UsersCreateRoute = UsersCreateRouteImport.update({
-  id: '/create',
-  path: '/create',
-  getParentRoute: () => UsersRoute,
-} as any)
-const UsersActiveRoute = UsersActiveRouteImport.update({
-  id: '/active',
-  path: '/active',
-  getParentRoute: () => UsersRoute,
-} as any)
-const MenuEditRoute = MenuEditRouteImport.update({
-  id: '/edit',
-  path: '/edit',
-  getParentRoute: () => MenuRoute,
+const RestaurantRestaurantIdRoute = RestaurantRestaurantIdRouteImport.update({
+  id: '/restaurant/$restaurantId',
+  path: '/restaurant/$restaurantId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
   id: '/sign-up',
@@ -70,114 +45,119 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => AuthRoute,
 } as any)
+const RestaurantRestaurantIdIndexRoute =
+  RestaurantRestaurantIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => RestaurantRestaurantIdRoute,
+  } as any)
+const RestaurantRestaurantIdMenuRoute =
+  RestaurantRestaurantIdMenuRouteImport.update({
+    id: '/menu',
+    path: '/menu',
+    getParentRoute: () => RestaurantRestaurantIdRoute,
+  } as any)
+const RestaurantRestaurantIdUsersCreateRoute =
+  RestaurantRestaurantIdUsersCreateRouteImport.update({
+    id: '/users/create',
+    path: '/users/create',
+    getParentRoute: () => RestaurantRestaurantIdRoute,
+  } as any)
+const RestaurantRestaurantIdUsersActiveRoute =
+  RestaurantRestaurantIdUsersActiveRouteImport.update({
+    id: '/users/active',
+    path: '/users/active',
+    getParentRoute: () => RestaurantRestaurantIdRoute,
+  } as any)
+const RestaurantRestaurantIdMenuEditRoute =
+  RestaurantRestaurantIdMenuEditRouteImport.update({
+    id: '/edit',
+    path: '/edit',
+    getParentRoute: () => RestaurantRestaurantIdMenuRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/menu': typeof MenuRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/users': typeof UsersRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
-  '/menu/edit': typeof MenuEditRoute
-  '/users/active': typeof UsersActiveRoute
-  '/users/create': typeof UsersCreateRoute
+  '/restaurant/$restaurantId': typeof RestaurantRestaurantIdRouteWithChildren
+  '/restaurant/$restaurantId/menu': typeof RestaurantRestaurantIdMenuRouteWithChildren
+  '/restaurant/$restaurantId/': typeof RestaurantRestaurantIdIndexRoute
+  '/restaurant/$restaurantId/menu/edit': typeof RestaurantRestaurantIdMenuEditRoute
+  '/restaurant/$restaurantId/users/active': typeof RestaurantRestaurantIdUsersActiveRoute
+  '/restaurant/$restaurantId/users/create': typeof RestaurantRestaurantIdUsersCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/menu': typeof MenuRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/users': typeof UsersRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
-  '/menu/edit': typeof MenuEditRoute
-  '/users/active': typeof UsersActiveRoute
-  '/users/create': typeof UsersCreateRoute
+  '/restaurant/$restaurantId/menu': typeof RestaurantRestaurantIdMenuRouteWithChildren
+  '/restaurant/$restaurantId': typeof RestaurantRestaurantIdIndexRoute
+  '/restaurant/$restaurantId/menu/edit': typeof RestaurantRestaurantIdMenuEditRoute
+  '/restaurant/$restaurantId/users/active': typeof RestaurantRestaurantIdUsersActiveRoute
+  '/restaurant/$restaurantId/users/create': typeof RestaurantRestaurantIdUsersCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/menu': typeof MenuRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/users': typeof UsersRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
-  '/menu/edit': typeof MenuEditRoute
-  '/users/active': typeof UsersActiveRoute
-  '/users/create': typeof UsersCreateRoute
+  '/restaurant/$restaurantId': typeof RestaurantRestaurantIdRouteWithChildren
+  '/restaurant/$restaurantId/menu': typeof RestaurantRestaurantIdMenuRouteWithChildren
+  '/restaurant/$restaurantId/': typeof RestaurantRestaurantIdIndexRoute
+  '/restaurant/$restaurantId/menu/edit': typeof RestaurantRestaurantIdMenuEditRoute
+  '/restaurant/$restaurantId/users/active': typeof RestaurantRestaurantIdUsersActiveRoute
+  '/restaurant/$restaurantId/users/create': typeof RestaurantRestaurantIdUsersCreateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
-    | '/menu'
-    | '/settings'
-    | '/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
-    | '/menu/edit'
-    | '/users/active'
-    | '/users/create'
+    | '/restaurant/$restaurantId'
+    | '/restaurant/$restaurantId/menu'
+    | '/restaurant/$restaurantId/'
+    | '/restaurant/$restaurantId/menu/edit'
+    | '/restaurant/$restaurantId/users/active'
+    | '/restaurant/$restaurantId/users/create'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/menu'
-    | '/settings'
-    | '/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
-    | '/menu/edit'
-    | '/users/active'
-    | '/users/create'
+    | '/restaurant/$restaurantId/menu'
+    | '/restaurant/$restaurantId'
+    | '/restaurant/$restaurantId/menu/edit'
+    | '/restaurant/$restaurantId/users/active'
+    | '/restaurant/$restaurantId/users/create'
   id:
     | '__root__'
     | '/'
     | '/auth'
-    | '/menu'
-    | '/settings'
-    | '/users'
     | '/auth/sign-in'
     | '/auth/sign-up'
-    | '/menu/edit'
-    | '/users/active'
-    | '/users/create'
+    | '/restaurant/$restaurantId'
+    | '/restaurant/$restaurantId/menu'
+    | '/restaurant/$restaurantId/'
+    | '/restaurant/$restaurantId/menu/edit'
+    | '/restaurant/$restaurantId/users/active'
+    | '/restaurant/$restaurantId/users/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
-  MenuRoute: typeof MenuRouteWithChildren
-  SettingsRoute: typeof SettingsRoute
-  UsersRoute: typeof UsersRouteWithChildren
+  RestaurantRestaurantIdRoute: typeof RestaurantRestaurantIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/menu': {
-      id: '/menu'
-      path: '/menu'
-      fullPath: '/menu'
-      preLoaderRoute: typeof MenuRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -192,26 +172,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/users/create': {
-      id: '/users/create'
-      path: '/create'
-      fullPath: '/users/create'
-      preLoaderRoute: typeof UsersCreateRouteImport
-      parentRoute: typeof UsersRoute
-    }
-    '/users/active': {
-      id: '/users/active'
-      path: '/active'
-      fullPath: '/users/active'
-      preLoaderRoute: typeof UsersActiveRouteImport
-      parentRoute: typeof UsersRoute
-    }
-    '/menu/edit': {
-      id: '/menu/edit'
-      path: '/edit'
-      fullPath: '/menu/edit'
-      preLoaderRoute: typeof MenuEditRouteImport
-      parentRoute: typeof MenuRoute
+    '/restaurant/$restaurantId': {
+      id: '/restaurant/$restaurantId'
+      path: '/restaurant/$restaurantId'
+      fullPath: '/restaurant/$restaurantId'
+      preLoaderRoute: typeof RestaurantRestaurantIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/auth/sign-up': {
       id: '/auth/sign-up'
@@ -226,6 +192,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/sign-in'
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/restaurant/$restaurantId/': {
+      id: '/restaurant/$restaurantId/'
+      path: '/'
+      fullPath: '/restaurant/$restaurantId/'
+      preLoaderRoute: typeof RestaurantRestaurantIdIndexRouteImport
+      parentRoute: typeof RestaurantRestaurantIdRoute
+    }
+    '/restaurant/$restaurantId/menu': {
+      id: '/restaurant/$restaurantId/menu'
+      path: '/menu'
+      fullPath: '/restaurant/$restaurantId/menu'
+      preLoaderRoute: typeof RestaurantRestaurantIdMenuRouteImport
+      parentRoute: typeof RestaurantRestaurantIdRoute
+    }
+    '/restaurant/$restaurantId/users/create': {
+      id: '/restaurant/$restaurantId/users/create'
+      path: '/users/create'
+      fullPath: '/restaurant/$restaurantId/users/create'
+      preLoaderRoute: typeof RestaurantRestaurantIdUsersCreateRouteImport
+      parentRoute: typeof RestaurantRestaurantIdRoute
+    }
+    '/restaurant/$restaurantId/users/active': {
+      id: '/restaurant/$restaurantId/users/active'
+      path: '/users/active'
+      fullPath: '/restaurant/$restaurantId/users/active'
+      preLoaderRoute: typeof RestaurantRestaurantIdUsersActiveRouteImport
+      parentRoute: typeof RestaurantRestaurantIdRoute
+    }
+    '/restaurant/$restaurantId/menu/edit': {
+      id: '/restaurant/$restaurantId/menu/edit'
+      path: '/edit'
+      fullPath: '/restaurant/$restaurantId/menu/edit'
+      preLoaderRoute: typeof RestaurantRestaurantIdMenuEditRouteImport
+      parentRoute: typeof RestaurantRestaurantIdMenuRoute
     }
   }
 }
@@ -242,34 +243,47 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
-interface MenuRouteChildren {
-  MenuEditRoute: typeof MenuEditRoute
+interface RestaurantRestaurantIdMenuRouteChildren {
+  RestaurantRestaurantIdMenuEditRoute: typeof RestaurantRestaurantIdMenuEditRoute
 }
 
-const MenuRouteChildren: MenuRouteChildren = {
-  MenuEditRoute: MenuEditRoute,
+const RestaurantRestaurantIdMenuRouteChildren: RestaurantRestaurantIdMenuRouteChildren =
+  {
+    RestaurantRestaurantIdMenuEditRoute: RestaurantRestaurantIdMenuEditRoute,
+  }
+
+const RestaurantRestaurantIdMenuRouteWithChildren =
+  RestaurantRestaurantIdMenuRoute._addFileChildren(
+    RestaurantRestaurantIdMenuRouteChildren,
+  )
+
+interface RestaurantRestaurantIdRouteChildren {
+  RestaurantRestaurantIdMenuRoute: typeof RestaurantRestaurantIdMenuRouteWithChildren
+  RestaurantRestaurantIdIndexRoute: typeof RestaurantRestaurantIdIndexRoute
+  RestaurantRestaurantIdUsersActiveRoute: typeof RestaurantRestaurantIdUsersActiveRoute
+  RestaurantRestaurantIdUsersCreateRoute: typeof RestaurantRestaurantIdUsersCreateRoute
 }
 
-const MenuRouteWithChildren = MenuRoute._addFileChildren(MenuRouteChildren)
+const RestaurantRestaurantIdRouteChildren: RestaurantRestaurantIdRouteChildren =
+  {
+    RestaurantRestaurantIdMenuRoute:
+      RestaurantRestaurantIdMenuRouteWithChildren,
+    RestaurantRestaurantIdIndexRoute: RestaurantRestaurantIdIndexRoute,
+    RestaurantRestaurantIdUsersActiveRoute:
+      RestaurantRestaurantIdUsersActiveRoute,
+    RestaurantRestaurantIdUsersCreateRoute:
+      RestaurantRestaurantIdUsersCreateRoute,
+  }
 
-interface UsersRouteChildren {
-  UsersActiveRoute: typeof UsersActiveRoute
-  UsersCreateRoute: typeof UsersCreateRoute
-}
-
-const UsersRouteChildren: UsersRouteChildren = {
-  UsersActiveRoute: UsersActiveRoute,
-  UsersCreateRoute: UsersCreateRoute,
-}
-
-const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
+const RestaurantRestaurantIdRouteWithChildren =
+  RestaurantRestaurantIdRoute._addFileChildren(
+    RestaurantRestaurantIdRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
-  MenuRoute: MenuRouteWithChildren,
-  SettingsRoute: SettingsRoute,
-  UsersRoute: UsersRouteWithChildren,
+  RestaurantRestaurantIdRoute: RestaurantRestaurantIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

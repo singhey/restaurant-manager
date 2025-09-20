@@ -23,6 +23,6 @@ function ActiveUsersPage() {
   )
 }
 
-export const Route = createFileRoute('/users/active')({
+export const Route = createFileRoute('/restaurant/$restaurantId/users/active')({
   component: ActiveUsersPage,
 })
