@@ -7,42 +7,49 @@
   - Create layout utilities for detecting auth pages and controlling sidebar visibility
   - _Requirements: 6.1, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3_
 
-- [ ] 2. Create authentication navigation components
-  - [ ] 2.1 Create UnauthenticatedNav component
+- [X] 2. Create authentication navigation components
+  - [X] 2.1 Create UnauthenticatedNav component
     - Implement component that displays "Sign In" button for unauthenticated users
     - Add navigation to `/auth/signin` when button is clicked
     - Style component to match existing Topbar design
     - _Requirements: 3.1, 3.2_
 
-  - [ ] 2.2 Create AuthenticatedNav component
+  - [X] 2.2 Create AuthenticatedNav component
     - Implement component that displays account dropdown for authenticated users
     - Create dropdown menu with "Account" and "Logout" options
     - Implement logout functionality using Better Auth client
     - Handle navigation to account page and sign-in redirect after logout
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-  - [ ] 2.3 Create AccountDropdown component
+  - [X] 2.3 Create AccountDropdown component
     - Implement dropdown menu component using existing UI components
     - Add proper accessibility attributes and keyboard navigation
     - Style dropdown to match existing design system
     - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-- [ ] 3. Enhance Topbar component with authentication state
-  - Modify Topbar to use authentication state from `useAuth` hook
+- [X] 3. Enhance Topbar component with authentication state
+
+
+
+
+  - Modify Topbar to use SignedIn and SignedOut component from better-auth-ui 
   - Conditionally render UnauthenticatedNav or AuthenticatedNav based on session
   - Ensure navigation updates immediately when authentication state changes
   - Maintain existing sidebar trigger and settings functionality
   - _Requirements: 3.1, 4.1, 4.5_
 
-- [ ] 4. Enhance authentication route components
-  - [ ] 4.1 Enhance sign-in page component
+- [X] 4. Enhance authentication route components
+  - [X] 4.1 Enhance sign-in page component
     - Add redirect logic for already authenticated users
     - Implement navigation link to registration page
     - Improve styling and layout consistency with design system
     - Add proper error handling and loading states using Better Auth UI
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 5.1, 5.2, 5.3, 5.4_
 
-  - [ ] 4.2 Enhance registration page component
+  - [X] 4.2 Enhance registration page component
+
+
+
     - Add redirect logic for already authenticated users
     - Implement navigation link to sign-in page
     - Improve styling and layout consistency with design system
@@ -50,7 +57,7 @@
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 5.1, 5.2, 5.3, 5.4_
 
 - [ ] 5. Create layout control components
-  - [ ] 5.1 Create AuthGuard component
+  - [X] 5.1 Create AuthGuard component
     - Implement component that wraps protected routes and checks authentication
     - Add loading states during session verification
     - Handle redirects for unauthenticated users to sign-in page

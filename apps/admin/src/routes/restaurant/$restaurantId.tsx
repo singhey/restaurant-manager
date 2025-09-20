@@ -1,4 +1,4 @@
-import { SignedIn } from '@daveyplate/better-auth-ui'
+import { RedirectToSignIn, SignedIn } from '@daveyplate/better-auth-ui'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/restaurant/$restaurantId')({
@@ -6,7 +6,11 @@ export const Route = createFileRoute('/restaurant/$restaurantId')({
 })
 
 function RouteComponent() {
-  return <SignedIn>
-    <Outlet />
-  </SignedIn>
+  console.log("Is protected route")
+  return <>
+    <RedirectToSignIn />
+    <SignedIn>
+      <Outlet />
+    </SignedIn>
+  </>
 }

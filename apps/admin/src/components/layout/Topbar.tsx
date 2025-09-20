@@ -1,9 +1,13 @@
 import { SidebarTrigger } from "@workspace/ui/components/sidebar"
-import { User, Settings, Search, type LucideIcon } from "lucide-react"
+import { Search } from "lucide-react"
 import { useLocation, Link } from "@tanstack/react-router"
-import { Button } from "@workspace/ui/components/button"
+// import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useState } from "react"
+import { SignedIn, SignedOut } from '@daveyplate/better-auth-ui'
+import { AuthenticatedNav } from "../auth/AuthenticatedNav"
+import { UnauthenticatedNav } from "../auth/UnauthenticatedNav"
+import { RestaurantRouteWrapper } from "@/components/conditional/RestaurantRouteWrapper"
 
 // Navigation item interface
 interface NavigationItem {
@@ -13,22 +17,22 @@ interface NavigationItem {
 }
 
 // Reusable topbar icon button component
-interface TopbarIconButtonProps {
-  icon: LucideIcon
-  label: string
-  onClick?: () => void
-}
+// interface TopbarIconButtonProps {
+//   icon: LucideIcon
+//   label: string
+//   onClick?: () => void
+// }
 
-const TopbarIconButton = ({ icon: Icon, label, onClick }: TopbarIconButtonProps) => (
-  <Button
-    className="flex h-full rounded-none w-16 items-center justify-center transition-colors cursor-pointer"
-    onClick={onClick}
-    variant={"ghost"}
-  >
-    <Icon className="h-4 w-4" />
-    <span className="sr-only">{label}</span>
-  </Button>
-)
+// const TopbarIconButton = ({ icon: Icon, label, onClick }: TopbarIconButtonProps) => (
+//   <Button
+//     className="flex h-full rounded-none w-16 items-center justify-center transition-colors cursor-pointer"
+//     onClick={onClick}
+//     variant={"ghost"}
+//   >
+//     <Icon className="h-4 w-4" />
+//     <span className="sr-only">{label}</span>
+//   </Button>
+// )
 
 // Search bar component for billing page
 const TopbarSearchBar = () => {
@@ -91,8 +95,9 @@ const TopbarNavigation = ({ items, currentPath, currentSearch }: TopbarNavigatio
       return true
     }
 
+    console.log(currentSearch)
     // If no search params and this is the first item, make it active by default
-    if (!currentSearch && index === 0) {
+    if ((!currentSearch || currentSearch === "") && index === 0) {
       return true
     }
 
@@ -206,9 +211,11 @@ export function Topbar() {
 
   return (
     <header className="flex h-16 shrink-0 items-center border-b">
+      <RestaurantRouteWrapper fallback={<div>Restaurant Free</div>}>
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
       </div>
+      </RestaurantRouteWrapper>
 
       {showSearchBar && (
         <div className="flex flex-1 items-center px-4">
@@ -220,23 +227,16 @@ export function Topbar() {
         <TopbarNavigation
           items={renderCenterContent()}
           currentPath={location.pathname}
-          currentSearch={location.search.toString()}
+          currentSearch={location.searchStr}
         />
       </div>
-
       <div className="flex h-full">
-        <div className="border-l border-border" />
-        <TopbarIconButton
-          icon={Settings}
-          label="Settings"
-          onClick={() => console.log('Settings clicked')}
-        />
-        <div className="border-l border-border" />
-        <TopbarIconButton
-          icon={User}
-          label="User menu"
-          onClick={() => console.log('User menu clicked')}
-        />
+        <SignedOut>
+          <UnauthenticatedNav />
+        </SignedOut>
+        <SignedIn>
+          <AuthenticatedNav />
+        </SignedIn>
       </div>
     </header>
   )
