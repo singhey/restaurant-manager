@@ -1,12 +1,10 @@
 import { AuthView } from '@daveyplate/better-auth-ui'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/auth/register')({
+export const Route = createFileRoute('/auth/sign-up')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>
-    <AuthView view="SIGN_UP" redirectTo='/dashboard' />
-  </div>
+  return <AuthView view="SIGN_UP" redirectTo="/dashboard" />
 }
