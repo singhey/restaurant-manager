@@ -38,12 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           ORGANIZATIONS: '/restaurant/account/restaurants'
         }
       }}
-      additionalFields={{
-        address: {
-          type: 'string',
-          label: 'Address',
-        }
-      }}
     >
       {children}
     </AuthUIProvider>
