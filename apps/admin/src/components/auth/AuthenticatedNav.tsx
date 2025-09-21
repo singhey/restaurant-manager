@@ -8,6 +8,7 @@ import {
 import { User } from "lucide-react"
 import { Link } from "@tanstack/react-router"
 import { authClient } from "../../lib/auth"
+import { RestaurantSettingsButton } from "@/components/conditional/RestaurantSettingsButton"
 
 export function AuthenticatedNav() {
   const handleLogout = async () => {
@@ -23,7 +24,7 @@ export function AuthenticatedNav() {
 
   return (
     <div className="flex h-full">
-      <div className="border-l border-border" />
+      <RestaurantSettingsButton />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

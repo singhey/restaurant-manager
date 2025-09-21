@@ -33,16 +33,21 @@
   - Add proper routing and navigation setup
   - _Requirements: 2.2, 4.2_
 
-- [ ] 5. Implement restaurant data fetching for existing organizations
+- [x] 5. Implement restaurant data fetching for existing organizations
+
+
   - Use `useFindManyRestaurant` hook to fetch restaurants linked to organizations
   - Filter restaurants by organization IDs from user memberships
   - Handle loading and error states for restaurant data
   - _Requirements: 1.3, 3.1_
 
+
 - [ ] 6. Create restaurant selection interface component
   - Build `RestaurantSelectionList` component to display available restaurants
   - Implement restaurant selection functionality with navigation
   - Add restaurant details display (name, organization)
+
+
   - _Requirements: 3.1, 3.2, 3.3_
 
 - [ ] 7. Implement conditional rendering for restaurant scenarios

@@ -1,4 +1,5 @@
-import { AuthView } from '@daveyplate/better-auth-ui'
+import { AuthView, SignedIn } from '@daveyplate/better-auth-ui'
+import { Navigate } from '@tanstack/react-router'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/auth/sign-up')({
@@ -6,5 +7,10 @@ export const Route = createFileRoute('/auth/sign-up')({
 })
 
 function RouteComponent() {
-  return <AuthView view="SIGN_UP" redirectTo="/restaurant/selector" />
+  return  <>
+    <SignedIn>
+      <Navigate to="/restaurant/selector" replace={true}/>
+    </SignedIn> 
+    <AuthView view="SIGN_UP" redirectTo="/restaurant/selector" />
+  </>
 }

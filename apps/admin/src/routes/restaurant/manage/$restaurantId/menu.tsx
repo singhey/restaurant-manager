@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/restaurant/$restaurantId/menu')({
+export const Route = createFileRoute('/restaurant/manage/$restaurantId/menu')({
   component: MenuLayout,
 })
 

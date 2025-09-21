@@ -1,4 +1,4 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet, useNavigate } from '@tanstack/react-router'
 import {
   SidebarProvider,
   SidebarInset,
@@ -12,8 +12,12 @@ import DataProvider from '../lib/DataProvider'
 import { Topbar } from '../components/layout/Topbar'
 import { NavigationMenu } from '../components/layout/NavigationMenu'
 import { RestaurantRouteWrapper } from '../components/conditional/RestaurantRouteWrapper'
+import { OrganizationSwitcher } from '@daveyplate/better-auth-ui'
 
 const RootLayout = () => {
+
+  const navigate = useNavigate()
+
   return (
     <DataProvider>
       <SidebarProvider>
@@ -21,7 +25,11 @@ const RootLayout = () => {
           <Sidebar>
             <div className='bg-background h-full'>
             <SidebarHeader className='border-b h-16 justify-center'>
-              <div className="flex items-center gap-2 px-2">
+              <OrganizationSwitcher hidePersonal={true}
+                className='bg-primary-foreground hover:bg-primary-foreground text-secondary-foreground' 
+                onSetActive={organization => organization && navigate({to: `/restaurant/${organization.slug}` as any})}
+                />
+              {/* <div className="flex items-center gap-2 px-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <span className="text-sm font-bold">A</span>
                 </div>
@@ -29,7 +37,7 @@ const RootLayout = () => {
                   <span className="text-sm font-semibold">Admin</span>
                   <span className="text-xs text-sidebar-foreground/70">Dashboard</span>
                 </div>
-              </div>
+              </div> */}
             </SidebarHeader>
             <SidebarContent>
               <SidebarGroup>

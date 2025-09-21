@@ -1,7 +1,7 @@
 import { SidebarTrigger } from "@workspace/ui/components/sidebar"
-import { Search } from "lucide-react"
+import { Search, type LucideIcon } from "lucide-react"
 import { useLocation, Link } from "@tanstack/react-router"
-// import { Button } from "@workspace/ui/components/button"
+import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useState } from "react"
 import { SignedIn, SignedOut } from '@daveyplate/better-auth-ui'
@@ -17,22 +17,22 @@ interface NavigationItem {
 }
 
 // Reusable topbar icon button component
-// interface TopbarIconButtonProps {
-//   icon: LucideIcon
-//   label: string
-//   onClick?: () => void
-// }
+interface TopbarIconButtonProps {
+  icon: LucideIcon
+  label: string
+  onClick?: () => void
+}
 
-// const TopbarIconButton = ({ icon: Icon, label, onClick }: TopbarIconButtonProps) => (
-//   <Button
-//     className="flex h-full rounded-none w-16 items-center justify-center transition-colors cursor-pointer"
-//     onClick={onClick}
-//     variant={"ghost"}
-//   >
-//     <Icon className="h-4 w-4" />
-//     <span className="sr-only">{label}</span>
-//   </Button>
-// )
+export const TopbarIconButton = ({ icon: Icon, label, onClick }: TopbarIconButtonProps) => (
+  <Button
+    className="flex h-full rounded-none w-16 items-center justify-center transition-colors cursor-pointer border-l"
+    onClick={onClick}
+    variant={"ghost"}
+  >
+    <Icon className="h-4 w-4" />
+    <span className="sr-only">{label}</span>
+  </Button>
+)
 
 // Search bar component for billing page
 const TopbarSearchBar = () => {
@@ -60,7 +60,7 @@ interface TopbarTextButtonProps {
   onClick?: () => void
 }
 
-const TopbarTextButton = ({ label, href, isActive, onClick }: TopbarTextButtonProps) => (
+export const TopbarTextButton = ({ label, href, isActive, onClick }: TopbarTextButtonProps) => (
   <Link
     to={href}
     className={`relative flex h-full items-center justify-center px-6 text-sm font-medium hover:bg-accent transition-all duration-600 ease-in-out cursor-pointer ${isActive
