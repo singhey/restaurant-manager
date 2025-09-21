@@ -29,10 +29,18 @@ MenuEditPage
 - **Frontend Framework**: React with TypeScript
 - **Routing**: TanStack Router (existing pattern)
 - **State Management**: TanStack Query with ZenStack hooks
-- **UI Components**: Workspace UI components (Sidebar, Button, Input, etc.)
-- **Drag & Drop**: @dnd-kit/core, @dnd-kit/sortable
+- **UI Components**: Workspace UI components (Sidebar, Button, Input, Select, etc.)
+- **Drag & Drop**: @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities
 - **Styling**: Tailwind CSS (existing pattern)
 - **Backend Integration**: ZenStack hooks with tRPC
+
+### Required Dependencies
+
+The following packages need to be installed for the drag-and-drop functionality:
+
+```bash
+pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
+```
 
 ### Data Flow
 
@@ -70,6 +78,8 @@ interface MenuStructurePanelProps {
 - Handles drag-and-drop reordering
 - Manages expand/collapse states
 - Provides add/delete functionality
+- Toggle between manual ordering and alphabetical sorting
+- Persists sorting preference across sessions
 
 ### CategoryItem Component
 
@@ -182,7 +192,7 @@ const { data: categories } = useFindManyCategory({
           select: { menuItems: true }
         }
       },
-      orderBy: { sortOrder: 'asc' }
+      orderBy: isAlphabeticalSort ? { name: 'asc' } : { sortOrder: 'asc' }
     },
     _count: {
       select: { 
@@ -191,7 +201,7 @@ const { data: categories } = useFindManyCategory({
       }
     }
   },
-  orderBy: { sortOrder: 'asc' }
+  orderBy: isAlphabeticalSort ? { name: 'asc' } : { sortOrder: 'asc' }
 });
 ```
 
@@ -263,6 +273,82 @@ Implement error boundaries at the page level to catch and display meaningful err
 - Cross-browser drag-and-drop compatibility
 - Mobile responsiveness testing
 
+## Sorting Implementation
+
+### Sorting Options
+
+The menu editor provides two sorting modes:
+
+**Manual Ordering**:
+- Uses the `sortOrder` field from the database
+- Enables drag-and-drop reordering functionality
+- Allows custom arrangement of categories and subcategories
+- Default mode for new users
+
+**Alphabetical Sorting**:
+- Sorts categories and subcategories lexicographically by name
+- Disables drag-and-drop functionality when active
+- Provides consistent alphabetical organization
+- Useful for large menus with many categories
+
+### Sorting State Management
+
+```typescript
+interface SortingState {
+  isAlphabeticalSort: boolean;
+  setSortingMode: (alphabetical: boolean) => void;
+}
+
+// Custom hook for sorting preference
+const useSortingPreference = () => {
+  const [isAlphabeticalSort, setIsAlphabeticalSort] = useState(() => {
+    return localStorage.getItem('menu-editor-sort-mode') === 'alphabetical';
+  });
+
+  const setSortingMode = (alphabetical: boolean) => {
+    setIsAlphabeticalSort(alphabetical);
+    localStorage.setItem('menu-editor-sort-mode', alphabetical ? 'alphabetical' : 'manual');
+  };
+
+  return { isAlphabeticalSort, setSortingMode };
+};
+```
+
+### Sorting Toggle Component
+
+```typescript
+interface SortingToggleProps {
+  isAlphabeticalSort: boolean;
+  onToggle: (alphabetical: boolean) => void;
+  disabled?: boolean;
+}
+
+const SortingToggle: React.FC<SortingToggleProps> = ({
+  isAlphabeticalSort,
+  onToggle,
+  disabled = false
+}) => {
+  return (
+    <div className="flex items-center gap-2">
+      <Label htmlFor="sort-toggle">Sort:</Label>
+      <Select
+        value={isAlphabeticalSort ? 'alphabetical' : 'manual'}
+        onValueChange={(value) => onToggle(value === 'alphabetical')}
+        disabled={disabled}
+      >
+        <SelectTrigger className="w-32">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="manual">Manual</SelectItem>
+          <SelectItem value="alphabetical">A-Z</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
+```
+
 ## Drag and Drop Implementation
 
 ### Library Choice
@@ -275,15 +361,17 @@ Use `@dnd-kit` for drag-and-drop functionality due to:
 
 ### Drag Contexts
 
-**Category Reordering**:
+**Category Reordering** (Manual Mode Only):
 - Allow dragging categories to reorder within the same level
 - Update `sortOrder` field on drop
 - Provide visual feedback during drag
+- Disabled when alphabetical sorting is active
 
-**Subcategory Reordering**:
+**Subcategory Reordering** (Manual Mode Only):
 - Allow dragging subcategories within the same category
 - Allow dragging subcategories between different categories
 - Update both `sortOrder` and `parentId` on cross-category moves
+- Disabled when alphabetical sorting is active
 
 ### Visual Feedback
 

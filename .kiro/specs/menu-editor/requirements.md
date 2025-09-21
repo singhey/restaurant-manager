@@ -63,6 +63,19 @@ The menu editor feature provides restaurant administrators with a comprehensive 
 4. WHEN the user drops a subcategory in a new position THEN the system SHALL update the subcategory order and persist the changes
 5. WHEN drag and drop operations occur THEN the system SHALL provide visual feedback during the drag operation
 
+### Requirement 8
+
+**User Story:** As a restaurant administrator, I want to choose between manual ordering and alphabetical sorting for categories and subcategories, so that I can organize my menu structure in the way that works best for my business.
+
+#### Acceptance Criteria
+
+1. WHEN the user accesses the menu editor THEN the system SHALL provide a toggle option between "Manual Order" and "Alphabetical Sort"
+2. WHEN "Alphabetical Sort" is selected THEN the system SHALL display all categories and subcategories in lexicographic (alphabetical) order by name
+3. WHEN "Manual Order" is selected THEN the system SHALL display categories and subcategories according to their sortOrder field
+4. WHEN "Alphabetical Sort" is active THEN the system SHALL disable drag-and-drop reordering functionality
+5. WHEN "Manual Order" is active THEN the system SHALL enable drag-and-drop reordering functionality
+6. WHEN the sorting preference is changed THEN the system SHALL persist the user's choice and maintain it across sessions
+
 ### Requirement 6
 
 **User Story:** As a restaurant administrator, I want to expand and collapse categories, so that I can focus on specific sections of the menu structure.

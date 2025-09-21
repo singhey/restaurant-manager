@@ -426,10 +426,6 @@ const metadata = {
                     name: "id",
                     type: "String",
                     isId: true,
-                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
-                }, organizationId: {
-                    name: "organizationId",
-                    type: "String",
                     isForeignKey: true,
                     relationField: 'organization',
                 }, organization: {
@@ -439,7 +435,7 @@ const metadata = {
                     backLink: 'restaurant',
                     isRelationOwner: true,
                     onDeleteAction: 'Cascade',
-                    foreignKeyMapping: { "id": "organizationId" },
+                    foreignKeyMapping: { "slug": "id" },
                 }, name: {
                     name: "name",
                     type: "String",
@@ -474,7 +470,7 @@ const metadata = {
                 }, currency: {
                     name: "currency",
                     type: "String",
-                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": "USD" }] }],
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": "INR" }] }],
                 }, isActive: {
                     name: "isActive",
                     type: "Boolean",
@@ -526,9 +522,6 @@ const metadata = {
                 id: {
                     name: "id",
                     fields: ["id"]
-                }, organizationId: {
-                    name: "organizationId",
-                    fields: ["organizationId"]
                 },
             },
         },
