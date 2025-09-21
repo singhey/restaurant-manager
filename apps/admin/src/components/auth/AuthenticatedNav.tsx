@@ -37,7 +37,7 @@ export function AuthenticatedNav() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link to="/auth/sign-in">
+            <Link to="/restaurant/account/settings">
               Account
             </Link>
           </DropdownMenuItem>

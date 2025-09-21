@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@tanstack/react-router'
+import { Link, useParams } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
 import {
   SidebarMenu,
@@ -22,8 +22,10 @@ interface NavigationMenuItemProps {
 }
 
 function NavigationMenuItem({ item }: NavigationMenuItemProps) {
-  const { isActive, hasActiveChild, shouldHighlight, shouldExpand } = useNavigationItemState(item)
-  
+  // console.log(item)
+  const { isActive, shouldHighlight, shouldExpand } = useNavigationItemState(item)
+  const {restaurantId} = useParams({from: `/restaurant/manage/$restaurantId`})
+
   // Manage expansion state with proper active child handling
   const [isExpanded, setIsExpanded] = React.useState(shouldExpand)
 
@@ -61,6 +63,7 @@ function NavigationMenuItem({ item }: NavigationMenuItemProps) {
           <Link
             to={item.href}
             className="flex items-center gap-2 w-full"
+            params={{restaurantId}}
             onClick={hasChildren ? handleToggle : undefined}
           >
             {item.icon && (
@@ -140,6 +143,9 @@ interface NavigationMenuSubItemProps {
 
 function NavigationMenuSubItem({ item }: NavigationMenuSubItemProps) {
   const { isActive, hasActiveChild, shouldHighlight } = useNavigationItemState(item)
+  const {restaurantId} = useParams({from: `/restaurant/manage/$restaurantId`})
+
+  console.log(restaurantId)
 
   // Handle nested children if they exist
   const [isExpanded, setIsExpanded] = React.useState(hasActiveChild)
@@ -172,7 +178,7 @@ function NavigationMenuSubItem({ item }: NavigationMenuSubItemProps) {
         data-active={shouldHighlight}
       >
         {!hasChildren ? (
-          <Link to={item.href} className="flex items-center gap-2">
+          <Link to={item.href} params={{restaurantId}} className="flex items-center gap-2">
             {item.icon && (
               <item.icon 
                 className={`h-4 w-4 ${

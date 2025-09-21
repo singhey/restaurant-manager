@@ -17,7 +17,9 @@ import { Route as RestaurantCreateRouteImport } from './routes/restaurant/create
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as RestaurantManageRestaurantIdRouteImport } from './routes/restaurant/manage/$restaurantId'
-import { Route as RestaurantAccountMeRouteImport } from './routes/restaurant/account/me'
+import { Route as RestaurantAccountSettingsRouteImport } from './routes/restaurant/account/settings'
+import { Route as RestaurantAccountSecurityRouteImport } from './routes/restaurant/account/security'
+import { Route as RestaurantAccountRestaurantsRouteImport } from './routes/restaurant/account/restaurants'
 import { Route as RestaurantManageRestaurantIdIndexRouteImport } from './routes/restaurant/manage/$restaurantId/index'
 import { Route as RestaurantManageRestaurantIdMenuRouteImport } from './routes/restaurant/manage/$restaurantId/menu'
 import { Route as RestaurantManageRestaurantIdUsersCreateRouteImport } from './routes/restaurant/manage/$restaurantId/users/create'
@@ -65,11 +67,24 @@ const RestaurantManageRestaurantIdRoute =
     path: '/manage/$restaurantId',
     getParentRoute: () => RestaurantRoute,
   } as any)
-const RestaurantAccountMeRoute = RestaurantAccountMeRouteImport.update({
-  id: '/account/me',
-  path: '/account/me',
-  getParentRoute: () => RestaurantRoute,
-} as any)
+const RestaurantAccountSettingsRoute =
+  RestaurantAccountSettingsRouteImport.update({
+    id: '/account/settings',
+    path: '/account/settings',
+    getParentRoute: () => RestaurantRoute,
+  } as any)
+const RestaurantAccountSecurityRoute =
+  RestaurantAccountSecurityRouteImport.update({
+    id: '/account/security',
+    path: '/account/security',
+    getParentRoute: () => RestaurantRoute,
+  } as any)
+const RestaurantAccountRestaurantsRoute =
+  RestaurantAccountRestaurantsRouteImport.update({
+    id: '/account/restaurants',
+    path: '/account/restaurants',
+    getParentRoute: () => RestaurantRoute,
+  } as any)
 const RestaurantManageRestaurantIdIndexRoute =
   RestaurantManageRestaurantIdIndexRouteImport.update({
     id: '/',
@@ -109,7 +124,9 @@ export interface FileRoutesByFullPath {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/restaurant/create': typeof RestaurantCreateRoute
   '/restaurant/selector': typeof RestaurantSelectorRoute
-  '/restaurant/account/me': typeof RestaurantAccountMeRoute
+  '/restaurant/account/restaurants': typeof RestaurantAccountRestaurantsRoute
+  '/restaurant/account/security': typeof RestaurantAccountSecurityRoute
+  '/restaurant/account/settings': typeof RestaurantAccountSettingsRoute
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdRouteWithChildren
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
@@ -125,7 +142,9 @@ export interface FileRoutesByTo {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/restaurant/create': typeof RestaurantCreateRoute
   '/restaurant/selector': typeof RestaurantSelectorRoute
-  '/restaurant/account/me': typeof RestaurantAccountMeRoute
+  '/restaurant/account/restaurants': typeof RestaurantAccountRestaurantsRoute
+  '/restaurant/account/security': typeof RestaurantAccountSecurityRoute
+  '/restaurant/account/settings': typeof RestaurantAccountSettingsRoute
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
@@ -141,7 +160,9 @@ export interface FileRoutesById {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/restaurant/create': typeof RestaurantCreateRoute
   '/restaurant/selector': typeof RestaurantSelectorRoute
-  '/restaurant/account/me': typeof RestaurantAccountMeRoute
+  '/restaurant/account/restaurants': typeof RestaurantAccountRestaurantsRoute
+  '/restaurant/account/security': typeof RestaurantAccountSecurityRoute
+  '/restaurant/account/settings': typeof RestaurantAccountSettingsRoute
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdRouteWithChildren
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
@@ -159,7 +180,9 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/restaurant/create'
     | '/restaurant/selector'
-    | '/restaurant/account/me'
+    | '/restaurant/account/restaurants'
+    | '/restaurant/account/security'
+    | '/restaurant/account/settings'
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
@@ -175,7 +198,9 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/restaurant/create'
     | '/restaurant/selector'
-    | '/restaurant/account/me'
+    | '/restaurant/account/restaurants'
+    | '/restaurant/account/security'
+    | '/restaurant/account/settings'
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu/edit'
@@ -190,7 +215,9 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/restaurant/create'
     | '/restaurant/selector'
-    | '/restaurant/account/me'
+    | '/restaurant/account/restaurants'
+    | '/restaurant/account/security'
+    | '/restaurant/account/settings'
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
@@ -263,11 +290,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RestaurantManageRestaurantIdRouteImport
       parentRoute: typeof RestaurantRoute
     }
-    '/restaurant/account/me': {
-      id: '/restaurant/account/me'
-      path: '/account/me'
-      fullPath: '/restaurant/account/me'
-      preLoaderRoute: typeof RestaurantAccountMeRouteImport
+    '/restaurant/account/settings': {
+      id: '/restaurant/account/settings'
+      path: '/account/settings'
+      fullPath: '/restaurant/account/settings'
+      preLoaderRoute: typeof RestaurantAccountSettingsRouteImport
+      parentRoute: typeof RestaurantRoute
+    }
+    '/restaurant/account/security': {
+      id: '/restaurant/account/security'
+      path: '/account/security'
+      fullPath: '/restaurant/account/security'
+      preLoaderRoute: typeof RestaurantAccountSecurityRouteImport
+      parentRoute: typeof RestaurantRoute
+    }
+    '/restaurant/account/restaurants': {
+      id: '/restaurant/account/restaurants'
+      path: '/account/restaurants'
+      fullPath: '/restaurant/account/restaurants'
+      preLoaderRoute: typeof RestaurantAccountRestaurantsRouteImport
       parentRoute: typeof RestaurantRoute
     }
     '/restaurant/manage/$restaurantId/': {
@@ -362,14 +403,18 @@ const RestaurantManageRestaurantIdRouteWithChildren =
 interface RestaurantRouteChildren {
   RestaurantCreateRoute: typeof RestaurantCreateRoute
   RestaurantSelectorRoute: typeof RestaurantSelectorRoute
-  RestaurantAccountMeRoute: typeof RestaurantAccountMeRoute
+  RestaurantAccountRestaurantsRoute: typeof RestaurantAccountRestaurantsRoute
+  RestaurantAccountSecurityRoute: typeof RestaurantAccountSecurityRoute
+  RestaurantAccountSettingsRoute: typeof RestaurantAccountSettingsRoute
   RestaurantManageRestaurantIdRoute: typeof RestaurantManageRestaurantIdRouteWithChildren
 }
 
 const RestaurantRouteChildren: RestaurantRouteChildren = {
   RestaurantCreateRoute: RestaurantCreateRoute,
   RestaurantSelectorRoute: RestaurantSelectorRoute,
-  RestaurantAccountMeRoute: RestaurantAccountMeRoute,
+  RestaurantAccountRestaurantsRoute: RestaurantAccountRestaurantsRoute,
+  RestaurantAccountSecurityRoute: RestaurantAccountSecurityRoute,
+  RestaurantAccountSettingsRoute: RestaurantAccountSettingsRoute,
   RestaurantManageRestaurantIdRoute:
     RestaurantManageRestaurantIdRouteWithChildren,
 }

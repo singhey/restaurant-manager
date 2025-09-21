@@ -63,7 +63,7 @@ function RouteComponent() {
   // Restaurants are already fetched with organization data included
 
   const handleRestaurantSelect = (id: string) => {
-    navigate({ to: `/restaurant/${id}` })
+    navigate({ to: `/restaurant/manage/${id}` })
   }
 
   const handleAddRestaurant = () => {

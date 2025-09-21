@@ -20,6 +20,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       replace={to => router.navigate({replace: true, to})}
       onSessionChange={() => window.location.reload()}
       Link={ModifiedLink}
+      viewPaths={{
+        SIGN_IN: '/auth/sign-in',
+        SIGN_UP: '/auth/sign-out'
+      }}
+      organization={{
+        basePath: '/',
+        viewPaths: {
+          SETTINGS: '/restaurant/selector'
+        }
+      }}
+      account={{
+        basePath: '/',
+        viewPaths: {
+          SETTINGS: '/restaurant/account/settings',
+          SECURITY: '/restaurant/account/security',
+          ORGANIZATIONS: '/restaurant/account/restaurants'
+        }
+      }}
+      additionalFields={{
+        address: {
+          type: 'string',
+          label: 'Address',
+        }
+      }}
     >
       {children}
     </AuthUIProvider>

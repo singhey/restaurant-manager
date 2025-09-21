@@ -11,8 +11,8 @@ import {
 import DataProvider from '../lib/DataProvider'
 import { Topbar } from '../components/layout/Topbar'
 import { NavigationMenu } from '../components/layout/NavigationMenu'
-import { RestaurantRouteWrapper } from '../components/conditional/RestaurantRouteWrapper'
 import { OrganizationSwitcher } from '@daveyplate/better-auth-ui'
+import { RenderWhenPathMatches } from '@/components/conditional/RenderWhenPathMatches'
 
 const RootLayout = () => {
 
@@ -21,7 +21,7 @@ const RootLayout = () => {
   return (
     <DataProvider>
       <SidebarProvider>
-        <RestaurantRouteWrapper>
+        <RenderWhenPathMatches paramName='restaurantId'>
           <Sidebar>
             <div className='bg-background h-full'>
             <SidebarHeader className='border-b h-16 justify-center'>
@@ -48,7 +48,7 @@ const RootLayout = () => {
             </SidebarContent>
             </div>
           </Sidebar>
-        </RestaurantRouteWrapper>
+        </RenderWhenPathMatches>
         <SidebarInset>
           <Topbar />
           <div className="flex flex-1 flex-col gap-4 p-4">

@@ -26,73 +26,73 @@ export const navigationConfig: NavigationConfig = {
     {
       id: 'dashboard',
       label: 'Dashboard',
-      href: '/restaurant/$restaurantId',
+      href: '/restaurant/manage/$restaurantId',
       icon: Home
     },
     {
       id: 'bill-menu',
       label: 'Bill Menu',
-      href: '/restaurant/$restaurantId/menu/billing',
+      href: '/restaurant/manage/$restaurantId/menu/billing',
       icon: Receipt
     },
     {
       id: 'live-orders',
       label: 'Live Orders',
-      href: '/restaurant/$restaurantId/orders/live',
+      href: '/restaurant/manage/$restaurantId/orders/live',
       icon: ShoppingCart
     },
     {
       id: 'kitchen-display',
       label: 'Kitchen Display System',
-      href: '/restaurant/$restaurantId/orders/kitchen',
+      href: '/restaurant/manage/$restaurantId/orders/kitchen',
       icon: ChefHat
     },
     {
       id: 'outlet-history',
       label: 'Outlet Order History',
-      href: '/restaurant/$restaurantId/orders/outlet-history',
+      href: '/restaurant/manage/$restaurantId/orders/outlet-history',
       icon: History
     },
     {
       id: 'online-history',
       label: 'Online Order History',
-      href: '/restaurant/$restaurantId/orders/online-history',
+      href: '/restaurant/manage/$restaurantId/orders/online-history',
       icon: Globe
     },
     {
       id: 'customers',
       label: 'Customers',
-      href: '/restaurant/$restaurantId/customers',
+      href: '/restaurant/manage/$restaurantId/customers',
       icon: Users
     },
     {
       id: 'management',
       label: 'Management',
-      href: '/restaurant/$restaurantId/management',
+      href: '/restaurant/manage/$restaurantId/management',
       icon: Edit3,
       children: [
         {
           id: 'edit-menu',
           label: 'Edit Menu',
-          href: '/restaurant/$restaurantId/menu/edit',
+          href: '/restaurant/manage/$restaurantId/menu/edit',
           icon: Edit3
         },
         {
           id: 'edit-addons',
           label: 'Edit Addons',
-          href: '/restaurant/$restaurantId/menu/addons',
+          href: '/restaurant/manage/$restaurantId/menu/addons',
           icon: Plus
         },
         {
           id: 'edit-vouchers',
           label: 'Edit Vouchers',
-          href: '/restaurant/$restaurantId/menu/vouchers',
+          href: '/restaurant/manage/$restaurantId/menu/vouchers',
           icon: Gift
         },
         {
           id: 'add-offers',
           label: 'Add Offers',
-          href: '/restaurant/$restaurantId/menu/offers',
+          href: '/restaurant/manage/$restaurantId/menu/offers',
           icon: Tag
         }
       ]
@@ -100,19 +100,19 @@ export const navigationConfig: NavigationConfig = {
     {
       id: 'users',
       label: 'Users',
-      href: '/restaurant/$restaurantId/users',
+      href: '/restaurant/manage/$restaurantId/users',
       icon: Users,
       children: [
         {
           id: 'users-active',
           label: 'Active Users',
-          href: '/restaurant/$restaurantId/users/active',
+          href: '/restaurant/manage/$restaurantId/users/active',
           icon: Eye
         },
         {
           id: 'users-create',
           label: 'Create User',
-          href: '/restaurant/$restaurantId/users/create',
+          href: '/restaurant/manage/$restaurantId/users/create',
           icon: Plus
         }
       ]
@@ -120,19 +120,19 @@ export const navigationConfig: NavigationConfig = {
     {
       id: 'account',
       label: 'Account',
-      href: '/restaurant/$restaurantId/account',
+      href: '/restaurant/manage/$restaurantId/account',
       icon: User
     },
     {
       id: 'store-details',
       label: 'Store Details',
-      href: '/restaurant/$restaurantId/store/details',
+      href: '/restaurant/manage/$restaurantId/store/details',
       icon: Store
     },
     {
       id: 'all-stores',
       label: 'All Stores',
-      href: '/restaurant/$restaurantId/stores',
+      href: '/restaurant/manage/$restaurantId/stores',
       icon: Building2
     }
   ]

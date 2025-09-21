@@ -1,5 +1,5 @@
 import { SidebarTrigger } from "@workspace/ui/components/sidebar"
-import { Search, type LucideIcon } from "lucide-react"
+import { ArrowLeft, Search, type LucideIcon } from "lucide-react"
 import { useLocation, Link } from "@tanstack/react-router"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
@@ -7,7 +7,7 @@ import { useState } from "react"
 import { SignedIn, SignedOut } from '@daveyplate/better-auth-ui'
 import { AuthenticatedNav } from "../auth/AuthenticatedNav"
 import { UnauthenticatedNav } from "../auth/UnauthenticatedNav"
-import { RestaurantRouteWrapper } from "@/components/conditional/RestaurantRouteWrapper"
+import { RenderWhenPathMatches } from "../conditional/RenderWhenPathMatches"
 
 // Navigation item interface
 interface NavigationItem {
@@ -211,11 +211,19 @@ export function Topbar() {
 
   return (
     <header className="flex h-16 shrink-0 items-center border-b">
-      <RestaurantRouteWrapper fallback={<div>Restaurant Free</div>}>
-      <div className="flex items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1" />
-      </div>
-      </RestaurantRouteWrapper>
+      <RenderWhenPathMatches paramName="restaurantId">
+        <div className="flex items-center gap-2 px-4">
+          <SidebarTrigger className="-ml-1" />
+        </div>
+      </RenderWhenPathMatches>
+      <RenderWhenPathMatches pathname={['/restaurant/account/settings']}>
+        <Button asChild variant={"ghost"} className="pl-4">
+          <Link to={`/restaurant/selector`}>
+            <ArrowLeft />
+            Manage Restaurants
+          </Link>
+        </Button>
+      </RenderWhenPathMatches>
 
       {showSearchBar && (
         <div className="flex flex-1 items-center px-4">

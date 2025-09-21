@@ -4,7 +4,7 @@ export const Route = createFileRoute('/')({
   beforeLoad: () => {
     // Redirect to a default restaurant - you can modify this logic
     throw redirect({
-      to: '/restaurant/$restaurantId',
+      to: '/restaurant/manage/$restaurantId',
       params: { restaurantId: 'default' }
     })
   },
