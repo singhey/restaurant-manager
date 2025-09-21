@@ -182,6 +182,18 @@ const getNavigationItems = (pathname: string): NavigationItem[] => {
   }
 
   if (pathname.includes('/store') || pathname.includes('/stores')) {
+    // Extract restaurantId from pathname for store management routes
+    const restaurantIdMatch = pathname.match(/\/restaurant\/manage\/([^\/]+)\/store/)
+    if (restaurantIdMatch) {
+      const restaurantId = restaurantIdMatch[1]
+      return [
+        { key: 'details', label: 'details', href: `/restaurant/manage/${restaurantId}/store/details` },
+        { key: 'seo', label: 'seo', href: `/restaurant/manage/${restaurantId}/store/seo` },
+        { key: 'delivery', label: 'delivery', href: `/restaurant/manage/${restaurantId}/store/delivery` },
+        { key: 'location', label: 'location', href: `/restaurant/manage/${restaurantId}/store/location` }
+      ]
+    }
+    
     return [
       { key: 'details', label: 'details', href: '/store/details' },
       { key: 'settings', label: 'settings', href: '/store/settings' },

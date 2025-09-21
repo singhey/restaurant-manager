@@ -73,14 +73,6 @@ export function AddCategoryForm({ }: AddCategoryFormProps) {
 
       {/* Form Actions */}
       <div className="flex justify-end gap-3 pt-4">
-        {/* <Button
-          type="button"
-          variant="outline"
-          onClick={handleCancel}
-          disabled={isSubmitting}
-        >
-          Cancel
-        </Button> */}
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isFormSubmitting]) => (

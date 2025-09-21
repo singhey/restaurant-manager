@@ -22,6 +22,11 @@ import { Route as RestaurantAccountSecurityRouteImport } from './routes/restaura
 import { Route as RestaurantAccountRestaurantsRouteImport } from './routes/restaurant/account/restaurants'
 import { Route as RestaurantManageRestaurantIdIndexRouteImport } from './routes/restaurant/manage/$restaurantId/index'
 import { Route as RestaurantManageRestaurantIdMenuRouteImport } from './routes/restaurant/manage/$restaurantId/menu'
+import { Route as RestaurantManageRestaurantIdStoreIndexRouteImport } from './routes/restaurant/manage/$restaurantId/store/index'
+import { Route as RestaurantManageRestaurantIdStoreSeoRouteImport } from './routes/restaurant/manage/$restaurantId/store/seo'
+import { Route as RestaurantManageRestaurantIdStoreLocationRouteImport } from './routes/restaurant/manage/$restaurantId/store/location'
+import { Route as RestaurantManageRestaurantIdStoreDetailsRouteImport } from './routes/restaurant/manage/$restaurantId/store/details'
+import { Route as RestaurantManageRestaurantIdStoreDeliveryRouteImport } from './routes/restaurant/manage/$restaurantId/store/delivery'
 import { Route as RestaurantManageRestaurantIdMenuEditRouteImport } from './routes/restaurant/manage/$restaurantId/menu/edit'
 
 const RestaurantRoute = RestaurantRouteImport.update({
@@ -95,6 +100,36 @@ const RestaurantManageRestaurantIdMenuRoute =
     path: '/menu',
     getParentRoute: () => RestaurantManageRestaurantIdRoute,
   } as any)
+const RestaurantManageRestaurantIdStoreIndexRoute =
+  RestaurantManageRestaurantIdStoreIndexRouteImport.update({
+    id: '/store/',
+    path: '/store/',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
+const RestaurantManageRestaurantIdStoreSeoRoute =
+  RestaurantManageRestaurantIdStoreSeoRouteImport.update({
+    id: '/store/seo',
+    path: '/store/seo',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
+const RestaurantManageRestaurantIdStoreLocationRoute =
+  RestaurantManageRestaurantIdStoreLocationRouteImport.update({
+    id: '/store/location',
+    path: '/store/location',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
+const RestaurantManageRestaurantIdStoreDetailsRoute =
+  RestaurantManageRestaurantIdStoreDetailsRouteImport.update({
+    id: '/store/details',
+    path: '/store/details',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
+const RestaurantManageRestaurantIdStoreDeliveryRoute =
+  RestaurantManageRestaurantIdStoreDeliveryRouteImport.update({
+    id: '/store/delivery',
+    path: '/store/delivery',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
 const RestaurantManageRestaurantIdMenuEditRoute =
   RestaurantManageRestaurantIdMenuEditRouteImport.update({
     id: '/edit',
@@ -117,6 +152,11 @@ export interface FileRoutesByFullPath {
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
+  '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
+  '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
+  '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
+  '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
+  '/restaurant/manage/$restaurantId/store': typeof RestaurantManageRestaurantIdStoreIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -132,6 +172,11 @@ export interface FileRoutesByTo {
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
+  '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
+  '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
+  '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
+  '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
+  '/restaurant/manage/$restaurantId/store': typeof RestaurantManageRestaurantIdStoreIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,6 +194,11 @@ export interface FileRoutesById {
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
+  '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
+  '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
+  '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
+  '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
+  '/restaurant/manage/$restaurantId/store/': typeof RestaurantManageRestaurantIdStoreIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,6 +217,11 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
     | '/restaurant/manage/$restaurantId/menu/edit'
+    | '/restaurant/manage/$restaurantId/store/delivery'
+    | '/restaurant/manage/$restaurantId/store/details'
+    | '/restaurant/manage/$restaurantId/store/location'
+    | '/restaurant/manage/$restaurantId/store/seo'
+    | '/restaurant/manage/$restaurantId/store'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -182,6 +237,11 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu/edit'
+    | '/restaurant/manage/$restaurantId/store/delivery'
+    | '/restaurant/manage/$restaurantId/store/details'
+    | '/restaurant/manage/$restaurantId/store/location'
+    | '/restaurant/manage/$restaurantId/store/seo'
+    | '/restaurant/manage/$restaurantId/store'
   id:
     | '__root__'
     | '/'
@@ -198,6 +258,11 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
     | '/restaurant/manage/$restaurantId/menu/edit'
+    | '/restaurant/manage/$restaurantId/store/delivery'
+    | '/restaurant/manage/$restaurantId/store/details'
+    | '/restaurant/manage/$restaurantId/store/location'
+    | '/restaurant/manage/$restaurantId/store/seo'
+    | '/restaurant/manage/$restaurantId/store/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -299,6 +364,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RestaurantManageRestaurantIdMenuRouteImport
       parentRoute: typeof RestaurantManageRestaurantIdRoute
     }
+    '/restaurant/manage/$restaurantId/store/': {
+      id: '/restaurant/manage/$restaurantId/store/'
+      path: '/store'
+      fullPath: '/restaurant/manage/$restaurantId/store'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdStoreIndexRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
+    '/restaurant/manage/$restaurantId/store/seo': {
+      id: '/restaurant/manage/$restaurantId/store/seo'
+      path: '/store/seo'
+      fullPath: '/restaurant/manage/$restaurantId/store/seo'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdStoreSeoRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
+    '/restaurant/manage/$restaurantId/store/location': {
+      id: '/restaurant/manage/$restaurantId/store/location'
+      path: '/store/location'
+      fullPath: '/restaurant/manage/$restaurantId/store/location'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdStoreLocationRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
+    '/restaurant/manage/$restaurantId/store/details': {
+      id: '/restaurant/manage/$restaurantId/store/details'
+      path: '/store/details'
+      fullPath: '/restaurant/manage/$restaurantId/store/details'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdStoreDetailsRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
+    '/restaurant/manage/$restaurantId/store/delivery': {
+      id: '/restaurant/manage/$restaurantId/store/delivery'
+      path: '/store/delivery'
+      fullPath: '/restaurant/manage/$restaurantId/store/delivery'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdStoreDeliveryRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
     '/restaurant/manage/$restaurantId/menu/edit': {
       id: '/restaurant/manage/$restaurantId/menu/edit'
       path: '/edit'
@@ -339,6 +439,11 @@ const RestaurantManageRestaurantIdMenuRouteWithChildren =
 interface RestaurantManageRestaurantIdRouteChildren {
   RestaurantManageRestaurantIdMenuRoute: typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   RestaurantManageRestaurantIdIndexRoute: typeof RestaurantManageRestaurantIdIndexRoute
+  RestaurantManageRestaurantIdStoreDeliveryRoute: typeof RestaurantManageRestaurantIdStoreDeliveryRoute
+  RestaurantManageRestaurantIdStoreDetailsRoute: typeof RestaurantManageRestaurantIdStoreDetailsRoute
+  RestaurantManageRestaurantIdStoreLocationRoute: typeof RestaurantManageRestaurantIdStoreLocationRoute
+  RestaurantManageRestaurantIdStoreSeoRoute: typeof RestaurantManageRestaurantIdStoreSeoRoute
+  RestaurantManageRestaurantIdStoreIndexRoute: typeof RestaurantManageRestaurantIdStoreIndexRoute
 }
 
 const RestaurantManageRestaurantIdRouteChildren: RestaurantManageRestaurantIdRouteChildren =
@@ -347,6 +452,16 @@ const RestaurantManageRestaurantIdRouteChildren: RestaurantManageRestaurantIdRou
       RestaurantManageRestaurantIdMenuRouteWithChildren,
     RestaurantManageRestaurantIdIndexRoute:
       RestaurantManageRestaurantIdIndexRoute,
+    RestaurantManageRestaurantIdStoreDeliveryRoute:
+      RestaurantManageRestaurantIdStoreDeliveryRoute,
+    RestaurantManageRestaurantIdStoreDetailsRoute:
+      RestaurantManageRestaurantIdStoreDetailsRoute,
+    RestaurantManageRestaurantIdStoreLocationRoute:
+      RestaurantManageRestaurantIdStoreLocationRoute,
+    RestaurantManageRestaurantIdStoreSeoRoute:
+      RestaurantManageRestaurantIdStoreSeoRoute,
+    RestaurantManageRestaurantIdStoreIndexRoute:
+      RestaurantManageRestaurantIdStoreIndexRoute,
   }
 
 const RestaurantManageRestaurantIdRouteWithChildren =

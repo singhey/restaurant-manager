@@ -19,7 +19,7 @@ function RestaurantSettingsButtonComp() {
     <TopbarIconButton
         icon={Settings}
         label="Settings"
-        onClick={() => navigate({ to: '/restaurant/manage/$restaurantId', params: { restaurantId } })}
+        onClick={() => navigate({ to: '/restaurant/manage/$restaurantId/store/details', params: { restaurantId } })}
       />
       <div className="border-l border-border" />
   </>
