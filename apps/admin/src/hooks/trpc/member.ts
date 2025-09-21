@@ -328,7 +328,7 @@ export function useSuspenseCountMember<TArgs extends Prisma.MemberCountArgs, TQu
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Member', `${endpoint}/member/count`, args, options, fetch);
 }
 
-export function useCheckMember<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; organizationId?: string; userId?: string; email?: string; role?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckMember<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; organizationId?: string; userId?: string; role?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Member', `${endpoint}/member/check`, args, options, fetch);
 }

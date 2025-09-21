@@ -114,6 +114,14 @@ const metadata = {
                     type: "String",
                     isForeignKey: true,
                     relationField: 'user',
+                }, activeOrganizationId: {
+                    name: "activeOrganizationId",
+                    type: "String",
+                    isOptional: true,
+                }, teamId: {
+                    name: "teamId",
+                    type: "String",
+                    isOptional: true,
                 }, user: {
                     name: "user",
                     type: "User",
@@ -311,9 +319,6 @@ const metadata = {
                     type: "String",
                     isForeignKey: true,
                     relationField: 'user',
-                }, email: {
-                    name: "email",
-                    type: "String",
                 }, role: {
                     name: "role",
                     type: "String",
