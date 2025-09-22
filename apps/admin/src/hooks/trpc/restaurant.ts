@@ -5,7 +5,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import type { Prisma, Restaurant } from "../../../../../../restaurant-manager/generated/prisma";
+import type { Prisma, Restaurant } from "@zenstackhq/runtime/models";
 import type { UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
 import { getHooksContext } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import { useModelQuery, useInfiniteModelQuery, useModelMutation } from '@zenstackhq/tanstack-query/runtime-v5/react';
@@ -328,7 +328,7 @@ export function useSuspenseCountRestaurant<TArgs extends Prisma.RestaurantCountA
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Restaurant', `${endpoint}/restaurant/count`, args, options, fetch);
 }
 
-export function useCheckRestaurant<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; name?: string; address?: string; phone?: string; email?: string; website?: string; description?: string; logo?: string; timezone?: string; currency?: string; isActive?: boolean; settings?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckRestaurant<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; name?: string; website?: string; description?: string; logo?: string; timezone?: string; currency?: string; isActive?: boolean; settings?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Restaurant', `${endpoint}/restaurant/check`, args, options, fetch);
 }

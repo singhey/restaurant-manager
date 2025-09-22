@@ -5,7 +5,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import type { Prisma, Payment } from "../../../../../../restaurant-manager/generated/prisma";
+import type { Prisma, Payment } from "@zenstackhq/runtime/models";
 import type { UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
 import { getHooksContext } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import { useModelQuery, useInfiniteModelQuery, useModelMutation } from '@zenstackhq/tanstack-query/runtime-v5/react';
@@ -327,7 +327,7 @@ export function useSuspenseCountPayment<TArgs extends Prisma.PaymentCountArgs, T
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Payment', `${endpoint}/payment/count`, args, options, fetch);
 }
-import type { PaymentStatus } from '../../../../../../restaurant-manager/generated/prisma';
+import type { PaymentStatus } from '@zenstackhq/runtime/models';
 
 export function useCheckPayment<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; orderId?: string; paymentMethod?: string; status?: PaymentStatus; transactionId?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();

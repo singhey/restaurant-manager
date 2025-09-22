@@ -5,7 +5,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import type { Prisma, Voucher } from "../../../../../../restaurant-manager/generated/prisma";
+import type { Prisma, Voucher } from "@zenstackhq/runtime/models";
 import type { UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
 import { getHooksContext } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import { useModelQuery, useInfiniteModelQuery, useModelMutation } from '@zenstackhq/tanstack-query/runtime-v5/react';
@@ -327,7 +327,7 @@ export function useSuspenseCountVoucher<TArgs extends Prisma.VoucherCountArgs, T
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Voucher', `${endpoint}/voucher/count`, args, options, fetch);
 }
-import type { DiscountType } from '../../../../../../restaurant-manager/generated/prisma';
+import type { DiscountType } from '@zenstackhq/runtime/models';
 
 export function useCheckVoucher<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; restaurantId?: string; code?: string; name?: string; description?: string; discountType?: DiscountType; usageLimit?: number; usedCount?: number; isActive?: boolean }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();

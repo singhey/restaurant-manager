@@ -5,7 +5,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import type { Prisma, AddonGroup } from "../../../../../../restaurant-manager/generated/prisma";
+import type { Prisma, AddonGroup } from "@zenstackhq/runtime/models";
 import type { UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
 import { getHooksContext } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import { useModelQuery, useInfiniteModelQuery, useModelMutation } from '@zenstackhq/tanstack-query/runtime-v5/react';
@@ -327,7 +327,7 @@ export function useSuspenseCountAddonGroup<TArgs extends Prisma.AddonGroupCountA
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('AddonGroup', `${endpoint}/addonGroup/count`, args, options, fetch);
 }
-import type { SelectionType } from '../../../../../../restaurant-manager/generated/prisma';
+import type { SelectionType } from '@zenstackhq/runtime/models';
 
 export function useCheckAddonGroup<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; name?: string; selectionType?: SelectionType; isRequired?: boolean }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();

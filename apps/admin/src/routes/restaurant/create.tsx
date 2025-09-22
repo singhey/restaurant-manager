@@ -1,3 +1,4 @@
+import { useCreateRestaurant } from '@/hooks/trpc'
 import { authClient } from '@/lib/auth'
 import { createFileRoute } from '@tanstack/react-router'
 import { 
@@ -5,6 +6,7 @@ import {
   AppInputField,
   AppTextareaField
 } from '@workspace/ui/components/tanstack-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 export const Route = createFileRoute('/restaurant/create')({
@@ -22,16 +24,28 @@ const organizationSchema = z.object({
 })
 
 function RouteComponent() {
+  const {mutate: createRestaurant} = useCreateRestaurant()
   const form = useAppForm({
     validators: {
       onChange: organizationSchema
     },
-    onSubmit: ({ value }: {value: z.infer<typeof organizationSchema>}) => {
+    onSubmit: async ({ value }: {value: z.infer<typeof organizationSchema>}) => {
       console.log(value)
-      authClient.organization.create({
+      const organization = await authClient.organization.create({
         name: value.name,
         slug: value.slug || value.name.toLowerCase().replaceAll(' ', '-'),
         address: value.address
+      })
+      if(!organization.data) {
+        toast.error('Unable to create restaurant')
+        return
+      }
+      createRestaurant({
+        data: {
+          name: organization.data.name,
+          id: organization.data.slug,
+          address: organization.data.address
+        }
       })
     }
   })

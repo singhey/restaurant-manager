@@ -439,18 +439,6 @@ const metadata = {
                 }, name: {
                     name: "name",
                     type: "String",
-                }, address: {
-                    name: "address",
-                    type: "String",
-                    isOptional: true,
-                }, phone: {
-                    name: "phone",
-                    type: "String",
-                    isOptional: true,
-                }, email: {
-                    name: "email",
-                    type: "String",
-                    isOptional: true,
                 }, website: {
                     name: "website",
                     type: "String",
@@ -463,10 +451,30 @@ const metadata = {
                     name: "logo",
                     type: "String",
                     isOptional: true,
+                }, reviewLinks: {
+                    name: "reviewLinks",
+                    type: "RestaurantReviewLinks",
+                    isTypeDef: true,
+                    isOptional: true,
+                }, compliance: {
+                    name: "compliance",
+                    type: "ComplianceIds",
+                    isTypeDef: true,
+                    isOptional: true,
+                }, position: {
+                    name: "position",
+                    type: "RestaurantLocation",
+                    isTypeDef: true,
+                    isOptional: true,
+                }, delivery: {
+                    name: "delivery",
+                    type: "RestaurantDelivery",
+                    isTypeDef: true,
+                    isOptional: true,
                 }, timezone: {
                     name: "timezone",
                     type: "String",
-                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": "UTC" }] }],
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": "IST" }] }],
                 }, currency: {
                     name: "currency",
                     type: "String",
@@ -517,11 +525,76 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'restaurant',
+                }, seo: {
+                    name: "seo",
+                    type: "RestaurantSEO",
+                    isDataModel: true,
+                    isOptional: true,
+                    backLink: 'restaurant',
                 },
             }, uniqueConstraints: {
                 id: {
                     name: "id",
                     fields: ["id"]
+                },
+            },
+        },
+        restaurantSEO: {
+            name: 'RestaurantSEO', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, restaurantId: {
+                    name: "restaurantId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'restaurant',
+                }, restaurant: {
+                    name: "restaurant",
+                    type: "Restaurant",
+                    isDataModel: true,
+                    backLink: 'seo',
+                    isRelationOwner: true,
+                    onDeleteAction: 'Cascade',
+                    foreignKeyMapping: { "id": "restaurantId" },
+                }, metaTitle: {
+                    name: "metaTitle",
+                    type: "String",
+                    isOptional: true,
+                }, metaDescription: {
+                    name: "metaDescription",
+                    type: "String",
+                    isOptional: true,
+                }, metaKeywords: {
+                    name: "metaKeywords",
+                    type: "String",
+                    isOptional: true,
+                }, gTag: {
+                    name: "gTag",
+                    type: "String",
+                    isOptional: true,
+                }, fbPixel: {
+                    name: "fbPixel",
+                    type: "String",
+                    isOptional: true,
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                }, restaurantId: {
+                    name: "restaurantId",
+                    fields: ["restaurantId"]
                 },
             },
         },
@@ -1263,10 +1336,78 @@ const metadata = {
         },
 
     },
+    typeDefs: {
+        restaurantDelivery: {
+            name: 'RestaurantDelivery', fields: {
+                acceptCashOnDelivery: {
+                    name: "acceptCashOnDelivery",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": true }] }],
+                }, deliveryRadius: {
+                    name: "deliveryRadius",
+                    type: "Int",
+                    isOptional: true,
+                }, averagePreparationTime: {
+                    name: "averagePreparationTime",
+                    type: "Int",
+                    isOptional: true,
+                }, enableDelivery: {
+                    name: "enableDelivery",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, enableTakeaway: {
+                    name: "enableTakeaway",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                }, enableDineIn: {
+                    name: "enableDineIn",
+                    type: "Boolean",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": false }] }],
+                },
+            },
+        },
+        restaurantReviewLinks: {
+            name: 'RestaurantReviewLinks', fields: {
+                generic: {
+                    name: "generic",
+                    type: "String",
+                    isOptional: true,
+                },
+            },
+        },
+        complianceIds: {
+            name: 'ComplianceIds', fields: {
+                fssai: {
+                    name: "fssai",
+                    type: "String",
+                    isOptional: true,
+                }, gst: {
+                    name: "gst",
+                    type: "String",
+                    isOptional: true,
+                },
+            },
+        },
+        restaurantLocation: {
+            name: 'RestaurantLocation', fields: {
+                latitude: {
+                    name: "latitude",
+                    type: "Float",
+                }, longitude: {
+                    name: "longitude",
+                    type: "Float",
+                }, address: {
+                    name: "address",
+                    type: "String",
+                },
+            },
+        },
+
+    },
     deleteCascade: {
         user: ['Session', 'Account', 'Member', 'Invitation'],
         organization: ['Member', 'Invitation', 'Restaurant'],
-        restaurant: ['Category', 'MenuItem', 'Order', 'Voucher', 'Plugin'],
+        restaurant: ['RestaurantSEO', 'Category', 'MenuItem', 'Order', 'Voucher', 'Plugin'],
 
     },
     authModel: 'User'

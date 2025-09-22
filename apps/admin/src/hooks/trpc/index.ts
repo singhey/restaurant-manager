@@ -13,6 +13,7 @@ export * from './organization';
 export * from './member';
 export * from './invitation';
 export * from './restaurant';
+export * from './restaurant-seo';
 export * from './category';
 export * from './menu-item';
 export * from './addon-group';

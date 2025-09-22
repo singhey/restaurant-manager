@@ -27,7 +27,7 @@ const RootLayout = () => {
             <SidebarHeader className='border-b h-16 justify-center'>
               <OrganizationSwitcher hidePersonal={true}
                 className='bg-primary-foreground hover:bg-primary-foreground text-secondary-foreground' 
-                onSetActive={organization => organization && navigate({to: `/restaurant/${organization.slug}` as any})}
+                onSetActive={organization => organization && navigate({to: `/restaurant/manage/${organization.slug}` as any})}
                 />
               {/* <div className="flex items-center gap-2 px-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">

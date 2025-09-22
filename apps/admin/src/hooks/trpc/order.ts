@@ -5,7 +5,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import type { Prisma, Order } from "../../../../../../restaurant-manager/generated/prisma";
+import type { Prisma, Order } from "@zenstackhq/runtime/models";
 import type { UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions, InfiniteData } from '@tanstack/react-query';
 import { getHooksContext } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import { useModelQuery, useInfiniteModelQuery, useModelMutation } from '@zenstackhq/tanstack-query/runtime-v5/react';
@@ -327,7 +327,7 @@ export function useSuspenseCountOrder<TArgs extends Prisma.OrderCountArgs, TQuer
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('Order', `${endpoint}/order/count`, args, options, fetch);
 }
-import type { OrderType, OrderStatus, PaymentStatus } from '../../../../../../restaurant-manager/generated/prisma';
+import type { OrderType, OrderStatus, PaymentStatus } from '@zenstackhq/runtime/models';
 
 export function useCheckOrder<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; restaurantId?: string; orderNumber?: string; customerId?: string; orderType?: OrderType; status?: OrderStatus; paymentStatus?: PaymentStatus; notes?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
