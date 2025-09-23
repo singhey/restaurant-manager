@@ -66,6 +66,7 @@ export interface CategoryItemProps {
   onToggleExpanded: (categoryId: string) => void;
   onDelete: (categoryId: string) => void;
   onReorder: (categoryId: string, newOrder: number) => void;
+  onSubcategoryReorder: (subcategoryId: string, newOrder: number, newParentId?: string) => void;
 }
 
 export interface SubcategoryItemProps {
@@ -110,7 +111,7 @@ export interface DragEndEvent {
 
 // State management types
 export interface MenuEditorState {
-  expandedCategories: Set<string>;
+  expandedCategories: string[];
   selectedItem?: string;
   isLoading: boolean;
   error?: string;
@@ -118,4 +119,20 @@ export interface MenuEditorState {
 
 export interface ExpandedStatesStorage {
   [categoryId: string]: boolean;
+}
+
+// Sorting preference types
+export type SortingMode = 'manual' | 'alphabetical';
+
+export interface SortingPreference {
+  mode: SortingMode;
+  isAlphabeticalSort: boolean;
+}
+
+export interface SortingPreferenceHook {
+  isAlphabeticalSort: boolean;
+  sortingMode: SortingMode;
+  setSortingMode: (mode: SortingMode) => void;
+  toggleSortingMode: () => void;
+  resetToDefault: () => void;
 }

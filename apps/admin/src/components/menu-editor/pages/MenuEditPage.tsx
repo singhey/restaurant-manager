@@ -1,5 +1,5 @@
 import { MenuStructurePanel } from './MenuStructurePanel'
-import { MenuEditorErrorBoundary } from './MenuEditorErrorBoundary'
+import { MenuEditorErrorBoundary } from '../components/MenuEditorErrorBoundary'
 
 /**
  * Main page component for the menu editor

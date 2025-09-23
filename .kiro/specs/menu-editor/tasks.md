@@ -47,37 +47,32 @@
 
 - [ ] 4. Implement category and subcategory creation functionality
   - [x] 4.1 Build AddCategoryForm component
-
-
-
-
-
     - Create form with name and description fields
     - Implement client-side validation using react-hook-form
     - Add form submission handling with ZenStack `useCreateCategory` hook
     - Handle success and error states with proper user feedback
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 7.1, 7.4_
 
-  - [ ] 4.2 Create AddSubcategoryForm component
+  - [x] 4.2 Create AddSubcategoryForm component
     - Build subcategory creation form with parent category context
     - Implement validation for subcategory names
     - Add form submission using ZenStack hooks with proper parent relationship
     - Handle success and error feedback
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 7.2, 7.4_
 
-  - [ ] 4.3 Integrate creation forms with main interface
+  - [x] 4.3 Integrate creation forms with main interface
     - Add modal or inline form display for category creation
     - Implement subcategory creation within category items
     - Add proper form state management and cleanup
     - _Requirements: 2.1, 3.1_
 
 - [ ] 5. Implement sorting functionality with lexicographic option
-  - [ ] 5.1 Install required drag-and-drop dependencies
+  - [x] 5.1 Install required drag-and-drop dependencies
     - Install @dnd-kit/core, @dnd-kit/sortable, and @dnd-kit/utilities packages
     - Verify package installation and TypeScript types
     - _Requirements: 5.1, 8.5_
 
-  - [ ] 5.2 Create sorting preference management hook
+- - [x] 5.2 Create sorting preference management hook
     - Implement useSortingPreference hook with localStorage persistence
     - Add state management for alphabetical vs manual sorting modes
     - Create utility functions for sorting preference persistence
@@ -102,14 +97,14 @@
     - _Requirements: 8.1, 8.2, 8.3_
 
 - [ ] 6. Implement deletion functionality
-  - [ ] 6.1 Add category deletion with confirmation
+  - [x] 6.1 Add category deletion with confirmation
     - Create confirmation dialog component for category deletion
     - Implement `useDeleteCategory` hook integration
     - Handle cascade deletion warnings for categories with subcategories/items
     - Add proper error handling and user feedback
     - _Requirements: 4.1, 4.2, 4.5, 7.2, 7.4_
 
-  - [ ] 6.2 Add subcategory deletion with confirmation
+  - [x] 6.2 Add subcategory deletion with confirmation
     - Implement subcategory deletion confirmation dialog
     - Use `useDeleteCategory` hook for subcategory removal
     - Handle deletion warnings for subcategories with items
@@ -117,14 +112,14 @@
     - _Requirements: 4.3, 4.4, 4.5, 7.2, 7.4_
 
 - [ ] 7. Implement drag-and-drop reordering functionality
-  - [ ] 7.1 Set up @dnd-kit drag context and providers
+  - [x] 7.1 Set up @dnd-kit drag context and providers
     - Configure DndContext with appropriate sensors for mouse, keyboard, and touch
     - Set up collision detection and drag overlay components
     - Implement drag start, drag over, and drag end event handlers
     - Add conditional logic to disable drag-and-drop when alphabetical sorting is active
     - _Requirements: 5.1, 5.2, 5.5, 8.4, 8.5_
 
-  - [ ] 7.2 Add category drag-and-drop reordering
+- - [x] 7.2 Add category drag-and-drop reordering
     - Make CategoryItem components draggable with proper drag handles
     - Implement drop zones for category reordering
     - Add visual feedback during drag operations
@@ -132,7 +127,12 @@
     - Disable drag handles when alphabetical sorting is active
     - _Requirements: 5.1, 5.2, 5.5, 7.2, 8.4, 8.5_
 
-  - [ ] 7.3 Implement subcategory drag-and-drop with cross-category support
+  - [x] 7.3 Implement subcategory drag-and-drop with cross-category support
+
+
+
+
+
     - Make SubcategoryItem components draggable
     - Enable dropping subcategories within same category for reordering
     - Implement cross-category subcategory movement
@@ -140,7 +140,13 @@
     - Disable drag functionality when alphabetical sorting is active
     - _Requirements: 5.3, 5.4, 5.5, 7.2, 8.4, 8.5_
 
-  - [ ] 7.4 Add drag-and-drop visual feedback and animations
+  - [x] 7.4 Add drag-and-drop visual feedback and animations
+
+
+
+
+
+    - Whenever you're importing anything use alias import like @/
     - Implement drag overlay with item preview
     - Add drop zone visual indicators
     - Create smooth animations for reordering

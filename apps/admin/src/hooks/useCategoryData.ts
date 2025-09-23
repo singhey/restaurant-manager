@@ -56,7 +56,7 @@ export function useCategoryData(restaurantId?: string) {
       ...category,
       description: category.description ?? undefined, // Convert null to undefined
       parentId: category.parentId ?? undefined, // Convert null to undefined
-      children: category.children?.map(child => {
+      children: category.children?.map((child: any) => {
         const transformedChild: SubcategoryWithItems = {
           ...child,
           description: child.description ?? undefined, // Convert null to undefined
