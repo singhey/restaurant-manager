@@ -1,4 +1,4 @@
-import { useCreateRestaurant } from '@/hooks/trpc'
+import { useCreateRestaurant } from '@workspace/db/hooks/trpc'
 import { authClient } from '@/lib/auth'
 import { createFileRoute } from '@tanstack/react-router'
 import { 

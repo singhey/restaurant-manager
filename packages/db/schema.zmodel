@@ -1,0 +1,482 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+plugin hooks {
+  provider = '@zenstackhq/tanstack-query'
+  output = "./hooks/trpc"
+  target = "react"
+}
+
+model User {
+  id            String       @id 
+  email         String       @unique
+  name          String?
+  role          UserRole     @default(ADMIN)
+  emailVerified Boolean      @default(false)
+  image         String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now()) @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  orders        Order[]
+  members       Member[]
+  invitations   Invitation[]
+
+  @@map("user")
+  @@allow('all', true)
+  @@index([email])
+  @@index([id])
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  activeOrganizationId String?
+  teamId  String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+  @@allow('all', true)
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+  @@allow('all', true)
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@map("verification")
+  @@allow('all', true)
+}
+
+// Better Auth Organization Plugin Models
+model Organization {
+  id          String   @id
+  name        String
+  slug        String?  @unique
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  members     Member[]
+  invitations Invitation[]
+  restaurant  Restaurant? // One-to-one relationship with Restaurant
+
+  metaData    String?
+  address    String?
+
+  @@map("organization")
+  @@allow('create', auth().role == 'ADMIN')
+}
+
+model Member {
+  id             String       @id
+  organizationId String
+  userId         String
+  role           String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@map("member")
+  @@allow('all', true)
+}
+
+model Invitation {
+  id             String       @id
+  organizationId String
+  email          String
+  role           String
+  status         String
+  expiresAt      DateTime
+  inviterId      String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  inviter        User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, email])
+  @@map("invitation")
+}
+
+// Restaurant Management Models
+
+// Restaurant Model (One-to-one with Organization)
+model Restaurant {
+  id         String       @id
+  organization   Organization @relation(fields: [id], references: [slug], onDelete: Cascade)
+  name           String
+  website        String?
+  description    String?
+  logo           String?
+  reviewLinks    RestaurantReviewLinks? @json
+  compliance     ComplianceIds? @json
+  position       RestaurantLocation? @json
+  delivery       RestaurantDelivery? @json
+  timezone       String       @default("IST")
+  currency       String       @default("INR")
+  isActive       Boolean      @default(true)
+  settings       String?      // JSON string for restaurant-specific settings
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // Restaurant-specific relations
+  categories     Category[]
+  menuItems      MenuItem[]
+  orders         Order[]
+  vouchers       Voucher[]
+  plugins        Plugin[]
+  seo            RestaurantSEO?
+
+  @@allow('read', auth() != null)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+type RestaurantDelivery {
+  acceptCashOnDelivery Boolean @default(true)
+  deliveryRadius  Int?   // in kilometers
+  averagePreparationTime Int? // in minutes
+  enableDelivery Boolean @default(false)
+  enableTakeaway Boolean @default(false)
+  enableDineIn   Boolean @default(false)
+}
+
+type RestaurantReviewLinks {
+  generic  String?
+}
+
+type ComplianceIds {
+  fssai      String?
+  gst        String?
+}
+
+type RestaurantLocation {
+  latitude  Float
+  longitude Float
+  address   String
+}
+
+
+model RestaurantSEO {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  metaTitle    String?
+  metaDescription String?
+  metaKeywords String?
+  gTag        String?  // Google Tag Manager ID
+  fbPixel   String?  // Facebook Pixel ID
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([restaurantId])
+  @@allow('read', true)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  MANAGER
+  CASHIER
+  KITCHEN
+  CUSTOMER
+}
+
+enum OrderType {
+  DINE_IN
+  TAKEOUT
+  DELIVERY
+  ONLINE
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum SelectionType {
+  SINGLE
+  MULTIPLE
+}
+
+// Menu Management
+model Category {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  sortOrder    Int        @default(0)
+  isActive     Boolean    @default(true)
+  parentId     String?
+  parent       Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children     Category[] @relation("CategoryHierarchy")
+  menuItems    MenuItem[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@allow('read', true)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+model MenuItem {
+  id           String          @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  price        Float
+  image        String?
+  isAvailable  Boolean         @default(true)
+  categoryId   String
+  category     Category        @relation(fields: [categoryId], references: [id])
+  addons       MenuItemAddon[]
+  orderItems   OrderItem[]
+  variants     Variant[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@allow('read', isAvailable || auth().role in ['ADMIN', 'MANAGER', 'CASHIER'])
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+
+model Variant {
+  id          Int    @id @default(autoincrement())
+  menuItemId  String
+  name        String
+  price       Float
+  menuItem    MenuItem  @relation(fields: [menuItemId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@allow('read', true)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+
+model AddonGroup {
+  id            String        @id @default(cuid())
+  name          String
+  selectionType SelectionType
+  isRequired    Boolean       @default(false)
+  addons        Addon[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@allow('read', true)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+model Addon {
+  id           String           @id @default(cuid())
+  name         String
+  price        Float
+  addonGroupId String
+  addonGroup   AddonGroup       @relation(fields: [addonGroupId], references: [id])
+  menuItems    MenuItemAddon[]
+  orderItems   OrderItemAddon[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@allow('read', true)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+model MenuItemAddon {
+  id         String   @id @default(cuid())
+  menuItemId String
+  addonId    String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  addon      Addon    @relation(fields: [addonId], references: [id])
+
+  @@unique([menuItemId, addonId])
+  @@allow('read', true)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+// Order Management
+model Order {
+  id            String         @id @default(cuid())
+  restaurantId  String
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  orderNumber   String         @unique
+  customerId    String?
+  customer      User?          @relation(fields: [customerId], references: [id])
+  orderType     OrderType
+  status        OrderStatus    @default(PENDING)
+  subtotal      Float
+  tax           Float
+  discount      Float          @default(0)
+  total         Float
+  paymentStatus PaymentStatus  @default(PENDING)
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  items         OrderItem[]
+  vouchers      OrderVoucher[]
+  payments      Payment[]
+
+  @@allow('read', auth() != null)
+  @@allow('create', auth() != null)
+  @@allow('update', auth().role in ['ADMIN', 'MANAGER', 'CASHIER', 'KITCHEN'])
+}
+
+model OrderItem {
+  id         String           @id @default(cuid())
+  orderId    String
+  order      Order            @relation(fields: [orderId], references: [id])
+  menuItemId String
+  menuItem   MenuItem         @relation(fields: [menuItemId], references: [id])
+  quantity   Int
+  unitPrice  Float
+  totalPrice Float
+  notes      String?
+  addons     OrderItemAddon[]
+
+  @@allow('read', auth() != null)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER', 'CASHIER'])
+}
+
+model OrderItemAddon {
+  id          String    @id @default(cuid())
+  orderItemId String
+  addonId     String
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
+  addon       Addon     @relation(fields: [addonId], references: [id])
+  quantity    Int       @default(1)
+  unitPrice   Float
+  totalPrice  Float
+
+  @@allow('read', auth() != null)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER', 'CASHIER'])
+}
+
+// Payment System
+model Payment {
+  id            String        @id @default(cuid())
+  orderId       String
+  order         Order         @relation(fields: [orderId], references: [id])
+  amount        Float
+  paymentMethod String
+  status        PaymentStatus @default(PENDING)
+  transactionId String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@allow('read', auth().role in ['ADMIN', 'MANAGER', 'CASHIER'])
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER', 'CASHIER'])
+}
+
+// Voucher System
+model Voucher {
+  id            String         @id @default(cuid())
+  restaurantId  String
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  code          String         @unique
+  name          String
+  description   String?
+  discountType  DiscountType
+  discountValue Float
+  minOrderValue Float?
+  maxDiscount   Float?
+  usageLimit    Int?
+  usedCount     Int            @default(0)
+  isActive      Boolean        @default(true)
+  validFrom     DateTime
+  validUntil    DateTime
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  orders        OrderVoucher[]
+
+  @@allow('read', isActive && validFrom <= now() && validUntil >= now())
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER'])
+}
+
+model OrderVoucher {
+  id        String  @id @default(cuid())
+  orderId   String
+  voucherId String
+  order     Order   @relation(fields: [orderId], references: [id])
+  voucher   Voucher @relation(fields: [voucherId], references: [id])
+  discount  Float
+
+  @@unique([orderId, voucherId])
+  @@allow('read', auth() != null)
+  @@allow('all', auth().role in ['ADMIN', 'MANAGER', 'CASHIER'])
+}
+
+// Plugin System
+model Plugin {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  name         String
+  version      String
+  description  String?
+  isEnabled    Boolean    @default(false)
+  config       String?    // JSON string for SQLite compatibility
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([restaurantId, name])
+  @@allow('read', auth().role in ['ADMIN', 'MANAGER'])
+  @@allow('all', auth().role == 'ADMIN')
+}

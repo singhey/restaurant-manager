@@ -737,6 +737,54 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'menuItem',
+                }, variants: {
+                    name: "variants",
+                    type: "Variant",
+                    isDataModel: true,
+                    isArray: true,
+                    backLink: 'menuItem',
+                }, createdAt: {
+                    name: "createdAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, updatedAt: {
+                    name: "updatedAt",
+                    type: "DateTime",
+                    attributes: [{ "name": "@updatedAt", "args": [] }],
+                },
+            }, uniqueConstraints: {
+                id: {
+                    name: "id",
+                    fields: ["id"]
+                },
+            },
+        },
+        variant: {
+            name: 'Variant', fields: {
+                id: {
+                    name: "id",
+                    type: "Int",
+                    isId: true,
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                    isAutoIncrement: true,
+                }, menuItemId: {
+                    name: "menuItemId",
+                    type: "String",
+                    isForeignKey: true,
+                    relationField: 'menuItem',
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, price: {
+                    name: "price",
+                    type: "Float",
+                }, menuItem: {
+                    name: "menuItem",
+                    type: "MenuItem",
+                    isDataModel: true,
+                    backLink: 'variants',
+                    isRelationOwner: true,
+                    foreignKeyMapping: { "id": "menuItemId" },
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",

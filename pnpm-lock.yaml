@@ -55,7 +55,7 @@ importers:
         version: 1.2.8(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@tailwindcss/vite':
         specifier: ^4.1.13
-        version: 4.1.13(vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))
+        version: 4.1.13(vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))
       '@tanstack/react-form':
         specifier: ^1.23.0
         version: 1.23.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -65,12 +65,15 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.131.48
         version: 1.131.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@workspace/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@zenstackhq/tanstack-query':
         specifier: ^2.19.0
-        version: 2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)
+        version: 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)
       better-auth:
         specifier: ^1.3.12
         version: 1.3.12(next@15.4.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -107,7 +110,7 @@ importers:
         version: 9.36.0
       '@tanstack/router-plugin':
         specifier: ^1.131.48
-        version: 1.131.48(@tanstack/react-router@1.131.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))
+        version: 1.131.48(@tanstack/react-router@1.131.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))
       '@types/leaflet':
         specifier: ^1.9.20
         version: 1.9.20
@@ -119,7 +122,7 @@ importers:
         version: 19.1.9(@types/react@19.1.13)
       '@vitejs/plugin-react-swc':
         specifier: ^4.0.1
-        version: 4.1.0(vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))
+        version: 4.1.0(vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))
       eslint:
         specifier: ^9.35.0
         version: 9.36.0(jiti@2.5.1)
@@ -140,7 +143,7 @@ importers:
         version: 8.44.0(eslint@9.36.0(jiti@2.5.1))(typescript@5.8.3)
       vite:
         specifier: ^7.1.6
-        version: 7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
+        version: 7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
 
   apps/web:
     dependencies:
@@ -202,6 +205,22 @@ importers:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
+
+  packages/db:
+    dependencies:
+      '@prisma/client':
+        specifier: 6.16.2
+        version: 6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)
+      '@zenstackhq/runtime':
+        specifier: 2.19.0
+        version: 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(zod@4.1.9)
+    devDependencies:
+      prisma:
+        specifier: ^6.16.2
+        version: 6.16.2(typescript@5.9.2)
+      zenstack:
+        specifier: 2.19.0
+        version: 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)(zod@4.1.9)
 
   packages/eslint-config:
     devDependencies:
@@ -1076,6 +1095,10 @@ packages:
     resolution: {integrity: sha512-j/l6jpnpaIBM87cAYPJzi/6TgqmBv9spkqPyCXvRYsu5uxqh6tPJZDnD85yo8VWqzTuTQPgfv7NgT63u7kbwAQ==}
     engines: {node: '>= 20.19.0'}
 
+  '@noble/hashes@1.8.0':
+    resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
+    engines: {node: ^14.21.3 || >=16}
+
   '@noble/hashes@2.0.0':
     resolution: {integrity: sha512-h8VUBlE8R42+XIDO229cgisD287im3kdY6nbNZJFjc6ZvKIXPYXe6Vc/t+kyjFdMFyt5JpapzTsEg8n63w5/lw==}
     engines: {node: '>= 20.19.0'}
@@ -1091,6 +1114,9 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@paralleldrive/cuid2@2.2.2':
+    resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
 
   '@peculiar/asn1-android@2.5.0':
     resolution: {integrity: sha512-t8A83hgghWQkcneRsgGs2ebAlRe54ns88p7ouv8PW2tzF1nAW4yHcL4uZKrFpIU+uszIRzTkcCuie37gpkId0A==}
@@ -2279,6 +2305,9 @@ packages:
   '@types/node@20.19.9':
     resolution: {integrity: sha512-cuVNgarYWZqxRJDQHEB58GEONhOK79QVR/qYx4S7kcUObQvUwvFnYxJuuHUKm2aieN9X3yZB4LZsuYNU1Qphsw==}
 
+  '@types/node@22.15.32':
+    resolution: {integrity: sha512-3jigKqgSjsH6gYZv2nEsqdXfZqIFGAV36XYYjf9KGZ3PSG+IhLecqPnI310RvjutyMwifE2hhhNEklOUrvx/wA==}
+
   '@types/react-dom@19.1.7':
     resolution: {integrity: sha512-i5ZzwYpqjmrKenzkoLM2Ibzt6mAsM7pxB6BCIouEVVmgiqaMj1TjaK7hnA36hbW5aZv20kx7Lw6hWzPWg0Rurw==}
     peerDependencies:
@@ -2464,6 +2493,10 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  agent-base@6.0.2:
+    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
+    engines: {node: '>= 6.0.0'}
+
   agent-base@7.1.4:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
     engines: {node: '>= 14'}
@@ -2555,6 +2588,10 @@ packages:
   ast-types@0.16.1:
     resolution: {integrity: sha512-6t10qk83GOG8p0vKmaCr8eiilZwO171AvbROMtvvNiwrTly62t+7XkA8RdIIVbpMhCASAsxgAzdRSwh6nw/5Dg==}
     engines: {node: '>=4'}
+
+  async-exit-hook@2.0.1:
+    resolution: {integrity: sha512-NW2cX8m1Q7KPA7a5M2ULQeZ2wR5qI5PAbw5L0UOMxdioVk9PMZ0h1TmyZEkPYrCvYjDlFICusOu1dlEKAAeXBw==}
+    engines: {node: '>=0.12.0'}
 
   async-function@1.0.0:
     resolution: {integrity: sha512-hsU18Ae8CDTR6Kgu9DYf0EbCr/a5iGL0rytQDobUcdpYOKokk8LEjVphnXkDkgpi0wYVsqrXuP0bZxJaTqdgoA==}
@@ -2771,12 +2808,20 @@ packages:
     resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
     engines: {node: '>=12.5.0'}
 
+  colors@1.4.0:
+    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
+    engines: {node: '>=0.1.90'}
+
   comlink@4.4.2:
     resolution: {integrity: sha512-OxGdvBmJuNKSCMO4NTl1L47VRp6xn2wG4F/2hYzB6tiCb709otOxtEYCSvK80PtjODfXXZu8ds+Nw5kVCjqd2g==}
 
   commander@10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
+
+  commander@8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -2963,6 +3008,9 @@ packages:
   empathic@2.0.0:
     resolution: {integrity: sha512-i6UzDscO/XfAcNYD75CfICkmfLedpyPDdozrLMmQc5ORaQcdMoc21OnlEylMIqI7U8eniKrPMxxtj8k0vhmJhA==}
     engines: {node: '>=14'}
+
+  emphasize@4.2.0:
+    resolution: {integrity: sha512-yGKvcFUHlBsUPwlxTlzKLR8+zhpbitkFOMCUxN8fTJng9bdH3WNzUGkhdaGdjndSUgqmMPBN7umfwnUdLz5Axg==}
 
   enhanced-resolve@5.18.2:
     resolution: {integrity: sha512-6Jw4sE1maoRJo3q8MsSIn2onJFbLTOjY9hlx4DZXmOKvLRd1Ok2kXmAGXaafL2+ijsJZ1ClYbl/pmqr9+k4iUQ==}
@@ -3158,6 +3206,9 @@ packages:
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
 
+  fault@1.0.4:
+    resolution: {integrity: sha512-CJ0HCB5tL5fYTEA7ToAq5+kTwd++Borf1/bifxd9iT70QcXr4MRrO3Llf8Ifs70q+SJcGHFtnIE/Nw6giCtECA==}
+
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
     engines: {node: '>=12.0.0'}
@@ -3193,6 +3244,10 @@ packages:
   for-each@0.3.5:
     resolution: {integrity: sha512-dKx12eRCVIzqCxFGplyFKJMPvLEWgmNtUrpTiJIR5u97zEhRG8ySrtboPHZXx7daLxQVrl643cTzbab2tkQjxg==}
     engines: {node: '>= 0.4'}
+
+  format@0.2.2:
+    resolution: {integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==}
+    engines: {node: '>=0.4.x'}
 
   fs-extra@10.1.0:
     resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
@@ -3340,6 +3395,9 @@ packages:
   header-case@1.0.1:
     resolution: {integrity: sha512-i0q9mkOeSuhXw6bGgiQCCBgY/jlZuV/7dZXyZ9c6LcBrqwvT8eT719E9uxE5LiZftdl+z81Ugbg/VvXV4OJOeQ==}
 
+  highlight.js@10.4.1:
+    resolution: {integrity: sha512-yR5lWvNz7c85OhVAEAeFhVCc/GV4C30Fjzc/rCP0aCWzc1UUOPUk55dK/qdwTZHBvMZo+eZ2jpk62ndX/xMFlg==}
+
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
@@ -3353,6 +3411,10 @@ packages:
   http-proxy-agent@7.0.2:
     resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
     engines: {node: '>= 14'}
+
+  https-proxy-agent@5.0.0:
+    resolution: {integrity: sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==}
+    engines: {node: '>= 6'}
 
   https-proxy-agent@7.0.6:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
@@ -3750,6 +3812,9 @@ packages:
   lower-case@1.1.4:
     resolution: {integrity: sha512-2Fgx1Ycm599x+WGpIYwJOvsjmXFzTSc34IwDWALRA/8AopUKAVPwfJ+h5+f85BCp0PWmmJcWzEpxOpoXycMpdA==}
 
+  lowlight@1.17.0:
+    resolution: {integrity: sha512-vmtBgYKD+QVNy7tIa7ulz5d//Il9R4MooOVh4nkOf9R9Cb/Dk5TXMSTieg/vDulkBkIWj59/BIlyFQxT9X1oAQ==}
+
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -3807,6 +3872,10 @@ packages:
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
+  minimatch@5.1.6:
+    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
+    engines: {node: '>=10'}
+
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -3821,6 +3890,10 @@ packages:
   minizlib@3.0.2:
     resolution: {integrity: sha512-oG62iEk+CYt5Xj2YqI5Xi9xWUeZhDI8jjQmC5oThVH5JGCTgIjr7ciJDzC7MBzYd//WvR1OTmP5Q38Q8ShQtVA==}
     engines: {node: '>= 18'}
+
+  mixpanel@0.17.0:
+    resolution: {integrity: sha512-DY5WeOy/hmkPrNiiZugJpWR0iMuOwuj1a3u0bgwB2eUFRV6oIew/pIahhpawdbNjb+Bye4a8ID3gefeNPvL81g==}
+    engines: {node: '>=10.0'}
 
   mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
@@ -4093,6 +4166,20 @@ packages:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
     hasBin: true
+
+  pretty-repl@4.0.1:
+    resolution: {integrity: sha512-Ve+ZNS5fwxylks3TTR4su7SaNAHVOh++7J5R8VKFAHIjmAMS8X79rnETc/JJoqay52cfgeHum7vm2+9hFSys9Q==}
+    engines: {node: '>=14'}
+
+  prisma@6.16.2:
+    resolution: {integrity: sha512-aRvldGE5UUJTtVmFiH3WfNFNiqFlAtePUxcI0UEGlnXCX7DqhiMT5TRYwncHFeA/Reca5W6ToXXyCMTeFPdSXA==}
+    engines: {node: '>=18.18'}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=5.1.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   prismjs@1.30.0:
     resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
@@ -4483,6 +4570,10 @@ packages:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
     engines: {node: '>=8'}
 
+  strip-color@0.1.0:
+    resolution: {integrity: sha512-p9LsUieSjWNNAxVCXLeilaDlmuUOrDS5/dF9znM1nZc7EGX5+zEFC0bEevsNIaldjlks+2jns5Siz6F9iK6jwA==}
+    engines: {node: '>=0.10.0'}
+
   strip-final-newline@2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
@@ -4524,6 +4615,10 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
+  supports-hyperlinks@2.3.0:
+    resolution: {integrity: sha512-RpsAZlpWcDwOPQA22aCH4J0t7L8JmAvsCxfOSEwm7cQs3LshN36QaTkwd70DnBOXDWGssw2eUoc8CaRWT0XunA==}
+    engines: {node: '>=8'}
+
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
@@ -4547,6 +4642,10 @@ packages:
   tar@7.4.3:
     resolution: {integrity: sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==}
     engines: {node: '>=18'}
+
+  terminal-link@2.1.1:
+    resolution: {integrity: sha512-un0FmiRUQNr5PJqy9kP7c40F5BOfpGlYTrxonDChEZB7pzZxRNp/bt+ymiy9/npwXya9KH99nJ/GXFIiUkYGFQ==}
+    engines: {node: '>=8'}
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
@@ -4867,14 +4966,28 @@ packages:
     resolution: {integrity: sha512-RY7HwI/ydoC1Wwg4gJ3y6LpU9FJRZAUnTYMXthqhFXXu77ErDd/xkREpGuk4MyYkk4a+XDWAMqe0S3KkelYQEQ==}
     engines: {node: '>=14.0.0'}
 
+  vscode-jsonrpc@8.1.0:
+    resolution: {integrity: sha512-6TDy/abTQk+zDGYazgbIPc+4JoXdwC8NHU9Pbn4UJP1fehUyZmM4RHp5IthX7A6L5KS30PRui+j+tbbMMMafdw==}
+    engines: {node: '>=14.0.0'}
+
+  vscode-languageclient@8.1.0:
+    resolution: {integrity: sha512-GL4QdbYUF/XxQlAsvYWZRV3V34kOkpRlvV60/72ghHfsYFnS/v2MANZ9P6sHmxFcZKOse8O+L9G7Czg0NUWing==}
+    engines: {vscode: ^1.67.0}
+
   vscode-languageserver-protocol@3.17.2:
     resolution: {integrity: sha512-8kYisQ3z/SQ2kyjlNeQxbkkTNmVFoQCqkmGrzLH6A9ecPlgTbp3wDTnUNqaUxYr4vlAcloxx8zwy7G5WdguYNg==}
+
+  vscode-languageserver-protocol@3.17.3:
+    resolution: {integrity: sha512-924/h0AqsMtA5yK22GgMtCYiMdCOtWTSGgUOkgEDX+wk2b0x4sAfLiO4NxBxqbiVtz7K7/1/RgVrVI0NClZwqA==}
 
   vscode-languageserver-textdocument@1.0.12:
     resolution: {integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA==}
 
   vscode-languageserver-types@3.17.2:
     resolution: {integrity: sha512-zHhCWatviizPIq9B7Vh9uvrH6x3sK8itC84HkamnBWoDFJtzBf7SWlpLCZUit72b3os45h6RWQNC9xHRDF8dRA==}
+
+  vscode-languageserver-types@3.17.3:
+    resolution: {integrity: sha512-SYU4z1dL0PyIMd4Vj8YOqFvHu7Hz/enbWtpfnVbJHU4Nd1YNYx8u0ennumc6h48GQNeOLxmwySmnADouT/AuZA==}
 
   vscode-languageserver@8.0.2:
     resolution: {integrity: sha512-bpEt2ggPxKzsAOZlXmCJ50bV7VrxwCS5BI4+egUmure/oI/t4OlFzi/YNtVvY24A2UDOZAgwFGgnZPwqSJubkA==}
@@ -4950,6 +5063,14 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zenstack@2.19.0:
+    resolution: {integrity: sha512-CnH7tazExdA2N3m4i7RYx5MmEH8UbFoxpEtTvT606A20GQxjcxwjVAfnyMjpCTSf6Z9MFBL5TT6c604xg9AI8A==}
+    engines: {vscode: ^1.99.3}
+    hasBin: true
+    peerDependencies:
+      prisma: 5.0.0 - 6.16.x
+      zod: ^3.25.0 || ^4.0.0
 
   zod-validation-error@4.0.2:
     resolution: {integrity: sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==}
@@ -5644,7 +5765,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.4
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@levischuck/tiny-cbor@0.2.11': {}
 
@@ -5685,6 +5806,8 @@ snapshots:
 
   '@noble/ciphers@2.0.0': {}
 
+  '@noble/hashes@1.8.0': {}
+
   '@noble/hashes@2.0.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -5698,6 +5821,10 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@paralleldrive/cuid2@2.2.2':
+    dependencies:
+      '@noble/hashes': 1.8.0
 
   '@peculiar/asn1-android@2.5.0':
     dependencies:
@@ -5795,9 +5922,15 @@ snapshots:
       tslib: 2.8.1
       tsyringe: 4.10.0
 
-  '@prisma/client@6.16.2(typescript@5.8.3)':
+  '@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3)':
     optionalDependencies:
+      prisma: 6.16.2(typescript@5.8.3)
       typescript: 5.8.3
+
+  '@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)':
+    optionalDependencies:
+      prisma: 6.16.2(typescript@5.9.2)
+      typescript: 5.9.2
 
   '@prisma/config@6.16.2':
     dependencies:
@@ -5861,6 +5994,27 @@ snapshots:
       prompts: 2.4.2
     optionalDependencies:
       typescript: 5.8.3
+    transitivePeerDependencies:
+      - magicast
+
+  '@prisma/internals@6.16.2(typescript@5.9.2)':
+    dependencies:
+      '@prisma/config': 6.16.2
+      '@prisma/debug': 6.16.2
+      '@prisma/dmmf': 6.16.2
+      '@prisma/driver-adapter-utils': 6.16.2
+      '@prisma/engines': 6.16.2
+      '@prisma/fetch-engine': 6.16.2
+      '@prisma/generator': 6.16.2
+      '@prisma/generator-helper': 6.16.2
+      '@prisma/get-platform': 6.16.2
+      '@prisma/prisma-schema-wasm': 6.16.0-7.1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+      '@prisma/schema-engine-wasm': 6.16.0-7.1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+      '@prisma/schema-files-loader': 6.16.2
+      arg: 5.0.2
+      prompts: 2.4.2
+    optionalDependencies:
+      typescript: 5.9.2
     transitivePeerDependencies:
       - magicast
 
@@ -7078,12 +7232,12 @@ snapshots:
       postcss: 8.5.6
       tailwindcss: 4.1.11
 
-  '@tailwindcss/vite@4.1.13(vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))':
+  '@tailwindcss/vite@4.1.13(vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))':
     dependencies:
       '@tailwindcss/node': 4.1.13
       '@tailwindcss/oxide': 4.1.13
       tailwindcss: 4.1.13
-      vite: 7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
+      vite: 7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
 
   '@tanstack/devtools-event-client@0.2.5': {}
 
@@ -7153,7 +7307,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-plugin@1.131.48(@tanstack/react-router@1.131.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))':
+  '@tanstack/router-plugin@1.131.48(@tanstack/react-router@1.131.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))':
     dependencies:
       '@babel/core': 7.28.4
       '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.28.4)
@@ -7171,7 +7325,7 @@ snapshots:
       zod: 3.25.76
     optionalDependencies:
       '@tanstack/react-router': 1.131.48(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      vite: 7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
+      vite: 7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -7340,11 +7494,16 @@ snapshots:
 
   '@types/minimatch@6.0.0':
     dependencies:
-      minimatch: 9.0.5
+      minimatch: 10.0.3
 
   '@types/node@20.19.9':
     dependencies:
       undici-types: 6.21.0
+
+  '@types/node@22.15.32':
+    dependencies:
+      undici-types: 6.21.0
+    optional: true
 
   '@types/react-dom@19.1.7(@types/react@19.1.9)':
     dependencies:
@@ -7554,11 +7713,11 @@ snapshots:
       '@typescript-eslint/types': 8.44.0
       eslint-visitor-keys: 4.2.1
 
-  '@vitejs/plugin-react-swc@4.1.0(vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))':
+  '@vitejs/plugin-react-swc@4.1.0(vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.35
       '@swc/core': 1.13.5
-      vite: 7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
+      vite: 7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -7582,9 +7741,9 @@ snapshots:
     dependencies:
       langium: 1.3.1
 
-  '@zenstackhq/runtime@2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(zod@3.25.76)':
+  '@zenstackhq/runtime@2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(zod@3.25.76)':
     dependencies:
-      '@prisma/client': 6.16.2(typescript@5.8.3)
+      '@prisma/client': 6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3)
       bcryptjs: 2.4.3
       buffer: 6.0.3
       decimal.js-light: 2.5.1
@@ -7600,12 +7759,30 @@ snapshots:
       zod: 3.25.76
       zod-validation-error: 4.0.2(zod@3.25.76)
 
-  '@zenstackhq/sdk@2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)':
+  '@zenstackhq/runtime@2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(zod@4.1.9)':
+    dependencies:
+      '@prisma/client': 6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)
+      bcryptjs: 2.4.3
+      buffer: 6.0.3
+      decimal.js-light: 2.5.1
+      deepmerge: 4.3.1
+      logic-solver: 2.0.1
+      pluralize: 8.0.0
+      safe-json-stringify: 1.2.0
+      semver: 7.7.2
+      superjson: 1.13.3
+      ts-pattern: 4.3.0
+      tslib: 2.8.1
+      uuid: 9.0.1
+      zod: 4.1.9
+      zod-validation-error: 4.0.2(zod@4.1.9)
+
+  '@zenstackhq/sdk@2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)':
     dependencies:
       '@prisma/generator-helper': 6.16.2
       '@prisma/internals': 6.16.2(typescript@5.8.3)
       '@zenstackhq/language': 2.19.0
-      '@zenstackhq/runtime': 2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(zod@3.25.76)
+      '@zenstackhq/runtime': 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(zod@3.25.76)
       langium: 1.3.1
       semver: 7.7.2
       ts-morph: 26.0.0
@@ -7616,10 +7793,26 @@ snapshots:
       - typescript
       - zod
 
-  '@zenstackhq/tanstack-query@2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)':
+  '@zenstackhq/sdk@2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(typescript@5.9.2)(zod@4.1.9)':
     dependencies:
-      '@zenstackhq/runtime': 2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(zod@3.25.76)
-      '@zenstackhq/sdk': 2.19.0(@prisma/client@6.16.2(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)
+      '@prisma/generator-helper': 6.16.2
+      '@prisma/internals': 6.16.2(typescript@5.9.2)
+      '@zenstackhq/language': 2.19.0
+      '@zenstackhq/runtime': 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(zod@4.1.9)
+      langium: 1.3.1
+      semver: 7.7.2
+      ts-morph: 26.0.0
+      ts-pattern: 4.3.0
+    transitivePeerDependencies:
+      - '@prisma/client'
+      - magicast
+      - typescript
+      - zod
+
+  '@zenstackhq/tanstack-query@2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)':
+    dependencies:
+      '@zenstackhq/runtime': 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(zod@3.25.76)
+      '@zenstackhq/sdk': 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.8.3))(typescript@5.8.3))(typescript@5.8.3)(zod@3.25.76)
       cross-fetch: 4.1.0
       semver: 7.7.2
       ts-morph: 26.0.0
@@ -7640,6 +7833,12 @@ snapshots:
       acorn: 8.15.0
 
   acorn@8.15.0: {}
+
+  agent-base@6.0.2:
+    dependencies:
+      debug: 4.4.1
+    transitivePeerDependencies:
+      - supports-color
 
   agent-base@7.1.4: {}
 
@@ -7758,6 +7957,8 @@ snapshots:
   ast-types@0.16.1:
     dependencies:
       tslib: 2.8.1
+
+  async-exit-hook@2.0.1: {}
 
   async-function@1.0.0: {}
 
@@ -8014,9 +8215,13 @@ snapshots:
       color-string: 1.9.1
     optional: true
 
+  colors@1.4.0: {}
+
   comlink@4.4.2: {}
 
   commander@10.0.1: {}
+
+  commander@8.3.0: {}
 
   concat-map@0.0.1: {}
 
@@ -8194,6 +8399,12 @@ snapshots:
   emoji-regex@8.0.0: {}
 
   empathic@2.0.0: {}
+
+  emphasize@4.2.0:
+    dependencies:
+      chalk: 4.1.2
+      highlight.js: 10.4.1
+      lowlight: 1.17.0
 
   enhanced-resolve@5.18.2:
     dependencies:
@@ -8562,6 +8773,10 @@ snapshots:
     dependencies:
       reusify: 1.1.0
 
+  fault@1.0.4:
+    dependencies:
+      format: 0.2.2
+
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
       picomatch: 4.0.3
@@ -8593,6 +8808,8 @@ snapshots:
   for-each@0.3.5:
     dependencies:
       is-callable: 1.2.7
+
+  format@0.2.2: {}
 
   fs-extra@10.1.0:
     dependencies:
@@ -8763,6 +8980,8 @@ snapshots:
       no-case: 2.3.2
       upper-case: 1.1.3
 
+  highlight.js@10.4.1: {}
+
   hoist-non-react-statics@3.3.2:
     dependencies:
       react-is: 16.13.1
@@ -8785,6 +9004,13 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.4
+      debug: 4.4.1
+    transitivePeerDependencies:
+      - supports-color
+
+  https-proxy-agent@5.0.0:
+    dependencies:
+      agent-base: 6.0.2
       debug: 4.4.1
     transitivePeerDependencies:
       - supports-color
@@ -9169,6 +9395,11 @@ snapshots:
 
   lower-case@1.1.4: {}
 
+  lowlight@1.17.0:
+    dependencies:
+      fault: 1.0.4
+      highlight.js: 10.4.1
+
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -9217,6 +9448,10 @@ snapshots:
     dependencies:
       brace-expansion: 1.1.12
 
+  minimatch@5.1.6:
+    dependencies:
+      brace-expansion: 2.0.2
+
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.2
@@ -9228,6 +9463,12 @@ snapshots:
   minizlib@3.0.2:
     dependencies:
       minipass: 7.1.2
+
+  mixpanel@0.17.0:
+    dependencies:
+      https-proxy-agent: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
 
   mkdirp@0.5.6:
     dependencies:
@@ -9510,6 +9751,32 @@ snapshots:
   prelude-ls@1.2.1: {}
 
   prettier@3.6.2: {}
+
+  pretty-repl@4.0.1:
+    dependencies:
+      ansi-regex: 5.0.1
+      chalk: 4.1.2
+      emphasize: 4.2.0
+      strip-ansi: 6.0.1
+
+  prisma@6.16.2(typescript@5.8.3):
+    dependencies:
+      '@prisma/config': 6.16.2
+      '@prisma/engines': 6.16.2
+    optionalDependencies:
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - magicast
+    optional: true
+
+  prisma@6.16.2(typescript@5.9.2):
+    dependencies:
+      '@prisma/config': 6.16.2
+      '@prisma/engines': 6.16.2
+    optionalDependencies:
+      typescript: 5.9.2
+    transitivePeerDependencies:
+      - magicast
 
   prismjs@1.30.0: {}
 
@@ -10028,6 +10295,8 @@ snapshots:
     dependencies:
       ansi-regex: 5.0.1
 
+  strip-color@0.1.0: {}
+
   strip-final-newline@2.0.0: {}
 
   strip-json-comments@2.0.1: {}
@@ -10057,6 +10326,11 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
 
+  supports-hyperlinks@2.3.0:
+    dependencies:
+      has-flag: 4.0.0
+      supports-color: 7.2.0
+
   supports-preserve-symlinks-flag@1.0.0: {}
 
   swap-case@1.1.2:
@@ -10080,6 +10354,11 @@ snapshots:
       minizlib: 3.0.2
       mkdirp: 3.0.1
       yallist: 5.0.0
+
+  terminal-link@2.1.1:
+    dependencies:
+      ansi-escapes: 4.3.2
+      supports-hyperlinks: 2.3.0
 
   through@2.3.8: {}
 
@@ -10383,7 +10662,7 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  vite@7.1.6(@types/node@20.19.9)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5):
+  vite@7.1.6(@types/node@22.15.32)(jiti@2.5.1)(lightningcss@1.30.1)(tsx@4.20.5):
     dependencies:
       esbuild: 0.25.10
       fdir: 6.5.0(picomatch@4.0.3)
@@ -10392,7 +10671,7 @@ snapshots:
       rollup: 4.51.0
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 20.19.9
+      '@types/node': 22.15.32
       fsevents: 2.3.3
       jiti: 2.5.1
       lightningcss: 1.30.1
@@ -10400,14 +10679,29 @@ snapshots:
 
   vscode-jsonrpc@8.0.2: {}
 
+  vscode-jsonrpc@8.1.0: {}
+
+  vscode-languageclient@8.1.0:
+    dependencies:
+      minimatch: 5.1.6
+      semver: 7.7.2
+      vscode-languageserver-protocol: 3.17.3
+
   vscode-languageserver-protocol@3.17.2:
     dependencies:
       vscode-jsonrpc: 8.0.2
       vscode-languageserver-types: 3.17.2
 
+  vscode-languageserver-protocol@3.17.3:
+    dependencies:
+      vscode-jsonrpc: 8.1.0
+      vscode-languageserver-types: 3.17.3
+
   vscode-languageserver-textdocument@1.0.12: {}
 
   vscode-languageserver-types@3.17.2: {}
+
+  vscode-languageserver-types@3.17.3: {}
 
   vscode-languageserver@8.0.2:
     dependencies:
@@ -10499,9 +10793,47 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
+  zenstack@2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2)(zod@4.1.9):
+    dependencies:
+      '@paralleldrive/cuid2': 2.2.2
+      '@zenstackhq/language': 2.19.0
+      '@zenstackhq/sdk': 2.19.0(@prisma/client@6.16.2(prisma@6.16.2(typescript@5.9.2))(typescript@5.9.2))(typescript@5.9.2)(zod@4.1.9)
+      async-exit-hook: 2.0.1
+      colors: 1.4.0
+      commander: 8.3.0
+      deepmerge: 4.3.1
+      langium: 1.3.1
+      mixpanel: 0.17.0
+      ora: 5.4.1
+      pluralize: 8.0.0
+      pretty-repl: 4.0.1
+      prisma: 6.16.2(typescript@5.9.2)
+      semver: 7.7.2
+      strip-color: 0.1.0
+      terminal-link: 2.1.1
+      ts-morph: 26.0.0
+      ts-pattern: 4.3.0
+      uuid: 9.0.1
+      vscode-jsonrpc: 8.1.0
+      vscode-languageclient: 8.1.0
+      vscode-languageserver: 8.0.2
+      vscode-languageserver-textdocument: 1.0.12
+      vscode-uri: 3.0.8
+      zod: 4.1.9
+      zod-validation-error: 4.0.2(zod@4.1.9)
+    transitivePeerDependencies:
+      - '@prisma/client'
+      - magicast
+      - supports-color
+      - typescript
+
   zod-validation-error@4.0.2(zod@3.25.76):
     dependencies:
       zod: 3.25.76
+
+  zod-validation-error@4.0.2(zod@4.1.9):
+    dependencies:
+      zod: 4.1.9
 
   zod@3.25.76: {}
 

@@ -1,4 +1,4 @@
-import { useFindManyCategory } from './trpc/category';
+import { useFindManyCategory } from '@workspace/db/hooks/trpc/category';
 import type { CategoryWithSubcategories, SubcategoryWithItems } from '../types/menu-editor';
 
 /**
@@ -25,6 +25,8 @@ export function useCategoryData(restaurantId?: string) {
             isActive: true,
           },
           include: {
+            menuItems: {
+            },
             _count: {
               select: {
                 children: true,
@@ -51,7 +53,7 @@ export function useCategoryData(restaurantId?: string) {
   );
 
   // Transform the data to match our TypeScript interfaces
-  const categories: CategoryWithSubcategories[] = rawCategories?.map(category => {
+  const categories: CategoryWithSubcategories[] = rawCategories?.map((category: any) => {
     const transformedCategory: CategoryWithSubcategories = {
       ...category,
       description: category.description ?? undefined, // Convert null to undefined
@@ -61,7 +63,7 @@ export function useCategoryData(restaurantId?: string) {
           ...child,
           description: child.description ?? undefined, // Convert null to undefined
           parentId: child.parentId ?? undefined, // Convert null to undefined
-          menuItems: [], // We don't need the full menu items, just the count
+          menuItems: child.menuItems || [], // Include the actual menu items
           _count: {
             children: child._count?.children || 0,
             menuItems: child._count?.menuItems || 0

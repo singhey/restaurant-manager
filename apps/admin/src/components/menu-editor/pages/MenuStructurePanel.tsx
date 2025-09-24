@@ -6,7 +6,8 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'sonner'
 import { useCategoryData } from '../../../hooks/useCategoryData'
 import { useCategoryExpandedState } from '../../../hooks/useCategoryState'
-import { useUpdateCategory } from '@/hooks/trpc/category'
+import { useFindManyCategory, useUpdateCategory } from '@workspace/db/hooks/trpc/category'
+import { useUpdateMenuItem } from '@workspace/db/hooks/trpc/menu-item'
 import { CategoryItem } from '../components/items/CategoryItem'
 import { AddCategoryForm } from '../components/forms/AddCategoryForm'
 import { DeleteCategoryDialog } from '../components/dialogs/DeleteCategoryDialog'
@@ -19,7 +20,21 @@ import { useParams } from '@tanstack/react-router'
  * Left panel component containing the hierarchical menu structure
  * Displays categories and subcategories with add/delete functionality
  */
-export function MenuStructurePanel({ onItemSelect: _onItemSelect }: MenuStructurePanelProps) {
+
+export function MenuStructurePanel({}: MenuStructurePanelProps) {
+  const {restaurantId} = useParams({strict: false})
+  const {data: categories} = useFindManyCategory({
+    where: {
+      restaurantId,
+    }
+  })
+
+  return <div>
+
+  </div>
+}
+
+export function MenuStructurePanels({ onItemSelect: _onItemSelect }: MenuStructurePanelProps) {
   const [showAddCategoryForm, setShowAddCategoryForm] = useState(false)
   const [categoryToDelete, setCategoryToDelete] = useState<CategoryWithSubcategories | null>(null)
   
@@ -77,9 +92,20 @@ export function MenuStructurePanel({ onItemSelect: _onItemSelect }: MenuStructur
     onSuccess: () => {
       toast.success('Category order updated successfully')
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error('Failed to update category order:', error)
       toast.error('Failed to update category order. Please try again.')
+    }
+  })
+
+  // Set up menu item update mutation for reordering
+  const { mutate: updateMenuItem, isPending: isUpdatingMenuItem } = useUpdateMenuItem({
+    onSuccess: () => {
+      toast.success('Menu item order updated successfully')
+    },
+    onError: (error: any) => {
+      console.error('Failed to update menu item order:', error)
+      toast.error('Failed to update menu item order. Please try again.')
     }
   })
 
@@ -182,6 +208,54 @@ export function MenuStructurePanel({ onItemSelect: _onItemSelect }: MenuStructur
     })
   }
 
+  const handleMenuItemReorder = (menuItemId: string, newOrder: number) => {
+    // Validate inputs
+    if (!menuItemId || typeof newOrder !== 'number' || isNaN(newOrder)) {
+      console.error('Invalid menu item reorder parameters:', { menuItemId, newOrder })
+      toast.error('Invalid reorder parameters')
+      return
+    }
+
+    // Find the menu item to ensure it exists
+    let menuItem = null
+    
+    for (const category of categories) {
+      for (const subcategory of category.children || []) {
+        const found = subcategory.menuItems?.find((item: any) => item.id === menuItemId)
+        if (found) {
+          menuItem = found
+          break
+        }
+      }
+      if (menuItem) break
+    }
+
+    if (!menuItem) {
+      console.error('Menu item not found for reordering:', menuItemId)
+      toast.error('Menu item not found')
+      return
+    }
+
+    // Don't update if the order hasn't changed
+    if (menuItem.sortOrder === newOrder) {
+      return
+    }
+
+    // Log the reorder operation for debugging
+    console.log('🍽️ MenuStructurePanel: Reordering menu item:', {
+      menuItemId,
+      menuItemName: menuItem.name,
+      oldOrder: menuItem.sortOrder,
+      newOrder
+    })
+
+    // Update the menu item's sortOrder
+    updateMenuItem({
+      where: { id: menuItemId },
+      data: { sortOrder: newOrder }
+    })
+  }
+
   if (error) {
     return (
       <div className="p-4">
@@ -262,12 +336,13 @@ export function MenuStructurePanel({ onItemSelect: _onItemSelect }: MenuStructur
             categories={categories}
             onCategoryReorder={handleCategoryReorder}
             onSubcategoryReorder={handleSubcategoryReorder}
+            onMenuItemReorder={handleMenuItemReorder}
           >
             <SortableContext 
               items={categories.map(cat => cat.id)}
               strategy={verticalListSortingStrategy}
             >
-              <div className={`space-y-2 ${isUpdatingCategory ? 'loading-blur' : ''}`}>
+              <div className={`space-y-2 ${isUpdatingCategory || isUpdatingMenuItem ? 'loading-blur' : ''}`}>
                 {categories.map((category) => (
                   <CategoryItem
                     key={category.id}
@@ -277,6 +352,14 @@ export function MenuStructurePanel({ onItemSelect: _onItemSelect }: MenuStructur
                     onDelete={handleCategoryDelete}
                     onReorder={handleCategoryReorder}
                     onSubcategoryReorder={handleSubcategoryReorder}
+                    onMenuItemSelect={(menuItem) => {
+                      console.log('Menu item selected:', menuItem)
+                      // TODO: Integrate with right panel state management
+                    }}
+                    onMenuItemAdd={(subcategoryId) => {
+                      console.log('Add menu item to subcategory:', subcategoryId)
+                      // TODO: Integrate with right panel state management
+                    }}
                   />
                 ))}
               </div>
@@ -285,7 +368,7 @@ export function MenuStructurePanel({ onItemSelect: _onItemSelect }: MenuStructur
           
           {/* Enhanced loading overlay for reordering */}
           <LoadingOverlay 
-            isVisible={isUpdatingCategory}
+            isVisible={isUpdatingCategory || isUpdatingMenuItem}
             title="Updating order..."
             subtitle="Please wait"
           />

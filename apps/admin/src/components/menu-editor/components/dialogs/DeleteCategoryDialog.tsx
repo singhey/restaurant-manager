@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button } from '@workspace/ui/components/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@workspace/ui/components/dialog'
 import { AlertTriangle, Loader2 } from 'lucide-react'
-import { useDeleteCategory } from '@/hooks/trpc/category'
+import { useDeleteCategory } from '@workspace/db/hooks/trpc/category'
 import type { CategoryWithSubcategories } from '../../../../types/menu-editor'
 
 interface DeleteCategoryDialogProps {
@@ -30,7 +30,7 @@ export function DeleteCategoryDialog({
       onSuccess()
       onClose()
     },
-    onError: (error) => {
+    onError: (error: any) => {
       const errorMessage = error instanceof Error 
         ? error.message 
         : 'Failed to delete category. Please try again.'

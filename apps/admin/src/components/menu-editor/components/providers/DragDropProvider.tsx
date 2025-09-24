@@ -28,13 +28,16 @@ interface DragDropProviderProps {
   categories: CategoryWithSubcategories[]
   onCategoryReorder: (categoryId: string, newOrder: number) => void
   onSubcategoryReorder: (subcategoryId: string, newOrder: number, newParentId?: string) => void
+  onMenuItemReorder: (menuItemId: string, newOrder: number) => void
 }
 
 interface DragData {
-  type: 'category' | 'subcategory'
+  type: 'category' | 'subcategory' | 'menuItem'
   id: string
   parentId?: string
+  subcategoryId?: string
   name: string
+  sortOrder?: number
 }
 
 /**
@@ -47,6 +50,7 @@ export function DragDropProvider({
   categories,
   onCategoryReorder,
   onSubcategoryReorder,
+  onMenuItemReorder,
 }: DragDropProviderProps) {
   const { isAlphabeticalSort } = useSortingPreference()
   const [activeItem, setActiveItem] = useState<DragData | null>(null)
@@ -80,7 +84,9 @@ export function DragDropProvider({
       type: data.type,
       id: data.id,
       parentId: data.parentId,
+      subcategoryId: data.subcategoryId,
       name: data.name,
+      sortOrder: data.sortOrder,
     }
   }
 
@@ -136,6 +142,15 @@ export function DragDropProvider({
         active: activeData.name,
         over: overData.name,
       })
+    } else if (activeData.type === 'menuItem' && overData.type === 'menuItem') {
+      // Menu item being dragged over another menu item - valid reorder within same subcategory
+      if (activeData.subcategoryId === overData.subcategoryId) {
+        console.log('🍽️ Valid menu item reorder:', {
+          active: activeData.name,
+          over: overData.name,
+          subcategory: activeData.subcategoryId,
+        })
+      }
     }
   }
 
@@ -171,6 +186,11 @@ export function DragDropProvider({
     // Handle subcategory reordering
     else if (activeData.type === 'subcategory') {
       handleSubcategoryReorder(activeData, overData)
+    }
+    
+    // Handle menu item reordering
+    else if (activeData.type === 'menuItem' && overData.type === 'menuItem') {
+      handleMenuItemReorder(activeData, overData)
     }
   }
 
@@ -418,6 +438,104 @@ export function DragDropProvider({
   }
 
   /**
+   * Handle menu item reordering within the same subcategory
+   */
+  const handleMenuItemReorder = (activeData: DragData, overData: DragData) => {
+    // Only allow reordering within the same subcategory
+    if (activeData.subcategoryId !== overData.subcategoryId) {
+      console.log('❌ Cannot reorder menu items across different subcategories')
+      return
+    }
+
+    // Find the subcategory containing these menu items
+    let targetSubcategory: any = null
+    for (const category of categories) {
+      const subcategory = category.children?.find(sub => sub.id === activeData.subcategoryId)
+      if (subcategory) {
+        targetSubcategory = subcategory
+        break
+      }
+    }
+
+    if (!targetSubcategory || !targetSubcategory.menuItems) {
+      console.error('Target subcategory not found:', activeData.subcategoryId)
+      return
+    }
+
+    const menuItems = targetSubcategory.menuItems
+    const activeIndex = menuItems.findIndex((item: any) => item.id === activeData.id)
+    const overIndex = menuItems.findIndex((item: any) => item.id === overData.id)
+
+    if (activeIndex === -1 || overIndex === -1) {
+      console.error('Menu items not found in subcategory')
+      return
+    }
+
+    // Don't reorder if dropping on itself
+    if (activeIndex === overIndex) return
+
+    // Calculate new sort order based on position
+    let newOrder: number
+
+    // Determine if we're moving up or down
+    const movingDown = activeIndex < overIndex
+
+    if (movingDown) {
+      // Moving down: place after the target item
+      if (overIndex === menuItems.length - 1) {
+        // Moving to last position
+        newOrder = menuItems[overIndex].sortOrder + 1000
+      } else {
+        // Moving to middle position - place between target and next item
+        const targetOrder = menuItems[overIndex].sortOrder
+        const nextOrder = menuItems[overIndex + 1].sortOrder
+        
+        // Ensure we have enough space between orders
+        if (nextOrder - targetOrder <= 1) {
+          newOrder = targetOrder + 500
+        } else {
+          newOrder = (targetOrder + nextOrder) / 2
+        }
+      }
+    } else {
+      // Moving up: place before the target item
+      if (overIndex === 0) {
+        // Moving to first position
+        newOrder = Math.max(0, menuItems[overIndex].sortOrder - 1000)
+      } else {
+        // Moving to middle position - place between previous and target item
+        const prevOrder = menuItems[overIndex - 1].sortOrder
+        const targetOrder = menuItems[overIndex].sortOrder
+        
+        // Ensure we have enough space between orders
+        if (targetOrder - prevOrder <= 1) {
+          newOrder = prevOrder + 500
+        } else {
+          newOrder = (prevOrder + targetOrder) / 2
+        }
+      }
+    }
+
+    // Ensure the new order is a valid number
+    if (isNaN(newOrder) || !isFinite(newOrder)) {
+      console.error('Invalid sort order calculated for menu item:', newOrder)
+      return
+    }
+
+    console.log('🍽️ Reordering menu item:', {
+      menuItemId: activeData.id,
+      menuItemName: activeData.name,
+      subcategoryId: activeData.subcategoryId,
+      oldOrder: activeData.sortOrder,
+      newOrder,
+      activeIndex,
+      overIndex
+    })
+
+    onMenuItemReorder(activeData.id, newOrder)
+  }
+
+  /**
    * Render enhanced drag overlay with item preview
    */
   const renderDragOverlay = () => {
@@ -425,23 +543,29 @@ export function DragDropProvider({
 
     // Find the full item data for enhanced preview
     let itemData: any = null
-    let itemCount = 0
 
     if (activeItem.type === 'category') {
       itemData = categories.find(cat => cat.id === activeItem.id)
-      if (itemData) {
-        itemCount = itemData._count.menuItems + 
-          (itemData.children?.reduce((sum: number, sub: any) => sum + sub._count.menuItems, 0) || 0)
-      }
-    } else {
+    } else if (activeItem.type === 'subcategory') {
       // Find subcategory
       for (const category of categories) {
         const subcategory = category.children?.find(sub => sub.id === activeItem.id)
         if (subcategory) {
           itemData = subcategory
-          itemCount = subcategory._count.menuItems
           break
         }
+      }
+    } else if (activeItem.type === 'menuItem') {
+      // Find menu item
+      for (const category of categories) {
+        for (const subcategory of category.children || []) {
+          const menuItem = subcategory.menuItems?.find((item: any) => item.id === activeItem.id)
+          if (menuItem) {
+            itemData = menuItem
+            break
+          }
+        }
+        if (itemData) break
       }
     }
 

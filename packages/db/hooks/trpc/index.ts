@@ -16,6 +16,7 @@ export * from './restaurant';
 export * from './restaurant-seo';
 export * from './category';
 export * from './menu-item';
+export * from './variant';
 export * from './addon-group';
 export * from './addon';
 export * from './menu-item-addon';

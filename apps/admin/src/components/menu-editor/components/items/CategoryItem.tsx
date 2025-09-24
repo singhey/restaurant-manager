@@ -9,6 +9,7 @@ import { AddSubcategoryForm } from '../forms/AddSubcategoryForm'
 import { DropZoneIndicator } from '../ui/DropZoneIndicator'
 import { DisabledOverlay } from '../ui/DisabledOverlay'
 import { useSortingPreference } from '@/hooks/useSortingPreference'
+import { useSubcategoryExpansion } from '@/hooks/useSubcategoryExpansion'
 import type { CategoryItemProps, CreateSubcategoryData } from '@/types/menu-editor'
 
 /**
@@ -22,9 +23,12 @@ export function CategoryItem({
   onDelete,
   onReorder: _onReorder,
   onSubcategoryReorder,
+  onMenuItemSelect,
+  onMenuItemAdd,
 }: CategoryItemProps) {
   const [showAddSubcategoryForm, setShowAddSubcategoryForm] = useState(false)
   const { isAlphabeticalSort } = useSortingPreference()
+  const { isSubcategoryExpanded, toggleSubcategoryExpanded } = useSubcategoryExpansion()
 
   // Set up drag and drop for categories
   const {
@@ -259,8 +263,12 @@ export function CategoryItem({
                 <SubcategoryItem
                   key={subcategory.id}
                   subcategory={subcategory}
+                  isExpanded={isSubcategoryExpanded(subcategory.id)}
+                  onToggleExpanded={toggleSubcategoryExpanded}
                   onDelete={handleSubcategoryDelete}
                   onReorder={handleSubcategoryReorder}
+                  onMenuItemSelect={onMenuItemSelect || (() => {})}
+                  onMenuItemAdd={onMenuItemAdd || (() => {})}
                 />
               ))}
             </SortableContext>
