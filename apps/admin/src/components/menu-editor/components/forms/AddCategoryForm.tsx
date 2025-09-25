@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAppForm, AppInputField, AppTextareaField } from '@workspace/ui/components/tanstack-form'
 import { LoadingButton } from '@workspace/ui/components/loading-button'
-import { useCreateCategory } from '@/hooks/trpc/category'
+import { useCreateCategory } from '@workspace/db/hooks/trpc/category'
 import { useParams } from '@tanstack/react-router'
 import type { AddCategoryFormProps } from '../../../../types/menu-editor'
 import {z} from 'zod'

@@ -118,10 +118,6 @@ export function SubcategoryItem({
           ? 'bg-muted/20'
           : ''
       }`}>
-        {/* Indent Indicator */}
-        <div className="w-4 flex justify-center">
-          <div className="w-px h-4 bg-border"></div>
-        </div>
 
         {/* Expand/Collapse Button */}
         <Button
@@ -137,14 +133,9 @@ export function SubcategoryItem({
               } ${!hasMenuItems ? 'opacity-30' : ''}`}
           />
         </Button>
-
-        {/* Subcategory Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h4 className="font-medium text-sm truncate">{subcategory.name}</h4>
-            <span className="text-xs text-muted-foreground">
-              ({subcategory._count.menuItems} items)
-            </span>
+            <h3 className="font-medium text-sm truncate">{subcategory.name}</h3>
           </div>
         </div>
 
@@ -253,12 +244,12 @@ export function SubcategoryItem({
       />
 
       {/* Delete Confirmation Dialog */}
-      <DeleteSubcategoryDialog
+      {/* <DeleteSubcategoryDialog
         subcategory={subcategory}
         isOpen={showDeleteDialog}
         onClose={handleDeleteCancel}
         onSuccess={handleDeleteSuccess}
-      />
+      /> */}
     </div>
   )
 }

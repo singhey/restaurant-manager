@@ -6,7 +6,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'sonner'
 import { useCategoryData } from '../../../hooks/useCategoryData'
 import { useCategoryExpandedState } from '../../../hooks/useCategoryState'
-import { useFindManyCategory, useUpdateCategory } from '@workspace/db/hooks/trpc/category'
+import { useDeleteCategory, useFindManyCategory, useUpdateCategory } from '@workspace/db/hooks/trpc/category'
 import { useUpdateMenuItem } from '@workspace/db/hooks/trpc/menu-item'
 import { CategoryItem } from '../components/items/CategoryItem'
 import { AddCategoryForm } from '../components/forms/AddCategoryForm'
@@ -15,23 +15,67 @@ import { DragDropProvider } from '../components/providers/DragDropProvider'
 import { LoadingOverlay } from '../components/ui/LoadingOverlay'
 import type { MenuStructurePanelProps, CreateCategoryData, CategoryWithSubcategories } from '../../../types/menu-editor'
 import { useParams } from '@tanstack/react-router'
+import LoadingWrapper from '@/components/loading/loading-wrapper'
+import CategoryRow from '../components/items/CategoryRow'
+import { Confirm } from '@/components/generic/Confirm'
 
 /**
  * Left panel component containing the hierarchical menu structure
  * Displays categories and subcategories with add/delete functionality
  */
 
+
 export function MenuStructurePanel({}: MenuStructurePanelProps) {
   const {restaurantId} = useParams({strict: false})
-  const {data: categories} = useFindManyCategory({
+  const {data: categories, isLoading} = useFindManyCategory({
     where: {
       restaurantId,
+      parentId: null
+    },
+    include: {
+      children: {
+        include: {
+          menuItems: true
+        },
+        
+      }
     }
   })
 
-  return <div>
+  const {mutate: updateCategory} = useUpdateCategory()
+  const {mutate: deleteCategory} = useDeleteCategory()
 
-  </div>
+  return <LoadingWrapper
+    results={categories}
+    loading={isLoading}
+    render={(results) => <div className='border-r w-full'>
+      {results.map(category => <CategoryRow
+              category={category}
+              onEdit={(id, newName) => updateCategory({
+                data: {
+                  name: newName
+                },
+                where: {
+                  id
+                }
+              })}
+              onDelete={async (id) => {
+                console.log("delete")
+                if(await Confirm.call({
+                  title: 'Confirm Delete',
+                  description: 'Do you wish to delete the category. This action cannot be undone.'
+                })) {
+                  deleteCategory({
+                    where: {
+                      id
+                    }
+                  })
+                }
+              }}
+            />
+          )
+        }</div>} 
+  />
 }
 
 export function MenuStructurePanels({ onItemSelect: _onItemSelect }: MenuStructurePanelProps) {
@@ -252,7 +296,7 @@ export function MenuStructurePanels({ onItemSelect: _onItemSelect }: MenuStructu
     // Update the menu item's sortOrder
     updateMenuItem({
       where: { id: menuItemId },
-      data: { sortOrder: newOrder }
+      data: {description: ''}
     })
   }
 

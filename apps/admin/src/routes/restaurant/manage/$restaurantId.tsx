@@ -18,7 +18,5 @@ function RouteComponent() {
     }
   }, [location])
 
-  return <div>
-    <Outlet />
-  </div>
+  return <Outlet />
 }

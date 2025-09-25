@@ -3,7 +3,7 @@ import { Button } from '@workspace/ui/components/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@workspace/ui/components/dialog'
 import { AlertTriangle, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
-import { useDeleteCategory } from '@/hooks/trpc/category'
+import { useDeleteCategory } from '@workspace/db/hooks/trpc/category'
 import type { SubcategoryWithItems } from '../../../../types/menu-editor'
 
 interface DeleteSubcategoryDialogProps {

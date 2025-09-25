@@ -13,6 +13,7 @@ import { Topbar } from '../components/layout/Topbar'
 import { NavigationMenu } from '../components/layout/NavigationMenu'
 import { OrganizationSwitcher } from '@daveyplate/better-auth-ui'
 import { RenderWhenPathMatches } from '@/components/conditional/RenderWhenPathMatches'
+import { Confirm } from '@/components/generic/Confirm'
 
 const RootLayout = () => {
 
@@ -51,9 +52,10 @@ const RootLayout = () => {
         </RenderWhenPathMatches>
         <SidebarInset>
           <Topbar />
-          <div className="flex flex-1 flex-col gap-4 p-4">
+          <Confirm.Root />
+          {/* <div className="flex flex-1"> */}
             <Outlet />
-          </div>
+          {/* </div> */}
         </SidebarInset>
       </SidebarProvider>
     </DataProvider>

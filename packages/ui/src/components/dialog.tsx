@@ -106,6 +106,39 @@ const DialogDescription = React.forwardRef<
 ))
 DialogDescription.displayName = DialogPrimitive.Description.displayName
 
+
+type ModalProps = {
+  isOpen: boolean,
+  onClose: () => void,
+  title?: string | React.ReactNode,
+  description?: string | React.ReactNode,
+  dialogContent: React.ReactNode
+}
+
+const Modal = ({isOpen, onClose, title, description, dialogContent}: ModalProps) => (
+  <Dialog open={isOpen} onOpenChange={onClose}>
+    <DialogContent className="sm:max-w-md">
+      <DialogHeader>
+        {title && <DialogTitle>
+          {title}
+        </DialogTitle>}
+        {description && <DialogDescription>
+          {description}
+        </DialogDescription>}
+      </DialogHeader>
+      <div>
+        {dialogContent}
+      </div>
+    </DialogContent>
+  </Dialog>
+)
+
+function useModal(defaultState: boolean) {
+  const [isOpen, setOpen] = React.useState(defaultState)
+
+  return {isOpen, setOpen, close: () => setOpen(false)}
+}
+
 export {
   Dialog,
   DialogPortal,
@@ -117,4 +150,6 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
+  Modal,
+  useModal
 }

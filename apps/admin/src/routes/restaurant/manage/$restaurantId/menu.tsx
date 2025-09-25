@@ -5,9 +5,5 @@ export const Route = createFileRoute('/restaurant/manage/$restaurantId/menu')({
 })
 
 function MenuLayout() {
-  return (
-    <div className="flex flex-col gap-4">
-      <Outlet />
-    </div>
-  )
+  return <Outlet />
 }

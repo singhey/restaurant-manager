@@ -76,8 +76,6 @@ export function CategoryItem({
   }
 
   const hasSubcategories = category.children && category.children.length > 0
-  const totalItems = category._count.menuItems +
-    (category.children?.reduce((sum, sub) => sum + sub._count.menuItems, 0) || 0)
 
   const handleToggleExpanded = () => {
     onToggleExpanded(category.id)
@@ -117,7 +115,7 @@ export function CategoryItem({
     <div 
       ref={setNodeRef}
       style={style}
-      className={`relative border border-border rounded-lg bg-card reorder-transition ${
+      className={`relative border bg-card reorder-transition ${
         isDragging 
           ? 'category-dragging' 
           : 'item-hover'

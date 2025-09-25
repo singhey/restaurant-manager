@@ -1,21 +1,5 @@
-// @ts-nocheck
-import type { MenuItem } from "@zenstackhq/runtime/models"
+import type { MenuItem, Category } from "@workspace/db/generated/prisma"
 // Core data types based on ZenStack schema
-export interface Category {
-  id: string;
-  restaurantId: string;
-  name: string;
-  description?: string;
-  sortOrder: number;
-  isActive: boolean;
-  parentId?: string;
-  children?: Category[];
-  menuItems?: MenuItem[];
-  _count?: {
-    children: number;
-    menuItems: number;
-  };
-}
 
 // Extended types for component usage
 export interface CategoryWithSubcategories extends Omit<Category, 'children' | '_count'> {
@@ -69,7 +53,7 @@ export interface MenuStructurePanelProps {
 }
 
 export interface CategoryItemProps {
-  category: CategoryWithSubcategories;
+  category: Category & {children: Category[]};
   isExpanded: boolean;
   onToggleExpanded: (categoryId: string) => void;
   onDelete: (categoryId: string) => void;
@@ -80,7 +64,7 @@ export interface CategoryItemProps {
 }
 
 export interface SubcategoryItemProps {
-  subcategory: SubcategoryWithItems;
+  subcategory: Category & {menuItems: MenuItem[]};
   isExpanded: boolean;
   onToggleExpanded: (subcategoryId: string) => void;
   onDelete: (subcategoryId: string) => void;

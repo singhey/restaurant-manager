@@ -8,9 +8,9 @@ import { MenuEditorErrorBoundary } from '../components/MenuEditorErrorBoundary'
 export function MenuEditPage() {
   return (
     <MenuEditorErrorBoundary>
-      <div className="flex h-full min-h-[600px]">
+      <div className="flex w-full h-full min-h-[600px]">
         {/* Left Panel - Menu Structure */}
-        <div className="w-1/4 border-r border-border pr-4">
+        <div className="w-1/4 flex">
           <MenuStructurePanel />
         </div>
         
