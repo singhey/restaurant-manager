@@ -5,6 +5,7 @@ import { useCreateCategory, useFindManyCategory } from '@workspace/db/hooks/trpc
 import { useParams } from '@tanstack/react-router';
 import type { AddSubcategoryFormProps } from '../../../../types/menu-editor';
 import { z } from 'zod';
+import { Button } from '@workspace/ui/components/button';
 
 const subcategorySchema = z.object({
   name: z.string().min(1, { message: "Subcategory name is required" })
@@ -21,43 +22,7 @@ export const AddSubcategoryForm: FC<AddSubcategoryFormProps> = ({ parentCategory
   const { restaurantId } = useParams({ from: '/restaurant/manage/$restaurantId/menu/edit' });
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Fetch existing subcategories to calculate proper sort order
-  const { data: existingSubcategories } = useFindManyCategory({
-    where: {
-      restaurantId,
-      parentId: parentCategoryId,
-    },
-    select: {
-      sortOrder: true,
-    },
-    orderBy: {
-      sortOrder: 'desc',
-    },
-    take: 1,
-  });
-
-  const { mutate: createSubcategory, isPending } = useCreateCategory({
-    onSuccess: (data) => {
-      if (data) {
-        // Clear any previous errors
-        setSubmitError(null);
-        
-        // Call the success callback with the created subcategory data
-        onSubmit({
-          name: data.name,
-          description: data.description || undefined,
-          parentId: data.parentId!,
-        });
-      }
-    },
-    onError: (error) => {
-      // Handle and display error messages
-      const errorMessage = error instanceof Error 
-        ? error.message 
-        : 'Failed to create subcategory. Please try again.';
-      setSubmitError(errorMessage);
-    },
-  });
+  const { mutate: createSubcategory, isPending } = useCreateCategory();
 
   const form = useAppForm({
     defaultValues: {
@@ -71,19 +36,21 @@ export const AddSubcategoryForm: FC<AddSubcategoryFormProps> = ({ parentCategory
       // Clear any previous errors
       setSubmitError(null);
 
-      // Calculate the next sort order based on existing subcategories
-      const maxSortOrder = existingSubcategories?.[0]?.sortOrder || 0;
-      const sortOrder = maxSortOrder + 1;
-
       createSubcategory({
         data: {
           name: value.name.trim(),
           description: value.description?.trim() || null,
           restaurantId,
-          sortOrder,
           isActive: true,
           parentId: parentCategoryId,
         },
+      }, {
+        onSuccess: () => {
+          onSubmit({
+            name: value.name.trim(),
+            parentId: parentCategoryId
+          })
+        }
       });
     },
   });
@@ -128,22 +95,15 @@ export const AddSubcategoryForm: FC<AddSubcategoryFormProps> = ({ parentCategory
 
       {/* Form Actions */}
       <div className="flex justify-end gap-3 pt-4">
+        <Button variant={"ghost"} onClick={onCancel} disabled={isPending}>
+          Cancel
+        </Button>
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isFormSubmitting]) => (
-            <>
-              <button
-                type="button"
-                onClick={onCancel}
-                disabled={isFormSubmitting || isPending}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <LoadingButton loading={!canSubmit || isFormSubmitting || isPending}>
+          children={() => (
+              <LoadingButton loading={isPending}>
                 Create Subcategory
               </LoadingButton>
-            </>
           )}
         />
       </div>

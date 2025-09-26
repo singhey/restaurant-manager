@@ -14,6 +14,7 @@ import { NavigationMenu } from '../components/layout/NavigationMenu'
 import { OrganizationSwitcher } from '@daveyplate/better-auth-ui'
 import { RenderWhenPathMatches } from '@/components/conditional/RenderWhenPathMatches'
 import { Confirm } from '@/components/generic/Confirm'
+import { Modal } from '@/components/generic/Modal'
 
 const RootLayout = () => {
 
@@ -53,6 +54,7 @@ const RootLayout = () => {
         <SidebarInset>
           <Topbar />
           <Confirm.Root />
+          <Modal.Root />
           {/* <div className="flex flex-1"> */}
             <Outlet />
           {/* </div> */}

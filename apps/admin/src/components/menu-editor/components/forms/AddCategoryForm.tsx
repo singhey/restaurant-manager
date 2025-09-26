@@ -5,6 +5,7 @@ import { useCreateCategory } from '@workspace/db/hooks/trpc/category'
 import { useParams } from '@tanstack/react-router'
 import type { AddCategoryFormProps } from '../../../../types/menu-editor'
 import {z} from 'zod'
+import { Button } from '@workspace/ui/components/button'
 
 
 const categorySchema = z.object({
@@ -23,7 +24,7 @@ export function AddCategoryForm({ onSubmit, onCancel }: AddCategoryFormProps) {
   const [submitError, setSubmitError] = useState<string | null>(null)
   
   const {mutate: createCategory, isPending} = useCreateCategory({
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       if (data) {
         // Clear any previous errors
         setSubmitError(null)
@@ -35,7 +36,7 @@ export function AddCategoryForm({ onSubmit, onCancel }: AddCategoryFormProps) {
         })
       }
     },
-    onError: (error) => {
+    onError: (error: any) => {
       // Handle and display error messages
       const errorMessage = error instanceof Error 
         ? error.message 
@@ -108,19 +109,12 @@ export function AddCategoryForm({ onSubmit, onCancel }: AddCategoryFormProps) {
 
       {/* Form Actions */}
       <div className="flex justify-end gap-3 pt-4">
+        <Button variant={"secondary"} onClick={onCancel}>Cancel</Button>
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isFormSubmitting]) => (
+          children={() => (
             <>
-              <button
-                type="button"
-                onClick={onCancel}
-                disabled={isFormSubmitting || isPending}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <LoadingButton loading={!canSubmit || isFormSubmitting || isPending}>
+              <LoadingButton loading={isPending}>
                 Create Category
               </LoadingButton>
             </>

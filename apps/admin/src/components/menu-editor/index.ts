@@ -12,10 +12,6 @@ export { SubcategoryItem } from './components/items/SubcategoryItem'
 export { AddCategoryForm } from './components/forms/AddCategoryForm'
 export { AddSubcategoryForm } from './components/forms/AddSubcategoryForm'
 
-// Dialogs
-export { DeleteCategoryDialog } from './components/dialogs/DeleteCategoryDialog'
-export { DeleteSubcategoryDialog } from './components/dialogs/DeleteSubcategoryDialog'
-
 // Components
 export { MenuEditorErrorBoundary } from './components/MenuEditorErrorBoundary'
 
