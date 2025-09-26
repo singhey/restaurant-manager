@@ -1,3 +1,4 @@
+import { NotFound } from '@/components/errors'
 import { authClient } from '@/lib/auth'
 import { useCurrentOrganization } from '@daveyplate/better-auth-ui'
 import { createFileRoute, Outlet, useLocation, useParams } from '@tanstack/react-router'
@@ -5,6 +6,7 @@ import { useEffect } from 'react'
 
 export const Route = createFileRoute('/restaurant/manage/$restaurantId')({
   component: RouteComponent,
+  notFoundComponent: NotFound
 })
 
 function RouteComponent() {

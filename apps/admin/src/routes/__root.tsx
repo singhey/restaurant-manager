@@ -16,6 +16,7 @@ import { RenderWhenPathMatches } from '@/components/conditional/RenderWhenPathMa
 import { Confirm } from '@/components/generic/Confirm'
 import { Modal } from '@/components/generic/Modal'
 import { Toaster } from "@workspace/ui/components/sonner"
+import { NotFound } from '../components/errors'
 
 const RootLayout = () => {
 
@@ -27,19 +28,19 @@ const RootLayout = () => {
         <RenderWhenPathMatches paramName='restaurantId'>
           <Sidebar>
             <div className='bg-background h-full'>
-            <SidebarHeader className='border-b h-16 justify-center'>
-              <OrganizationSwitcher hidePersonal={true}
-                className='bg-primary-foreground hover:bg-primary-foreground text-secondary-foreground' 
-                onSetActive={organization => organization && navigate({to: `/restaurant/manage/${organization.slug}` as any})}
+              <SidebarHeader className='border-b h-16 justify-center'>
+                <OrganizationSwitcher hidePersonal={true}
+                  className='bg-primary-foreground hover:bg-primary-foreground text-secondary-foreground'
+                  onSetActive={organization => organization && navigate({ to: `/restaurant/manage/${organization.slug}` as any })}
                 />
-            </SidebarHeader>
-            <SidebarContent>
-              <SidebarGroup>
-                <SidebarGroupContent>
-                  <NavigationMenu />
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
+              </SidebarHeader>
+              <SidebarContent>
+                <SidebarGroup>
+                  <SidebarGroupContent>
+                    <NavigationMenu />
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </SidebarContent>
             </div>
           </Sidebar>
         </RenderWhenPathMatches>
@@ -47,9 +48,9 @@ const RootLayout = () => {
           <Topbar />
           <Confirm.Root />
           <Modal.Root />
-          <Toaster richColors/>
+          <Toaster richColors />
           {/* <div className="flex flex-1"> */}
-            <Outlet />
+          <Outlet />
           {/* </div> */}
         </SidebarInset>
       </SidebarProvider>
@@ -57,4 +58,7 @@ const RootLayout = () => {
   )
 }
 
-export const Route = createRootRoute({ component: RootLayout })
+export const Route = createRootRoute({
+  component: RootLayout,
+  notFoundComponent: NotFound
+})

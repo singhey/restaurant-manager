@@ -19,11 +19,25 @@ export interface NavigationItem {
 }
 
 /**
+ * Interface for navigation groups
+ */
+export interface NavigationGroup {
+  /** Unique identifier for the group */
+  id: string
+  /** Display label for the group */
+  label: string
+  /** Array of navigation items in this group */
+  items: NavigationItem[]
+}
+
+/**
  * Interface for the complete navigation configuration
  */
 export interface NavigationConfig {
-  /** Array of top-level navigation items */
-  items: NavigationItem[]
+  /** Array of navigation groups */
+  groups: NavigationGroup[]
+  /** Array of top-level navigation items (for backward compatibility) */
+  items?: NavigationItem[]
 }
 
 /**

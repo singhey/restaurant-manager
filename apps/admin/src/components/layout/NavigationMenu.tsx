@@ -9,10 +9,13 @@ import {
   SidebarMenuSubItem,
   SidebarMenuSubButton,
   SidebarMenuBadge,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
 } from '@workspace/ui/components/sidebar'
 import { navigationConfig } from '../../config/navigation'
 import { useNavigationItemState } from '../../hooks/useNavigationState'
-import type { NavigationItem } from '../../types/navigation'
+import type { NavigationItem, NavigationGroup } from '../../types/navigation'
 
 /**
  * Component for rendering individual navigation menu items
@@ -246,14 +249,38 @@ function NavigationMenuSubItem({ item }: NavigationMenuSubItemProps) {
 }
 
 /**
+ * Component for rendering navigation groups
+ */
+interface NavigationGroupProps {
+  group: NavigationGroup
+}
+
+function NavigationGroupComponent({ group }: NavigationGroupProps) {
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel className="text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider">
+        {group.label}
+      </SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {group.items.map((item) => (
+            <NavigationMenuItem key={item.id} item={item} />
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  )
+}
+
+/**
  * Main NavigationMenu component that renders the complete navigation structure
  */
 export function NavigationMenu() {
   return (
-    <SidebarMenu>
-      {navigationConfig.items.map((item) => (
-        <NavigationMenuItem key={item.id} item={item} />
+    <div className="space-y-4">
+      {navigationConfig.groups.map((group) => (
+        <NavigationGroupComponent key={group.id} group={group} />
       ))}
-    </SidebarMenu>
+    </div>
   )
 }
