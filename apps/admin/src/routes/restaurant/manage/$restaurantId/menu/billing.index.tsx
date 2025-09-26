@@ -8,13 +8,13 @@ import { Button } from '@workspace/ui/components/button'
 import { useBilling } from '@/store/billing.store'
 
 export const Route = createFileRoute(
-  '/restaurant/manage/$restaurantId/menu/billing',
+  '/restaurant/manage/$restaurantId/menu/billing/',
 )({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { restaurantId } = useParams({ from: '/restaurant/manage/$restaurantId/menu/billing' })
+  const { restaurantId } = useParams({ from: '/restaurant/manage/$restaurantId/menu/billing/' })
   const { data: categories, isFetching } = useFindManyCategory({
     where: {
       restaurantId,
@@ -24,6 +24,8 @@ function RouteComponent() {
       children: true
     }
   })
+  const {categoryId} = useSearch({strict: false}) as any
+  const navigate = useNavigate()
 
   if (isFetching) {
 
@@ -31,6 +33,12 @@ function RouteComponent() {
 
   if (!categories) {
     return <div>Unable to fetch categories</div>
+  }
+
+  if(!categoryId) {
+    navigate({
+      search: {categoryId: categories[0].children[0].id} as any
+    })
   }
 
   return <MenuEditorErrorBoundary>
@@ -60,13 +68,13 @@ const CategoryBillRow = ({ category }: { category: Category & { children: Catego
   return <div className='w-full flex flex-col'>
     <div onClick={() => setOpened(!opened)} className='flex w-full border-b relative p-3 hover:bg-accent px-4 text-sm cursor-pointer'>
       {category.name}
-      {category.children.length > 0 && <ChevronDown className={`w-4 absolute right-4 ${opened ? 'rotate-0': 'rotate-[-90deg]'}`} />}
+      {category.children.length > 0 && <ChevronDown className={`w-4 absolute right-4 ${opened ? `rotate-0`: `rotate-[-90deg]`}`} />}
     </div>
     {
       opened && <div>
         {
           category.children.map(subCategory => <div key={subCategory.id}
-            className={`flex pl-8 w-full p-2 hover:bg-accent px-4 text-sm cursor-pointer ${categoryId === subCategory.id && 'bg-accent border-r-red-500 border-r-2'}`}
+            className={`flex pl-8 w-full p-2 hover:bg-accent px-4 text-sm cursor-pointer ${categoryId === subCategory.id && `bg-accent border-r-red-500 border-r-2`}`}
             onClick={() => {navigate({
               search: { categoryId: subCategory.id } as any
             }); setDishSearch('')}}>
@@ -80,7 +88,7 @@ const CategoryBillRow = ({ category }: { category: Category & { children: Catego
 
 
 const MenuDishes = () => {
-  const { restaurantId } = useParams({ from: '/restaurant/manage/$restaurantId/menu/billing' })
+  const { restaurantId } = useParams({ from: '/restaurant/manage/$restaurantId/menu/billing/' })
   const { categoryId } = useSearch({ strict: false }) as any
   const dishSearch = useBilling(state => state.dishSearch)
   const { data: dishes, isFetching } = useFindManyMenuItem({
@@ -119,18 +127,26 @@ const MenuDishes = () => {
 }
 
 const DishCard = ({ dish }: { dish: MenuItem }) => {
-  const [quantity, setQuantity] = useState(0)
+  const inCart = useBilling(state => state.inCart)
+  const quantity = inCart.filter(cart => cart.menuItem.id === dish.id).reduce((acc, cart) => acc + cart.quantity, 0)
+  const addToCart = useBilling(state => state.addToCart)
+  const removeFromCart = useBilling(state => state.removeFromCart)
+  const updateQuantity = useBilling(state => state.updateQuantity)
 
   const handleIncrease = () => {
-    setQuantity(prev => prev + 1)
-    // TODO: Add to cart logic using the billing store
-    console.log(`Added ${dish.name} to cart`)
+    if(quantity === 0) {
+      addToCart(dish, 1, dish.id)
+    }else {
+      updateQuantity(dish.id, quantity + 1)
+    }
   }
 
   const handleDecrease = () => {
-    setQuantity(prev => Math.max(0, prev - 1))
-    // TODO: Remove from cart logic using the billing store
-    console.log(`Removed ${dish.name} from cart`)
+    if(quantity === 1) {
+      removeFromCart(dish.id)
+    }else {
+      updateQuantity(dish.id, quantity - 1)
+    }
   }
 
   const formatPrice = (price: number) => {

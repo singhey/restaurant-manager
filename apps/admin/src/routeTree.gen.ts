@@ -28,7 +28,8 @@ import { Route as RestaurantManageRestaurantIdStoreLocationRouteImport } from '.
 import { Route as RestaurantManageRestaurantIdStoreDetailsRouteImport } from './routes/restaurant/manage/$restaurantId/store/details'
 import { Route as RestaurantManageRestaurantIdStoreDeliveryRouteImport } from './routes/restaurant/manage/$restaurantId/store/delivery'
 import { Route as RestaurantManageRestaurantIdMenuEditRouteImport } from './routes/restaurant/manage/$restaurantId/menu/edit'
-import { Route as RestaurantManageRestaurantIdMenuBillingRouteImport } from './routes/restaurant/manage/$restaurantId/menu/billing'
+import { Route as RestaurantManageRestaurantIdMenuBillingIndexRouteImport } from './routes/restaurant/manage/$restaurantId/menu/billing.index'
+import { Route as RestaurantManageRestaurantIdMenuBillingCheckoutRouteImport } from './routes/restaurant/manage/$restaurantId/menu/billing.checkout'
 
 const RestaurantRoute = RestaurantRouteImport.update({
   id: '/restaurant',
@@ -137,10 +138,16 @@ const RestaurantManageRestaurantIdMenuEditRoute =
     path: '/edit',
     getParentRoute: () => RestaurantManageRestaurantIdMenuRoute,
   } as any)
-const RestaurantManageRestaurantIdMenuBillingRoute =
-  RestaurantManageRestaurantIdMenuBillingRouteImport.update({
-    id: '/billing',
-    path: '/billing',
+const RestaurantManageRestaurantIdMenuBillingIndexRoute =
+  RestaurantManageRestaurantIdMenuBillingIndexRouteImport.update({
+    id: '/billing/',
+    path: '/billing/',
+    getParentRoute: () => RestaurantManageRestaurantIdMenuRoute,
+  } as any)
+const RestaurantManageRestaurantIdMenuBillingCheckoutRoute =
+  RestaurantManageRestaurantIdMenuBillingCheckoutRouteImport.update({
+    id: '/billing/checkout',
+    path: '/billing/checkout',
     getParentRoute: () => RestaurantManageRestaurantIdMenuRoute,
   } as any)
 
@@ -158,13 +165,14 @@ export interface FileRoutesByFullPath {
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdRouteWithChildren
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
-  '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
   '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
   '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
   '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
   '/restaurant/manage/$restaurantId/store': typeof RestaurantManageRestaurantIdStoreIndexRoute
+  '/restaurant/manage/$restaurantId/menu/billing/checkout': typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
+  '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -179,13 +187,14 @@ export interface FileRoutesByTo {
   '/restaurant/account/settings': typeof RestaurantAccountSettingsRoute
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdIndexRoute
-  '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
   '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
   '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
   '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
   '/restaurant/manage/$restaurantId/store': typeof RestaurantManageRestaurantIdStoreIndexRoute
+  '/restaurant/manage/$restaurantId/menu/billing/checkout': typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
+  '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -202,13 +211,14 @@ export interface FileRoutesById {
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdRouteWithChildren
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
-  '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
   '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
   '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
   '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
   '/restaurant/manage/$restaurantId/store/': typeof RestaurantManageRestaurantIdStoreIndexRoute
+  '/restaurant/manage/$restaurantId/menu/billing/checkout': typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
+  '/restaurant/manage/$restaurantId/menu/billing/': typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -226,13 +236,14 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
-    | '/restaurant/manage/$restaurantId/menu/billing'
     | '/restaurant/manage/$restaurantId/menu/edit'
     | '/restaurant/manage/$restaurantId/store/delivery'
     | '/restaurant/manage/$restaurantId/store/details'
     | '/restaurant/manage/$restaurantId/store/location'
     | '/restaurant/manage/$restaurantId/store/seo'
     | '/restaurant/manage/$restaurantId/store'
+    | '/restaurant/manage/$restaurantId/menu/billing/checkout'
+    | '/restaurant/manage/$restaurantId/menu/billing'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -247,13 +258,14 @@ export interface FileRouteTypes {
     | '/restaurant/account/settings'
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId'
-    | '/restaurant/manage/$restaurantId/menu/billing'
     | '/restaurant/manage/$restaurantId/menu/edit'
     | '/restaurant/manage/$restaurantId/store/delivery'
     | '/restaurant/manage/$restaurantId/store/details'
     | '/restaurant/manage/$restaurantId/store/location'
     | '/restaurant/manage/$restaurantId/store/seo'
     | '/restaurant/manage/$restaurantId/store'
+    | '/restaurant/manage/$restaurantId/menu/billing/checkout'
+    | '/restaurant/manage/$restaurantId/menu/billing'
   id:
     | '__root__'
     | '/'
@@ -269,13 +281,14 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
-    | '/restaurant/manage/$restaurantId/menu/billing'
     | '/restaurant/manage/$restaurantId/menu/edit'
     | '/restaurant/manage/$restaurantId/store/delivery'
     | '/restaurant/manage/$restaurantId/store/details'
     | '/restaurant/manage/$restaurantId/store/location'
     | '/restaurant/manage/$restaurantId/store/seo'
     | '/restaurant/manage/$restaurantId/store/'
+    | '/restaurant/manage/$restaurantId/menu/billing/checkout'
+    | '/restaurant/manage/$restaurantId/menu/billing/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -419,11 +432,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RestaurantManageRestaurantIdMenuEditRouteImport
       parentRoute: typeof RestaurantManageRestaurantIdMenuRoute
     }
-    '/restaurant/manage/$restaurantId/menu/billing': {
-      id: '/restaurant/manage/$restaurantId/menu/billing'
+    '/restaurant/manage/$restaurantId/menu/billing/': {
+      id: '/restaurant/manage/$restaurantId/menu/billing/'
       path: '/billing'
       fullPath: '/restaurant/manage/$restaurantId/menu/billing'
-      preLoaderRoute: typeof RestaurantManageRestaurantIdMenuBillingRouteImport
+      preLoaderRoute: typeof RestaurantManageRestaurantIdMenuBillingIndexRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdMenuRoute
+    }
+    '/restaurant/manage/$restaurantId/menu/billing/checkout': {
+      id: '/restaurant/manage/$restaurantId/menu/billing/checkout'
+      path: '/billing/checkout'
+      fullPath: '/restaurant/manage/$restaurantId/menu/billing/checkout'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdMenuBillingCheckoutRouteImport
       parentRoute: typeof RestaurantManageRestaurantIdMenuRoute
     }
   }
@@ -442,16 +462,19 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface RestaurantManageRestaurantIdMenuRouteChildren {
-  RestaurantManageRestaurantIdMenuBillingRoute: typeof RestaurantManageRestaurantIdMenuBillingRoute
   RestaurantManageRestaurantIdMenuEditRoute: typeof RestaurantManageRestaurantIdMenuEditRoute
+  RestaurantManageRestaurantIdMenuBillingCheckoutRoute: typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
+  RestaurantManageRestaurantIdMenuBillingIndexRoute: typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
 }
 
 const RestaurantManageRestaurantIdMenuRouteChildren: RestaurantManageRestaurantIdMenuRouteChildren =
   {
-    RestaurantManageRestaurantIdMenuBillingRoute:
-      RestaurantManageRestaurantIdMenuBillingRoute,
     RestaurantManageRestaurantIdMenuEditRoute:
       RestaurantManageRestaurantIdMenuEditRoute,
+    RestaurantManageRestaurantIdMenuBillingCheckoutRoute:
+      RestaurantManageRestaurantIdMenuBillingCheckoutRoute,
+    RestaurantManageRestaurantIdMenuBillingIndexRoute:
+      RestaurantManageRestaurantIdMenuBillingIndexRoute,
   }
 
 const RestaurantManageRestaurantIdMenuRouteWithChildren =

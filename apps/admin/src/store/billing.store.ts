@@ -5,16 +5,17 @@ import {create} from 'zustand'
 interface CartItem {
   menuItem: MenuItem,
   quantity: number,
-  id: number,
+  id: string,
 }
 
 interface BillingState {
   dishSearch: string,
   inCart: CartItem[],
-  addToCart: (menuItem: MenuItem, quantity: number, id: number) => void,
-  removeFromCart: (id: number) => void,
+  addToCart: (menuItem: MenuItem, quantity: number, id: string) => void,
+  removeFromCart: (id: string) => void,
   emptyCart: () => void
   setDishSearch: (search: string) => void 
+  updateQuantity: (id: string, quantity: number) => void
 }
 
 
@@ -43,6 +44,17 @@ export const useBilling = create<BillingState>((set) => ({
     set((state) => ({
       ...state,
       dishSearch: search
+    }))
+  },
+  updateQuantity(id, quantity) {
+    set((state) => ({
+      ...state,
+      inCart: state.inCart.map(cart => {
+        if(cart.id === id) {
+          return {...cart, quantity}
+        }
+        return cart
+      })
     }))
   },
 }))
