@@ -88,16 +88,28 @@ interface TopbarNavigationProps {
 
 const TopbarNavigation = ({ items, currentPath, currentSearch }: TopbarNavigationProps) => {
   const getIsActive = (item: NavigationItem, index: number) => {
-    const fullCurrentUrl = currentPath + currentSearch
+    const fullCurrentUrl = currentPath
 
-    // If the item href matches exactly
-    if (fullCurrentUrl === item.href) {
+    // Create regex patterns to match URLs with dynamic restaurantId
+    const createPattern = (url: string) => {
+      // Replace $restaurantId with a regex pattern that matches any value
+      return url.replace(/\$restaurantId/g, '[^/]+')
+    }
+
+    const itemPattern = createPattern(item.href)
+    const currentPattern = createPattern(fullCurrentUrl)
+
+    // Create regex objects for pattern matching
+    const itemRegex = new RegExp(`^${itemPattern}$`)
+    const currentRegex = new RegExp(`^${currentPattern}$`)
+
+    // Check if current URL matches item href pattern or vice versa
+    if (itemRegex.test(fullCurrentUrl) || currentRegex.test(item.href)) {
       return true
     }
 
-    console.log(currentSearch)
-    // If no search params and this is the first item, make it active by default
-    if ((!currentSearch || currentSearch === "") && index === 0) {
+    // If the item href matches exactly
+    if (fullCurrentUrl === item.href) {
       return true
     }
 
@@ -174,10 +186,10 @@ const getNavigationItems = (pathname: string): NavigationItem[] => {
 
   if (pathname.includes('/management') || pathname.includes('/menu/edit') || pathname.includes('/menu/addons') || pathname.includes('/menu/vouchers') || pathname.includes('/menu/offers')) {
     return [
-      { key: 'menu', label: 'menu', href: '/menu/edit' },
-      { key: 'addons', label: 'add-ons', href: '/menu/addons' },
-      { key: 'vouchers', label: 'vouchers', href: '/menu/vouchers' },
-      { key: 'offers', label: 'offers', href: '/menu/offers' }
+      { key: 'menu', label: 'menu', href: '/restaurant/manage/$restaurantId/menu/edit' },
+      { key: 'addons', label: 'add-ons', href: '/restaurant/manage/$restaurantId/menu/addons' },
+      { key: 'vouchers', label: 'vouchers', href: '/restaurant/manage/$restaurantId/menu/vouchers' },
+      { key: 'offers', label: 'offers', href: '/restaurant/manage/$restaurantId/menu/offers' }
     ]
   }
 
@@ -193,7 +205,7 @@ const getNavigationItems = (pathname: string): NavigationItem[] => {
         { key: 'location', label: 'location', href: `/restaurant/manage/${restaurantId}/store/location` }
       ]
     }
-    
+
     return [
       { key: 'details', label: 'details', href: '/store/details' },
       { key: 'settings', label: 'settings', href: '/store/settings' },

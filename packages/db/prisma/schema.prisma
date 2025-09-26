@@ -54,6 +54,18 @@ enum SelectionType {
   MULTIPLE
 }
 
+enum DISH_TYPE {
+  VEG
+  NON_VEG
+  EGG
+}
+
+enum SERVICES {
+  DELIVERY
+  TAKEAWAY
+  DINE_IN
+}
+
 model User {
   id            String       @id()
   email         String       @unique()
@@ -232,6 +244,9 @@ model MenuItem {
   description  String?
   price        Float
   image        String?
+  tax          Float           @default(5)
+  dishType     DISH_TYPE       @default(VEG)
+  services     String[]
   isAvailable  Boolean         @default(true)
   categoryId   String
   category     Category        @relation(fields: [categoryId], references: [id])

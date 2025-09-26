@@ -1,10 +1,13 @@
 import React, { useState, type Dispatch, type SetStateAction } from 'react';
 import { GripVertical, Edit, Trash2, Check, X, ChevronDown, Plus } from 'lucide-react';
-import type { Category } from "@workspace/db/generated/prisma/client";
+import type { Category, MenuItem } from "@workspace/db/generated/prisma/client";
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
 import { Modal } from '@/components/generic/Modal';
 import { AddSubcategoryForm } from '../forms/AddSubcategoryForm';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import { Confirm } from '@/components/generic/Confirm';
+import { useDeleteMenuItem } from '@workspace/db/hooks/trpc';
 
 // Reusable Drag Handle Component
 interface DragHandleProps {
@@ -13,7 +16,7 @@ interface DragHandleProps {
 
 export function DragHandle({ className = "" }: DragHandleProps) {
   return (
-    <div className={`cursor-grab active:cursor-grabbing p-3 border-r border-l hover:bg-muted ${className}`}>
+    <div className={`cursor-grab active:cursor-grabbing p-3 border-l hover:bg-muted ${className}`}>
       <GripVertical className="h-4 w-4 text-muted-foreground" />
     </div>
   );
@@ -106,18 +109,62 @@ type CategoryRowProps = {
   className?: string;
 }
 
-export function SubCategoryRender({category, onEdit, onDelete, className = ""}: CategoryRowProps) {
+type SubCategoryRowProps = {
+  category: Category & {
+    menuItems?: MenuItem[]
+  },
+  onEdit?: (categoryId: string, newName: string) => void;
+  onDelete?: (categoryId: string) => void;
+  className?: string;
+}
+
+export function SubCategoryRender({category, onEdit, onDelete, className = ""}: SubCategoryRowProps) {
   const [opened, setOpened] = useState(false)
-  return <div className={`flex flex-col items-center border-b group w-full h-10 ${className}`}>
+  const {dish} = useSearch({strict: false}) as any
+  const {mutate: deleteDish} = useDeleteMenuItem()
+  const navigate = useNavigate()
+  return <>
+    <div className={`flex flex-col items-center border-b group w-full h-10 ${className} ${opened && ''}`}>
       <CategoryRowComp category={category} onDelete={onDelete} onEdit={onEdit} opened={opened} setOpened={setOpened} />
     </div>
+    {
+      opened && category.menuItems?.map(menuItem => <div className='w-full pl-4'>
+        <div className={`flex w-full h-full items-center group relative ${dish === menuItem.id && 'bg-accent border-r-2 border-r-red-800'}`} onClick={() => navigate({
+          from: '/restaurant/manage/$restaurantId/menu/edit',
+          search: {
+            dish: menuItem.id,
+          }})
+        }>
+          <DragHandle />
+          <span className="text-sm font-medium p-3 flex-1 cursor-pointer truncate overflow-ellipsis">
+            {menuItem.name}
+          </span>
+          <Button size="icon" variant="ghost" className='bg-background hidden group-hover:flex mr-2' onClick={async (e) => {
+            e.stopPropagation()
+            if(await Confirm.call({
+              title: "Confirm Delete?",
+              description: "Do you wish to delete dish " + menuItem.name
+            })) {
+              deleteDish({
+                where: {
+                  id: menuItem.id
+                }
+              })
+            }
+          }}>
+            <Trash2 />
+          </Button>
+        </div>
+      </div>)
+    }
+  </>
 }
 
 export function CategoryRow({ category, onEdit, onDelete, className = "" }: CategoryRowProps) {
   const [opened, setOpened] = useState(false)
 
   return (<>
-    <div className={`flex flex-col items-center border-b group w-full h-10 ${className}`}>
+    <div className={`flex flex-col items-center border-b group w-full h-10 ${className} ${opened && 'bg-primary-foreground'}`}>
       <CategoryRowComp category={category} onDelete={onDelete} onEdit={onEdit} opened={opened} setOpened={setOpened} />
     </div>
     {opened && <div className='pl-10 w-full'>
@@ -175,7 +222,7 @@ export function CategoryRowComp({ category, onEdit, onDelete, opened, setOpened 
     <div className={`${isEditing ? 'hidden' : 'hidden group-hover:flex absolute right-8 bg-background'}`}>
       <ActionButtons onEdit={handleEdit} onDelete={handleDelete} />
     </div>
-    <ChevronDown className={`mr-2 h-4 transition ${opened ? 'rotate-[-90deg]' : 'rotate-0'}`} />
+    <ChevronDown className={`mr-2 h-4 transition ${opened ? 'rotate-0' : 'rotate-[-90deg]'}`} />
   </div>
 }
 

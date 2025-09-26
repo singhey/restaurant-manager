@@ -44,6 +44,7 @@ function RouteComponent() {
         data: {
           name: organization.data.name,
           id: organization.data.slug,
+          //@ts-ignore
           address: organization.data.address
         }
       })

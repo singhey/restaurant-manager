@@ -20,6 +20,8 @@ import {
 import { Textarea } from '@workspace/ui/components/textarea'
 import { Checkbox } from "@workspace/ui/components/checkbox";
 import { RadioGroup, RadioGroupItem } from "@workspace/ui/components/radio-group";
+import { MultiSelect } from "@workspace/ui/components/multi-select";
+import { ToggleGroup, ToggleGroupItem } from "./toggle-group.js";
 
 const {
   fieldContext,
@@ -41,7 +43,8 @@ const { useAppForm, withForm: _withForm } = createFormHook({
     FormSelect,
     FormCheckbox,
     FormRadioGroup,
-    Textarea
+    Textarea,
+    MultiSelect
   },
   formComponents: {
     Button
@@ -461,6 +464,64 @@ function AppRadioField({
   );
 }
 
+function AppMultiSelectField({ 
+  label,
+  variant,
+  options = [],
+  className 
+}: Omit<AppFieldProps, 'type' | 'placeholder'> & {variant: 'default' | 'secondary'}) {
+  return (field: any) => (
+    <field.FormItem className={className}>
+      <field.FormLabel>{label}</field.FormLabel>
+      <field.FormControl>
+        <MultiSelect
+          value={field.state.value as string[]}
+          options={options}
+          variant={variant}
+          defaultValue={field.state.value}
+          onValueChange={(value: string[]) => field.handleChange(value)}
+        />
+      </field.FormControl>
+      {field.state.meta.errors.length > 0 && (
+        <field.FormMessage>
+          {field.state.meta.errors.join(', ')}
+        </field.FormMessage>
+      )}
+    </field.FormItem>
+  );
+}
+
+
+function AppToggleGroupField({ 
+  label,
+  toggleType,
+  options = [],
+  className 
+}: Omit<AppFieldProps, 'placeholder'> & {toggleType: "single"}) {
+  return (field: any) => (
+    <field.FormItem className={className}>
+      <field.FormLabel>{label}</field.FormLabel>
+      <field.FormControl>
+        <ToggleGroup
+          className="flex w-full"
+          type={toggleType}
+          value={field.state.value as string}
+          onValueChange={value => field.handleChange(value)}
+        >
+          {
+            options.map(option => <ToggleGroupItem className="" key={option.value} value={option.value}>{option.label}</ToggleGroupItem>)
+          }
+        </ToggleGroup>
+      </field.FormControl>
+      {field.state.meta.errors.length > 0 && (
+        <field.FormMessage>
+          {field.state.meta.errors.join(', ')}
+        </field.FormMessage>
+      )}
+    </field.FormItem>
+  );
+}
+
 export { 
   useAppForm, 
   useFormContext, 
@@ -479,6 +540,8 @@ export {
   AppSelectField,
   AppCheckboxField,
   AppRadioField,
+  AppMultiSelectField,
+  AppToggleGroupField
 };
 
 // Re-export UI components for convenience

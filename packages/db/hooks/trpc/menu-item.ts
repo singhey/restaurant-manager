@@ -327,8 +327,9 @@ export function useSuspenseCountMenuItem<TArgs extends Prisma.MenuItemCountArgs,
     const { endpoint, fetch } = getHooksContext();
     return useSuspenseModelQuery<TQueryFnData, TData, TError>('MenuItem', `${endpoint}/menuItem/count`, args, options, fetch);
 }
+import type { DISH_TYPE } from '@zenstackhq/runtime/models';
 
-export function useCheckMenuItem<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; restaurantId?: string; name?: string; description?: string; image?: string; isAvailable?: boolean; categoryId?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckMenuItem<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; restaurantId?: string; name?: string; description?: string; image?: string; dishType?: DISH_TYPE; services?: string; isAvailable?: boolean; categoryId?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('MenuItem', `${endpoint}/menuItem/check`, args, options, fetch);
 }

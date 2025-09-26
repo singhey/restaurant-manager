@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "public"."MenuItem" ADD COLUMN     "tax" DOUBLE PRECISION NOT NULL DEFAULT 5;

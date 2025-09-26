@@ -4,9 +4,6 @@
 export { MenuEditPage } from './pages/MenuEditPage'
 export { MenuStructurePanel } from './pages/MenuStructurePanel'
 
-// Items
-export { CategoryItem } from './components/items/CategoryItem'
-export { SubcategoryItem } from './components/items/SubcategoryItem'
 
 // Forms
 export { AddCategoryForm } from './components/forms/AddCategoryForm'

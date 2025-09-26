@@ -15,6 +15,7 @@ import { OrganizationSwitcher } from '@daveyplate/better-auth-ui'
 import { RenderWhenPathMatches } from '@/components/conditional/RenderWhenPathMatches'
 import { Confirm } from '@/components/generic/Confirm'
 import { Modal } from '@/components/generic/Modal'
+import { Toaster } from "@workspace/ui/components/sonner"
 
 const RootLayout = () => {
 
@@ -31,15 +32,6 @@ const RootLayout = () => {
                 className='bg-primary-foreground hover:bg-primary-foreground text-secondary-foreground' 
                 onSetActive={organization => organization && navigate({to: `/restaurant/manage/${organization.slug}` as any})}
                 />
-              {/* <div className="flex items-center gap-2 px-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <span className="text-sm font-bold">A</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold">Admin</span>
-                  <span className="text-xs text-sidebar-foreground/70">Dashboard</span>
-                </div>
-              </div> */}
             </SidebarHeader>
             <SidebarContent>
               <SidebarGroup>
@@ -55,6 +47,7 @@ const RootLayout = () => {
           <Topbar />
           <Confirm.Root />
           <Modal.Root />
+          <Toaster richColors/>
           {/* <div className="flex flex-1"> */}
             <Outlet />
           {/* </div> */}

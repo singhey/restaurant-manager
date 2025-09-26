@@ -5,7 +5,7 @@ interface Props { title: string, description: string, cancelText?: string, accep
 type Response = boolean
 
 export const Confirm = createCallable<Props, Response>(({ call, title, description, cancelText = "Cancel", acceptText = "Yes" }) =>  {
-  return <AlertDialog open={!call.ended}>
+  return <AlertDialog open={!call.ended} onOpenChange={open => call.end(open)}>
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogTitle>{title}</AlertDialogTitle>

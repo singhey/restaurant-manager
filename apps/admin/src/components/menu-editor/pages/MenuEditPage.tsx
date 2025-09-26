@@ -1,5 +1,6 @@
 import { MenuStructurePanel } from './MenuStructurePanel'
 import { MenuEditorErrorBoundary } from '../components/MenuEditorErrorBoundary'
+import MenuItemPanel from './MenuItemPanel'
 
 /**
  * Main page component for the menu editor
@@ -15,13 +16,8 @@ export function MenuEditPage() {
         </div>
         
         {/* Right Panel - Item Editor (Future Implementation) */}
-        <div className="w-3/4 pl-4">
-          <div className="flex items-center justify-center h-full text-muted-foreground">
-            <div className="text-center">
-              <h3 className="text-lg font-medium mb-2">Item Editor</h3>
-              <p className="text-sm">Select a category or subcategory to manage items</p>
-            </div>
-          </div>
+        <div className="w-3/4">
+          <MenuItemPanel />
         </div>
       </div>
     </MenuEditorErrorBoundary>

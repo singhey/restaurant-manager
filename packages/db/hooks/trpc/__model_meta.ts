@@ -709,6 +709,18 @@ const metadata = {
                     name: "image",
                     type: "String",
                     isOptional: true,
+                }, tax: {
+                    name: "tax",
+                    type: "Float",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 5 }] }],
+                }, dishType: {
+                    name: "dishType",
+                    type: "DISH_TYPE",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, services: {
+                    name: "services",
+                    type: "String",
+                    isArray: true,
                 }, isAvailable: {
                     name: "isAvailable",
                     type: "Boolean",
