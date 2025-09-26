@@ -1,6 +1,6 @@
 import { SidebarTrigger } from "@workspace/ui/components/sidebar"
 import { ArrowLeft, Search, type LucideIcon } from "lucide-react"
-import { useLocation, Link } from "@tanstack/react-router"
+import { useLocation, Link, useMatchRoute } from "@tanstack/react-router"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useState } from "react"
@@ -8,6 +8,7 @@ import { SignedIn, SignedOut } from '@daveyplate/better-auth-ui'
 import { AuthenticatedNav } from "../auth/AuthenticatedNav"
 import { UnauthenticatedNav } from "../auth/UnauthenticatedNav"
 import { RenderWhenPathMatches } from "../conditional/RenderWhenPathMatches"
+import { useBilling } from "@/store/billing.store"
 
 // Navigation item interface
 interface NavigationItem {
@@ -36,7 +37,8 @@ export const TopbarIconButton = ({ icon: Icon, label, onClick }: TopbarIconButto
 
 // Search bar component for billing page
 const TopbarSearchBar = () => {
-  const [searchValue, setSearchValue] = useState("")
+  const searchValue = useBilling(state => state.dishSearch)
+  const setSearchValue = useBilling(state => state.setDishSearch)
 
   return (
     <div className="relative flex items-center w-full">
@@ -144,11 +146,11 @@ const getNavigationItems = (pathname: string): NavigationItem[] => {
     ]
   }
 
-  if (pathname === '/menu/billing') {
+  if (pathname.includes('/menu/billing')) {
     return [
-      { key: 'menu', label: 'menu', href: '/menu/billing?view=menu' },
-      { key: 'checkout', label: 'checkout', href: '/menu/billing?view=checkout' },
-      { key: 'table', label: 'table', href: '/menu/billing?view=table' }
+      { key: 'menu', label: 'menu', href: '/restaurant/manage/$restaurantId/menu/billing' },
+      { key: 'checkout', label: 'checkout', href: '/restaurant/manage/$restaurantId/menu/billing/checkout' },
+      { key: 'table', label: 'table', href: '/restaurant/manage/$restaurantId/menu/billing/table' }
     ]
   }
 
@@ -184,7 +186,7 @@ const getNavigationItems = (pathname: string): NavigationItem[] => {
     ]
   }
 
-  if (pathname.includes('/management') || pathname.includes('/menu/edit') || pathname.includes('/menu/addons') || pathname.includes('/menu/vouchers') || pathname.includes('/menu/offers')) {
+  if (pathname.includes('/menu/edit') || pathname.includes('/menu/addons') || pathname.includes('/menu/vouchers') || pathname.includes('/menu/offers')) {
     return [
       { key: 'menu', label: 'menu', href: '/restaurant/manage/$restaurantId/menu/edit' },
       { key: 'addons', label: 'add-ons', href: '/restaurant/manage/$restaurantId/menu/addons' },
@@ -231,7 +233,8 @@ export function Topbar() {
     return getNavigationItems(location.pathname)
   }
 
-  const showSearchBar = location.pathname === '/menu/billing'
+  const matchRoute = useMatchRoute()
+  const showSearchBar = matchRoute({to: '/restaurant/manage/$restaurantId/menu/billing'})
 
   return (
     <header className="flex h-16 shrink-0 items-center border-b">

@@ -169,7 +169,7 @@ function NavigationMenuSubItem({ item }: NavigationMenuSubItemProps) {
     <SidebarMenuSubItem>
       <SidebarMenuSubButton 
         asChild={!hasChildren}
-        isActive={shouldHighlight}
+        isActive={shouldHighlight || isActive}
         className={`transition-colors ${
           shouldHighlight 
             ? 'bg-sidebar-accent text-sidebar-accent-foreground font-medium' 
