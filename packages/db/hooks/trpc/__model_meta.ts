@@ -52,12 +52,6 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'user',
-                }, orders: {
-                    name: "orders",
-                    type: "Order",
-                    isDataModel: true,
-                    isArray: true,
-                    backLink: 'customer',
                 }, members: {
                     name: "members",
                     type: "Member",
@@ -743,12 +737,6 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'menuItem',
-                }, orderItems: {
-                    name: "orderItems",
-                    type: "OrderItem",
-                    isDataModel: true,
-                    isArray: true,
-                    backLink: 'menuItem',
                 }, variants: {
                     name: "variants",
                     type: "Variant",
@@ -883,12 +871,6 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'addon',
-                }, orderItems: {
-                    name: "orderItems",
-                    type: "OrderItemAddon",
-                    isDataModel: true,
-                    isArray: true,
-                    backLink: 'addon',
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -967,23 +949,6 @@ const metadata = {
                     isRelationOwner: true,
                     onDeleteAction: 'Cascade',
                     foreignKeyMapping: { "id": "restaurantId" },
-                }, orderNumber: {
-                    name: "orderNumber",
-                    type: "String",
-                }, customerId: {
-                    name: "customerId",
-                    type: "String",
-                    isOptional: true,
-                    isForeignKey: true,
-                    relationField: 'customer',
-                }, customer: {
-                    name: "customer",
-                    type: "User",
-                    isDataModel: true,
-                    isOptional: true,
-                    backLink: 'orders',
-                    isRelationOwner: true,
-                    foreignKeyMapping: { "id": "customerId" },
                 }, orderType: {
                     name: "orderType",
                     type: "OrderType",
@@ -1008,10 +973,24 @@ const metadata = {
                     name: "paymentStatus",
                     type: "PaymentStatus",
                     attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, paymentMethod: {
+                    name: "paymentMethod",
+                    type: "String",
+                    isOptional: true,
+                }, customer: {
+                    name: "customer",
+                    type: "OrderCustomer",
+                    isTypeDef: true,
+                    isOptional: true,
                 }, notes: {
                     name: "notes",
                     type: "String",
                     isOptional: true,
+                }, items: {
+                    name: "items",
+                    type: "OrderItem",
+                    isTypeDef: true,
+                    isArray: true,
                 }, createdAt: {
                     name: "createdAt",
                     type: "DateTime",
@@ -1020,12 +999,11 @@ const metadata = {
                     name: "updatedAt",
                     type: "DateTime",
                     attributes: [{ "name": "@updatedAt", "args": [] }],
-                }, items: {
-                    name: "items",
-                    type: "OrderItem",
-                    isDataModel: true,
+                }, orderSettlement: {
+                    name: "orderSettlement",
+                    type: "OrderSettlement",
+                    isTypeDef: true,
                     isArray: true,
-                    backLink: 'order',
                 }, vouchers: {
                     name: "vouchers",
                     type: "OrderVoucher",
@@ -1038,116 +1016,6 @@ const metadata = {
                     isDataModel: true,
                     isArray: true,
                     backLink: 'order',
-                },
-            }, uniqueConstraints: {
-                id: {
-                    name: "id",
-                    fields: ["id"]
-                }, orderNumber: {
-                    name: "orderNumber",
-                    fields: ["orderNumber"]
-                },
-            },
-        },
-        orderItem: {
-            name: 'OrderItem', fields: {
-                id: {
-                    name: "id",
-                    type: "String",
-                    isId: true,
-                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
-                }, orderId: {
-                    name: "orderId",
-                    type: "String",
-                    isForeignKey: true,
-                    relationField: 'order',
-                }, order: {
-                    name: "order",
-                    type: "Order",
-                    isDataModel: true,
-                    backLink: 'items',
-                    isRelationOwner: true,
-                    foreignKeyMapping: { "id": "orderId" },
-                }, menuItemId: {
-                    name: "menuItemId",
-                    type: "String",
-                    isForeignKey: true,
-                    relationField: 'menuItem',
-                }, menuItem: {
-                    name: "menuItem",
-                    type: "MenuItem",
-                    isDataModel: true,
-                    backLink: 'orderItems',
-                    isRelationOwner: true,
-                    foreignKeyMapping: { "id": "menuItemId" },
-                }, quantity: {
-                    name: "quantity",
-                    type: "Int",
-                }, unitPrice: {
-                    name: "unitPrice",
-                    type: "Float",
-                }, totalPrice: {
-                    name: "totalPrice",
-                    type: "Float",
-                }, notes: {
-                    name: "notes",
-                    type: "String",
-                    isOptional: true,
-                }, addons: {
-                    name: "addons",
-                    type: "OrderItemAddon",
-                    isDataModel: true,
-                    isArray: true,
-                    backLink: 'orderItem',
-                },
-            }, uniqueConstraints: {
-                id: {
-                    name: "id",
-                    fields: ["id"]
-                },
-            },
-        },
-        orderItemAddon: {
-            name: 'OrderItemAddon', fields: {
-                id: {
-                    name: "id",
-                    type: "String",
-                    isId: true,
-                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
-                }, orderItemId: {
-                    name: "orderItemId",
-                    type: "String",
-                    isForeignKey: true,
-                    relationField: 'orderItem',
-                }, addonId: {
-                    name: "addonId",
-                    type: "String",
-                    isForeignKey: true,
-                    relationField: 'addon',
-                }, orderItem: {
-                    name: "orderItem",
-                    type: "OrderItem",
-                    isDataModel: true,
-                    backLink: 'addons',
-                    isRelationOwner: true,
-                    foreignKeyMapping: { "id": "orderItemId" },
-                }, addon: {
-                    name: "addon",
-                    type: "Addon",
-                    isDataModel: true,
-                    backLink: 'orderItems',
-                    isRelationOwner: true,
-                    foreignKeyMapping: { "id": "addonId" },
-                }, quantity: {
-                    name: "quantity",
-                    type: "Int",
-                    attributes: [{ "name": "@default", "args": [{ "name": "value", "value": 1 }] }],
-                }, unitPrice: {
-                    name: "unitPrice",
-                    type: "Float",
-                }, totalPrice: {
-                    name: "totalPrice",
-                    type: "Float",
                 },
             }, uniqueConstraints: {
                 id: {
@@ -1459,6 +1327,61 @@ const metadata = {
                 }, address: {
                     name: "address",
                     type: "String",
+                },
+            },
+        },
+        orderCustomer: {
+            name: 'OrderCustomer', fields: {
+                name: {
+                    name: "name",
+                    type: "String",
+                    isOptional: true,
+                }, phone: {
+                    name: "phone",
+                    type: "String",
+                    isOptional: true,
+                },
+            },
+        },
+        orderSettlement: {
+            name: 'OrderSettlement', fields: {
+                method: {
+                    name: "method",
+                    type: "String",
+                    isOptional: true,
+                }, amount: {
+                    name: "amount",
+                    type: "String",
+                    isOptional: true,
+                },
+            },
+        },
+        orderItem: {
+            name: 'OrderItem', fields: {
+                id: {
+                    name: "id",
+                    type: "String",
+                    attributes: [{ "name": "@default", "args": [{ "name": "value" }] }],
+                }, name: {
+                    name: "name",
+                    type: "String",
+                }, quantity: {
+                    name: "quantity",
+                    type: "Int",
+                }, unitPrice: {
+                    name: "unitPrice",
+                    type: "Float",
+                }, totalPrice: {
+                    name: "totalPrice",
+                    type: "Float",
+                }, notes: {
+                    name: "notes",
+                    type: "String",
+                    isOptional: true,
+                }, addons: {
+                    name: "addons",
+                    type: "String",
+                    isArray: true,
                 },
             },
         },

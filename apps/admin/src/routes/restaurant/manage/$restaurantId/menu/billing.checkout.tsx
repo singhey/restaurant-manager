@@ -1,5 +1,5 @@
 import { useBilling } from '@/store/billing.store'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card'
 import { Button } from '@workspace/ui/components/button'
@@ -8,6 +8,8 @@ import { Label } from '@workspace/ui/components/label'
 import { Separator } from '@workspace/ui/components/separator'
 import { Badge } from '@workspace/ui/components/badge'
 import { Trash2, Plus, Minus } from 'lucide-react'
+import { useCreateOrder } from '@workspace/db/hooks/trpc'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute(
   '/restaurant/manage/$restaurantId/menu/billing/checkout',
@@ -21,6 +23,9 @@ function RouteComponent() {
   const [customerNumber, setCustomerNumber] = useState('')
   const [discountPercent, setDiscountPercent] = useState(0)
   const [flatDiscount, setFlatDiscount] = useState(0)
+  const {mutate: createOrder} = useCreateOrder()
+  const navigate = useNavigate()
+  const {restaurantId} = useParams({from: '/restaurant/manage/$restaurantId/menu/billing/checkout'})
 
   // Calculate totals
   const subtotal = inCart.reduce((sum, item) => sum + (item.menuItem.price * item.quantity), 0)
@@ -44,6 +49,32 @@ function RouteComponent() {
 
   const handleCheckout = () => {
     // Implement checkout logic here
+    createOrder({
+      data: {
+        orderType: 'DINE_IN',
+        subtotal,
+        tax: totalTax,
+        discount: discountAmount,
+        total: finalTotal,
+        restaurantId: restaurantId,
+        items: inCart.map(item => ({
+          name: item.menuItem.name,
+          quantity: item.quantity,
+          unitPrice: item.menuItem.price,
+          totalPrice: item.menuItem.price * item.quantity
+        })),
+        orderSettlement: []
+      }
+    }, {
+      onSettled: (data, error) => {
+        if(error) {
+          toast.error('Unable to generate bill. Try again : ' + error.message)
+        }else {
+          navigate({to: `/restaurant/manage/$restaurantId/menu`, params: {restaurantId}})
+        }
+      }
+    })
+    console.log("Create called")
     console.log('Checkout:', {
       items: inCart,
       customer: { name: customerName, number: customerNumber },

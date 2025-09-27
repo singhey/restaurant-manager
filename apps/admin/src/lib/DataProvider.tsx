@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider as ZenStackHooksProvider } from '@workspace/db/hooks/trpc';
-import type { FetchFn } from '@zenstackhq/tanstack-query/runtime';
+import type { FetchFn } from '@workspace/db';
 import { AuthProvider } from './AuthProvider';
 
 // custom fetch function that adds a custom header

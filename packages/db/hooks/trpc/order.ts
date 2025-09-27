@@ -16,6 +16,8 @@ type DefaultError = QueryError;
 import { useSuspenseModelQuery, useSuspenseInfiniteModelQuery } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import type { UseSuspenseQueryOptions, UseSuspenseInfiniteQueryOptions } from '@tanstack/react-query';
 
+export { Prisma, Order }
+
 export function useCreateOrder(options?: Omit<(UseMutationOptions<(Order | undefined), DefaultError, Prisma.OrderCreateArgs> & ExtraMutationOptions), 'mutationFn'>) {
     const { endpoint, fetch } = getHooksContext();
     const _mutation =
@@ -329,7 +331,7 @@ export function useSuspenseCountOrder<TArgs extends Prisma.OrderCountArgs, TQuer
 }
 import type { OrderType, OrderStatus, PaymentStatus } from '@zenstackhq/runtime/models';
 
-export function useCheckOrder<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; restaurantId?: string; orderNumber?: string; customerId?: string; orderType?: OrderType; status?: OrderStatus; paymentStatus?: PaymentStatus; notes?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
+export function useCheckOrder<TError = DefaultError>(args: { operation: PolicyCrudKind; where?: { id?: string; restaurantId?: string; orderType?: OrderType; status?: OrderStatus; paymentStatus?: PaymentStatus; paymentMethod?: string; notes?: string }; }, options?: (Omit<UseQueryOptions<boolean, TError, boolean>, 'queryKey'> & ExtraQueryOptions)) {
     const { endpoint, fetch } = getHooksContext();
     return useModelQuery<boolean, boolean, TError>('Order', `${endpoint}/order/check`, args, options, fetch);
 }

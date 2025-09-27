@@ -170,11 +170,10 @@ const getNavigationItems = (pathname: string): NavigationItem[] => {
     ]
   }
 
-  if (pathname.includes('/orders/') && pathname.includes('history')) {
+  if (pathname.includes('/orders')) {
     return [
-      { key: 'today', label: 'today', href: pathname + '?filter=today' },
-      { key: 'week', label: 'this week', href: pathname + '?filter=week' },
-      { key: 'month', label: 'this month', href: pathname + '?filter=month' }
+      { key: 'outlet', label: 'outlet', href: '/restaurant/manage/$restaurantId/orders' },
+      { key: 'online', label: 'online', href: '/restaurant/manage/$restaurantId/orders/online' },
     ]
   }
 

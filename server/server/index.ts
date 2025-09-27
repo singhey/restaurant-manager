@@ -2,7 +2,7 @@ import { PrismaClient } from '@workspace/db/generated/prisma'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import express from 'express'
 import { toNodeHandler, fromNodeHeaders } from "better-auth/node";
-import { enhance } from '@zenstackhq/runtime';
+import { enhance } from '@workspace/db';
 import { ZenStackMiddleware } from '@zenstackhq/server/express'
 import { auth } from "./lib/auth";
 import cors from 'cors'

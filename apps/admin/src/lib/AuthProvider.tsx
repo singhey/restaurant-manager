@@ -21,8 +21,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       onSessionChange={() => window.location.reload()}
       Link={ModifiedLink}
       viewPaths={{
-        SIGN_IN: '/auth/sign-in',
-        SIGN_UP: '/auth/sign-out'
+        SIGN_IN: '/sign-in',
+        SIGN_UP: '/sign-out'
       }}
       organization={{
         basePath: '/',

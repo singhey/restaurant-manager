@@ -21,8 +21,6 @@ export * from './addon-group';
 export * from './addon';
 export * from './menu-item-addon';
 export * from './order';
-export * from './order-item';
-export * from './order-item-addon';
 export * from './payment';
 export * from './voucher';
 export * from './order-voucher';

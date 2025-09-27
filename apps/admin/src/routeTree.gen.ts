@@ -23,10 +23,12 @@ import { Route as RestaurantAccountRestaurantsRouteImport } from './routes/resta
 import { Route as RestaurantManageRestaurantIdIndexRouteImport } from './routes/restaurant/manage/$restaurantId/index'
 import { Route as RestaurantManageRestaurantIdMenuRouteImport } from './routes/restaurant/manage/$restaurantId/menu'
 import { Route as RestaurantManageRestaurantIdStoreIndexRouteImport } from './routes/restaurant/manage/$restaurantId/store/index'
+import { Route as RestaurantManageRestaurantIdOrdersIndexRouteImport } from './routes/restaurant/manage/$restaurantId/orders.index'
 import { Route as RestaurantManageRestaurantIdStoreSeoRouteImport } from './routes/restaurant/manage/$restaurantId/store/seo'
 import { Route as RestaurantManageRestaurantIdStoreLocationRouteImport } from './routes/restaurant/manage/$restaurantId/store/location'
 import { Route as RestaurantManageRestaurantIdStoreDetailsRouteImport } from './routes/restaurant/manage/$restaurantId/store/details'
 import { Route as RestaurantManageRestaurantIdStoreDeliveryRouteImport } from './routes/restaurant/manage/$restaurantId/store/delivery'
+import { Route as RestaurantManageRestaurantIdOrdersOnlineRouteImport } from './routes/restaurant/manage/$restaurantId/orders.online'
 import { Route as RestaurantManageRestaurantIdMenuEditRouteImport } from './routes/restaurant/manage/$restaurantId/menu/edit'
 import { Route as RestaurantManageRestaurantIdMenuBillingIndexRouteImport } from './routes/restaurant/manage/$restaurantId/menu/billing.index'
 import { Route as RestaurantManageRestaurantIdMenuBillingCheckoutRouteImport } from './routes/restaurant/manage/$restaurantId/menu/billing.checkout'
@@ -108,6 +110,12 @@ const RestaurantManageRestaurantIdStoreIndexRoute =
     path: '/store/',
     getParentRoute: () => RestaurantManageRestaurantIdRoute,
   } as any)
+const RestaurantManageRestaurantIdOrdersIndexRoute =
+  RestaurantManageRestaurantIdOrdersIndexRouteImport.update({
+    id: '/orders/',
+    path: '/orders/',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
 const RestaurantManageRestaurantIdStoreSeoRoute =
   RestaurantManageRestaurantIdStoreSeoRouteImport.update({
     id: '/store/seo',
@@ -130,6 +138,12 @@ const RestaurantManageRestaurantIdStoreDeliveryRoute =
   RestaurantManageRestaurantIdStoreDeliveryRouteImport.update({
     id: '/store/delivery',
     path: '/store/delivery',
+    getParentRoute: () => RestaurantManageRestaurantIdRoute,
+  } as any)
+const RestaurantManageRestaurantIdOrdersOnlineRoute =
+  RestaurantManageRestaurantIdOrdersOnlineRouteImport.update({
+    id: '/orders/online',
+    path: '/orders/online',
     getParentRoute: () => RestaurantManageRestaurantIdRoute,
   } as any)
 const RestaurantManageRestaurantIdMenuEditRoute =
@@ -166,10 +180,12 @@ export interface FileRoutesByFullPath {
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
+  '/restaurant/manage/$restaurantId/orders/online': typeof RestaurantManageRestaurantIdOrdersOnlineRoute
   '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
   '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
   '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
+  '/restaurant/manage/$restaurantId/orders': typeof RestaurantManageRestaurantIdOrdersIndexRoute
   '/restaurant/manage/$restaurantId/store': typeof RestaurantManageRestaurantIdStoreIndexRoute
   '/restaurant/manage/$restaurantId/menu/billing/checkout': typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
   '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
@@ -188,10 +204,12 @@ export interface FileRoutesByTo {
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
+  '/restaurant/manage/$restaurantId/orders/online': typeof RestaurantManageRestaurantIdOrdersOnlineRoute
   '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
   '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
   '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
+  '/restaurant/manage/$restaurantId/orders': typeof RestaurantManageRestaurantIdOrdersIndexRoute
   '/restaurant/manage/$restaurantId/store': typeof RestaurantManageRestaurantIdStoreIndexRoute
   '/restaurant/manage/$restaurantId/menu/billing/checkout': typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
   '/restaurant/manage/$restaurantId/menu/billing': typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
@@ -212,10 +230,12 @@ export interface FileRoutesById {
   '/restaurant/manage/$restaurantId/menu': typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   '/restaurant/manage/$restaurantId/': typeof RestaurantManageRestaurantIdIndexRoute
   '/restaurant/manage/$restaurantId/menu/edit': typeof RestaurantManageRestaurantIdMenuEditRoute
+  '/restaurant/manage/$restaurantId/orders/online': typeof RestaurantManageRestaurantIdOrdersOnlineRoute
   '/restaurant/manage/$restaurantId/store/delivery': typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   '/restaurant/manage/$restaurantId/store/details': typeof RestaurantManageRestaurantIdStoreDetailsRoute
   '/restaurant/manage/$restaurantId/store/location': typeof RestaurantManageRestaurantIdStoreLocationRoute
   '/restaurant/manage/$restaurantId/store/seo': typeof RestaurantManageRestaurantIdStoreSeoRoute
+  '/restaurant/manage/$restaurantId/orders/': typeof RestaurantManageRestaurantIdOrdersIndexRoute
   '/restaurant/manage/$restaurantId/store/': typeof RestaurantManageRestaurantIdStoreIndexRoute
   '/restaurant/manage/$restaurantId/menu/billing/checkout': typeof RestaurantManageRestaurantIdMenuBillingCheckoutRoute
   '/restaurant/manage/$restaurantId/menu/billing/': typeof RestaurantManageRestaurantIdMenuBillingIndexRoute
@@ -237,10 +257,12 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
     | '/restaurant/manage/$restaurantId/menu/edit'
+    | '/restaurant/manage/$restaurantId/orders/online'
     | '/restaurant/manage/$restaurantId/store/delivery'
     | '/restaurant/manage/$restaurantId/store/details'
     | '/restaurant/manage/$restaurantId/store/location'
     | '/restaurant/manage/$restaurantId/store/seo'
+    | '/restaurant/manage/$restaurantId/orders'
     | '/restaurant/manage/$restaurantId/store'
     | '/restaurant/manage/$restaurantId/menu/billing/checkout'
     | '/restaurant/manage/$restaurantId/menu/billing'
@@ -259,10 +281,12 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId'
     | '/restaurant/manage/$restaurantId/menu/edit'
+    | '/restaurant/manage/$restaurantId/orders/online'
     | '/restaurant/manage/$restaurantId/store/delivery'
     | '/restaurant/manage/$restaurantId/store/details'
     | '/restaurant/manage/$restaurantId/store/location'
     | '/restaurant/manage/$restaurantId/store/seo'
+    | '/restaurant/manage/$restaurantId/orders'
     | '/restaurant/manage/$restaurantId/store'
     | '/restaurant/manage/$restaurantId/menu/billing/checkout'
     | '/restaurant/manage/$restaurantId/menu/billing'
@@ -282,10 +306,12 @@ export interface FileRouteTypes {
     | '/restaurant/manage/$restaurantId/menu'
     | '/restaurant/manage/$restaurantId/'
     | '/restaurant/manage/$restaurantId/menu/edit'
+    | '/restaurant/manage/$restaurantId/orders/online'
     | '/restaurant/manage/$restaurantId/store/delivery'
     | '/restaurant/manage/$restaurantId/store/details'
     | '/restaurant/manage/$restaurantId/store/location'
     | '/restaurant/manage/$restaurantId/store/seo'
+    | '/restaurant/manage/$restaurantId/orders/'
     | '/restaurant/manage/$restaurantId/store/'
     | '/restaurant/manage/$restaurantId/menu/billing/checkout'
     | '/restaurant/manage/$restaurantId/menu/billing/'
@@ -397,6 +423,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RestaurantManageRestaurantIdStoreIndexRouteImport
       parentRoute: typeof RestaurantManageRestaurantIdRoute
     }
+    '/restaurant/manage/$restaurantId/orders/': {
+      id: '/restaurant/manage/$restaurantId/orders/'
+      path: '/orders'
+      fullPath: '/restaurant/manage/$restaurantId/orders'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdOrdersIndexRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
     '/restaurant/manage/$restaurantId/store/seo': {
       id: '/restaurant/manage/$restaurantId/store/seo'
       path: '/store/seo'
@@ -423,6 +456,13 @@ declare module '@tanstack/react-router' {
       path: '/store/delivery'
       fullPath: '/restaurant/manage/$restaurantId/store/delivery'
       preLoaderRoute: typeof RestaurantManageRestaurantIdStoreDeliveryRouteImport
+      parentRoute: typeof RestaurantManageRestaurantIdRoute
+    }
+    '/restaurant/manage/$restaurantId/orders/online': {
+      id: '/restaurant/manage/$restaurantId/orders/online'
+      path: '/orders/online'
+      fullPath: '/restaurant/manage/$restaurantId/orders/online'
+      preLoaderRoute: typeof RestaurantManageRestaurantIdOrdersOnlineRouteImport
       parentRoute: typeof RestaurantManageRestaurantIdRoute
     }
     '/restaurant/manage/$restaurantId/menu/edit': {
@@ -485,10 +525,12 @@ const RestaurantManageRestaurantIdMenuRouteWithChildren =
 interface RestaurantManageRestaurantIdRouteChildren {
   RestaurantManageRestaurantIdMenuRoute: typeof RestaurantManageRestaurantIdMenuRouteWithChildren
   RestaurantManageRestaurantIdIndexRoute: typeof RestaurantManageRestaurantIdIndexRoute
+  RestaurantManageRestaurantIdOrdersOnlineRoute: typeof RestaurantManageRestaurantIdOrdersOnlineRoute
   RestaurantManageRestaurantIdStoreDeliveryRoute: typeof RestaurantManageRestaurantIdStoreDeliveryRoute
   RestaurantManageRestaurantIdStoreDetailsRoute: typeof RestaurantManageRestaurantIdStoreDetailsRoute
   RestaurantManageRestaurantIdStoreLocationRoute: typeof RestaurantManageRestaurantIdStoreLocationRoute
   RestaurantManageRestaurantIdStoreSeoRoute: typeof RestaurantManageRestaurantIdStoreSeoRoute
+  RestaurantManageRestaurantIdOrdersIndexRoute: typeof RestaurantManageRestaurantIdOrdersIndexRoute
   RestaurantManageRestaurantIdStoreIndexRoute: typeof RestaurantManageRestaurantIdStoreIndexRoute
 }
 
@@ -498,6 +540,8 @@ const RestaurantManageRestaurantIdRouteChildren: RestaurantManageRestaurantIdRou
       RestaurantManageRestaurantIdMenuRouteWithChildren,
     RestaurantManageRestaurantIdIndexRoute:
       RestaurantManageRestaurantIdIndexRoute,
+    RestaurantManageRestaurantIdOrdersOnlineRoute:
+      RestaurantManageRestaurantIdOrdersOnlineRoute,
     RestaurantManageRestaurantIdStoreDeliveryRoute:
       RestaurantManageRestaurantIdStoreDeliveryRoute,
     RestaurantManageRestaurantIdStoreDetailsRoute:
@@ -506,6 +550,8 @@ const RestaurantManageRestaurantIdRouteChildren: RestaurantManageRestaurantIdRou
       RestaurantManageRestaurantIdStoreLocationRoute,
     RestaurantManageRestaurantIdStoreSeoRoute:
       RestaurantManageRestaurantIdStoreSeoRoute,
+    RestaurantManageRestaurantIdOrdersIndexRoute:
+      RestaurantManageRestaurantIdOrdersIndexRoute,
     RestaurantManageRestaurantIdStoreIndexRoute:
       RestaurantManageRestaurantIdStoreIndexRoute,
   }

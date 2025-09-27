@@ -77,7 +77,6 @@ model User {
   updatedAt     DateTime     @default(now()) @updatedAt()
   sessions      Session[]
   accounts      Account[]
-  orders        Order[]
   members       Member[]
   invitations   Invitation[]
 
@@ -251,7 +250,6 @@ model MenuItem {
   categoryId   String
   category     Category        @relation(fields: [categoryId], references: [id])
   addons       MenuItemAddon[]
-  orderItems   OrderItem[]
   variants     Variant[]
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt()
@@ -278,15 +276,14 @@ model AddonGroup {
 }
 
 model Addon {
-  id           String           @id() @default(cuid())
+  id           String          @id() @default(cuid())
   name         String
   price        Float
   addonGroupId String
-  addonGroup   AddonGroup       @relation(fields: [addonGroupId], references: [id])
+  addonGroup   AddonGroup      @relation(fields: [addonGroupId], references: [id])
   menuItems    MenuItemAddon[]
-  orderItems   OrderItemAddon[]
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt()
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt()
 }
 
 model MenuItemAddon {
@@ -300,49 +297,25 @@ model MenuItemAddon {
 }
 
 model Order {
-  id            String         @id() @default(cuid())
-  restaurantId  String
-  restaurant    Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  orderNumber   String         @unique()
-  customerId    String?
-  customer      User?          @relation(fields: [customerId], references: [id])
-  orderType     OrderType
-  status        OrderStatus    @default(PENDING)
-  subtotal      Float
-  tax           Float
-  discount      Float          @default(0)
-  total         Float
-  paymentStatus PaymentStatus  @default(PENDING)
-  notes         String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt()
-  items         OrderItem[]
-  vouchers      OrderVoucher[]
-  payments      Payment[]
-}
-
-model OrderItem {
-  id         String           @id() @default(cuid())
-  orderId    String
-  order      Order            @relation(fields: [orderId], references: [id])
-  menuItemId String
-  menuItem   MenuItem         @relation(fields: [menuItemId], references: [id])
-  quantity   Int
-  unitPrice  Float
-  totalPrice Float
-  notes      String?
-  addons     OrderItemAddon[]
-}
-
-model OrderItemAddon {
-  id          String    @id() @default(cuid())
-  orderItemId String
-  addonId     String
-  orderItem   OrderItem @relation(fields: [orderItemId], references: [id])
-  addon       Addon     @relation(fields: [addonId], references: [id])
-  quantity    Int       @default(1)
-  unitPrice   Float
-  totalPrice  Float
+  id              String         @id() @default(cuid())
+  restaurantId    String
+  restaurant      Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  orderType       OrderType
+  status          OrderStatus    @default(PENDING)
+  subtotal        Float
+  tax             Float
+  discount        Float          @default(0)
+  total           Float
+  paymentStatus   PaymentStatus  @default(PENDING)
+  paymentMethod   String?
+  customer        Json?
+  notes           String?
+  items           Json
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt()
+  orderSettlement Json
+  vouchers        OrderVoucher[]
+  payments        Payment[]
 }
 
 model Payment {
