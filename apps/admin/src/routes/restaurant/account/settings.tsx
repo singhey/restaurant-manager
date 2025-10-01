@@ -1,4 +1,4 @@
-import { AccountSettingsCards, AccountView } from '@daveyplate/better-auth-ui'
+import { AccountView } from '@daveyplate/better-auth-ui'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/restaurant/account/settings')({

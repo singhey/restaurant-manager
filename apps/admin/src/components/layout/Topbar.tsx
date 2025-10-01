@@ -3,7 +3,6 @@ import { ArrowLeft, Search, type LucideIcon } from "lucide-react"
 import { useLocation, Link, useMatchRoute } from "@tanstack/react-router"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
-import { useState } from "react"
 import { SignedIn, SignedOut } from '@daveyplate/better-auth-ui'
 import { AuthenticatedNav } from "../auth/AuthenticatedNav"
 import { UnauthenticatedNav } from "../auth/UnauthenticatedNav"
@@ -88,8 +87,8 @@ interface TopbarNavigationProps {
   currentSearch: string
 }
 
-const TopbarNavigation = ({ items, currentPath, currentSearch }: TopbarNavigationProps) => {
-  const getIsActive = (item: NavigationItem, index: number) => {
+const TopbarNavigation = ({ items, currentPath }: TopbarNavigationProps) => {
+  const getIsActive = (item: NavigationItem) => {
     const fullCurrentUrl = currentPath
 
     // Create regex patterns to match URLs with dynamic restaurantId
@@ -126,7 +125,7 @@ const TopbarNavigation = ({ items, currentPath, currentSearch }: TopbarNavigatio
           <TopbarTextButton
             label={item.label}
             href={item.href}
-            isActive={getIsActive(item, index)}
+            isActive={getIsActive(item)}
             onClick={() => console.log(`${item.label} clicked`)}
           />
         </div>

@@ -3,36 +3,9 @@ import { useAppForm, AppSelectField, AppCheckboxField } from '@workspace/ui/comp
 import { LoadingButton } from '@workspace/ui/components/loading-button'
 import { Button } from '@workspace/ui/components/button'
 import { useParams } from '@tanstack/react-router'
-import { z } from 'zod'
 import { useState } from 'react'
 import { Trash2, Plus } from 'lucide-react'
 
-const _deliverySettingsSchema = z.object({
-  // Delivery Fee Configuration
-  freeDelivery: z.boolean(),
-  customFee: z.object({
-    baseDistance: z.number().min(0.1, { message: "Base distance must be at least 0.1 km" }),
-    baseCharge: z.number().min(0, { message: "Base charge must be 0 or greater" }),
-    subsequentKmRate: z.number().min(0, { message: "Subsequent km rate must be 0 or greater" })
-  }),
-  
-  // Delivery Operations
-  deliveryRadius: z.number().min(1, { message: "Delivery radius must be at least 1 km" }),
-  averagePreparationTime: z.number().min(5, { message: "Preparation time must be at least 5 minutes" }),
-  currency: z.string().min(1, { message: "Currency is required" }),
-  serviceTypes: z.object({
-    delivery: z.boolean(),
-    takeaway: z.boolean(),
-    dineIn: z.boolean()
-  }).refine(data => data.delivery || data.takeaway || data.dineIn, {
-    message: "At least one service type must be enabled"
-  }),
-  contactSupport: z.array(z.object({
-    name: z.string().min(1, { message: "Contact name is required" }),
-    phoneNumber: z.string().min(10, { message: "Phone number must be at least 10 digits" })
-  })).min(1, { message: "At least one contact support entry is required" }),
-  cashOnDelivery: z.boolean()
-})
 
 interface ContactSupportEntry {
   id: string

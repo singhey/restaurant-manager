@@ -6,13 +6,10 @@ import {
   ShoppingCart,
   ChefHat,
   History,
-  Globe,
   Building2,
   User,
   Edit3,
   Plus,
-  Gift,
-  Tag,
   Eye
 } from 'lucide-react'
 import type { NavigationItem, NavigationConfig } from '../types/navigation'

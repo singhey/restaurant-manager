@@ -81,7 +81,7 @@ export default function MenuItemAdd({menuItem}: {menuItem: MenuItem}) {
             id: menuItem.id
           }
         }, {
-          onSettled(data, error) {
+          onSettled(_, error) {
             if(error) {
               toast.error(error.message)
             }else {

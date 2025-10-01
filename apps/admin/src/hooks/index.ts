@@ -5,6 +5,3 @@ export * from './useSortingPreference';
 
 // Navigation hooks
 export * from './useNavigationState';
-
-// tRPC hooks
-export * from './trpc/category';

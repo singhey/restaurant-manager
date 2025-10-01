@@ -61,12 +61,14 @@ function RouteComponent() {
           name: item.menuItem.name,
           quantity: item.quantity,
           unitPrice: item.menuItem.price,
-          totalPrice: item.menuItem.price * item.quantity
+          totalPrice: item.menuItem.price * item.quantity,
+          addons: [],
+          id: ''
         })),
         orderSettlement: []
       }
     }, {
-      onSettled: (data, error) => {
+      onSettled: (_, error) => {
         if(error) {
           toast.error('Unable to generate bill. Try again : ' + error.message)
         }else {
