@@ -28,7 +28,7 @@ export const auth = betterAuth({
       }
     })
   ],
-  trustedOrigins: ["http://localhost:5173"],
+  trustedOrigins: ['https://restaurant.singh3y.dev', 'http://localhost:5173'],
   user: {
     additionalFields: {
       role: {
