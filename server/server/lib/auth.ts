@@ -21,7 +21,7 @@ export const auth = betterAuth({
           // You can perform additional setup here, like creating a default member
           await prisma.restaurant.create({
             data: {
-              id: organization.id,
+              id: organization.slug,
               name: organization.name
             }
           });
