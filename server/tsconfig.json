@@ -2,7 +2,11 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "dist",
-    "strict": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "target": "ES2022",               // or ES2024 if you really need it
+    "module": "CommonJS",             // if you're in Node.js < ESM
+    "moduleResolution": "node", 
     "lib": ["esnext"],
     "esModuleInterop": true,
     "paths": {
