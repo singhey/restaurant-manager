@@ -16,8 +16,6 @@ type DefaultError = QueryError;
 import { useSuspenseModelQuery, useSuspenseInfiniteModelQuery } from '@zenstackhq/tanstack-query/runtime-v5/react';
 import type { UseSuspenseQueryOptions, UseSuspenseInfiniteQueryOptions } from '@tanstack/react-query';
 
-export { Prisma, Order }
-
 export function useCreateOrder(options?: Omit<(UseMutationOptions<(Order | undefined), DefaultError, Prisma.OrderCreateArgs> & ExtraMutationOptions), 'mutationFn'>) {
     const { endpoint, fetch } = getHooksContext();
     const _mutation =

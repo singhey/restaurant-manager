@@ -1,6 +1,6 @@
 import React, { useState, type Dispatch, type SetStateAction } from 'react';
 import { GripVertical, Edit, Trash2, Check, ChevronDown, Plus } from 'lucide-react';
-import type { Category, MenuItem } from "@workspace/db/generated/prisma/client";
+import type { Category, MenuItem } from "@workspace/db/generated/prisma";
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
 import { Modal } from '@/components/generic/Modal';

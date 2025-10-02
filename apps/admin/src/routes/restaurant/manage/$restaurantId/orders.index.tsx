@@ -5,7 +5,7 @@ import { Badge } from '@workspace/ui/components/badge'
 import { OrdersList } from '@/components/orders/orders-list'
 import { OrderDetails } from '@/components/orders/order-details'
 import { EmptyState } from '@/components/orders/empty-state'
-import type { models } from '@workspace/db'
+import type { Order, OrderStatus } from '@workspace/db'
 
 export const Route = createFileRoute('/restaurant/manage/$restaurantId/orders/')(
   {
@@ -24,7 +24,7 @@ function RouteComponent() {
   const { restaurantId } = useParams({ from: '/restaurant/manage/$restaurantId/orders/' })
   const navigate = useNavigate({ from: '/restaurant/manage/$restaurantId/orders' })
   const { orderId } = Route.useSearch()
-  const [selectedOrder, setSelectedOrder] = useState<models.Order | null>(null)
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
 
   const { data: orders, isLoading, isFetching, fetchNextPage, hasNextPage } = useInfiniteFindManyOrder({
     where: {
@@ -36,7 +36,7 @@ function RouteComponent() {
     take: ORDERS_PER_PAGE,
   })
 
-  const orderCards: models.Order[] = useMemo(() => {
+  const orderCards: Order[] = useMemo(() => {
     if (!orders) return []
 
     return orders.pages.flatMap(page => page)
@@ -67,7 +67,7 @@ function RouteComponent() {
     }
   }, [orderId, orderCards, navigate])
 
-  const handleOrderClick = useCallback((orderCard: models.Order) => {
+  const handleOrderClick = useCallback((orderCard: Order) => {
     const fullOrder = orderCards?.find(o => o.id === orderCard.id)
     setSelectedOrder(fullOrder || null)
     
@@ -80,7 +80,7 @@ function RouteComponent() {
     })
   }, [orderCards, navigate])
 
-  const statusVariants: Record<models.OrderStatus, string> = {
+  const statusVariants: Record<OrderStatus, string> = {
     PENDING: 'default',
     CONFIRMED: 'secondary',
     PREPARING: 'outline',

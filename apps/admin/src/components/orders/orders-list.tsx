@@ -3,15 +3,15 @@ import { useEffect } from 'react'
 import { OrderCard } from './order-card'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { Card, CardContent } from '@workspace/ui/components/card'
-import {models} from '@workspace/db'
+import type {Order} from '@workspace/db'
 
 interface OrdersListProps {
-  orders: models.Order[]
+  orders: Order[]
   selectedOrderId?: string
   isLoading: boolean
   isFetchingNextPage: boolean
   hasNextPage: boolean
-  onOrderClick: (order: models.Order) => void
+  onOrderClick: (order: Order) => void
   onLoadMore: () => void
 }
 

@@ -1,17 +1,17 @@
 import { Badge } from '@workspace/ui/components/badge'
 import { Separator } from '@workspace/ui/components/separator'
 import { User, Phone, ChefHat, CreditCard } from 'lucide-react'
-import {models} from '@workspace/db'
+import type {Order, PaymentStatus} from '@workspace/db'
 
 
-export const paymentStatusVariants: Record<models.PaymentStatus, string> = {
+export const paymentStatusVariants: Record<PaymentStatus, string> = {
   PAID: 'default',
   PENDING: 'secondary',
   FAILED: 'destructive', 
   REFUNDED: 'outline'
 }
 
-export function OrderDetails({ order }: {order: models.Order}) {
+export function OrderDetails({ order }: {order: Order}) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -72,7 +72,7 @@ export function OrderDetails({ order }: {order: models.Order}) {
           Order Items
         </h4>
         <div className="space-y-3">
-          {order.items?.length > 0 ? order.items.map((item, index) => (
+          {order.items?.length > 0 ? order.items.map((item: any, index: number) => (
             <div key={index} className="bg-muted/50 p-4 rounded-lg">
               <div className="flex justify-between items-start mb-2">
                 <div className="flex-1">
@@ -89,7 +89,7 @@ export function OrderDetails({ order }: {order: models.Order}) {
                 <div className="mt-2">
                   <p className="text-xs text-muted-foreground mb-1">Add-ons:</p>
                   <div className="flex flex-wrap gap-1">
-                    {item.addons.map((addon, addonIndex) => (
+                    {item.addons.map((addon: any, addonIndex: any) => (
                       <Badge key={addonIndex} variant="outline" className="text-xs">
                         {addon}
                       </Badge>

@@ -2,18 +2,18 @@ import { Card, CardContent } from '@workspace/ui/components/card'
 import { Badge } from '@workspace/ui/components/badge'
 import { Clock, User } from 'lucide-react'
 import { cn } from '@workspace/ui/lib/utils'
-import {models} from '@workspace/db'
+import type {Order, OrderStatus} from '@workspace/db'
 import { paymentStatusVariants } from './order-details'
 
 
 interface OrderCardProps {
-  order: models.Order
-  onClick: (order: models.Order) => void
+  order: Order
+  onClick: (order: Order) => void
   isSelected?: boolean
   className?: string
 }
 
-const statusVariants: Record<models.OrderStatus, string> = {
+const statusVariants: Record<OrderStatus, string> = {
   PENDING: 'default',
   CONFIRMED: 'secondary', 
   PREPARING: 'outline',
