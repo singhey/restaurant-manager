@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { organization } from "better-auth/plugins";
 // If your Prisma file is located elsewhere, you can change the path
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@workspace/db/generated/prisma";
 
 const prisma = new PrismaClient({
   log: ['query', 'info', 'warn', 'error'],

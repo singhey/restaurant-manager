@@ -46,6 +46,7 @@ app.use(
         const session = await auth.api.getSession({
           headers: fromNodeHeaders(request.headers),
         });
+        //@ts-ignore
         return enhance(
           prisma, 
           {
