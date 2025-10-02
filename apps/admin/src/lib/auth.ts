@@ -3,7 +3,7 @@ import { organizationClient, inferOrgAdditionalFields } from 'better-auth/client
 
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3000",
+  baseURL: import.meta.env.VITE_AUTH_API_URL,
   plugins: [
     organizationClient({
       schema: inferOrgAdditionalFields({

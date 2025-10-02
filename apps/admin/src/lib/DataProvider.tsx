@@ -20,7 +20,7 @@ function DataProvider({ children }: {children: React.ReactNode}): React.ReactNod
     return (
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
-            <ZenStackHooksProvider value={{ endpoint: 'http://localhost:3000/api/model', fetch: myFetch }}>
+            <ZenStackHooksProvider value={{ endpoint: import.meta.env.VITE_AUTH_API_URL+'/api/model', fetch: myFetch }}>
               {children}
             </ZenStackHooksProvider>
         </QueryClientProvider>
