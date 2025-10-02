@@ -1,0 +1,23 @@
+{
+  "apps": [
+    {
+      "name": "restaurant-manager-server",
+      "script": "npm",
+      "args": "run dev",
+      "exec_mode": "fork",
+      "listen_timeout": 30000,
+      "restart_delay": 30000,
+      "cwd": ".",
+      "interpreter": "none",
+      "ignore_watch": [
+        "node_modules",
+        "public",
+        "views",
+        "pm2.prod.json"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

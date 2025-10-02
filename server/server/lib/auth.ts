@@ -16,6 +16,17 @@ export const auth = betterAuth({
   },
   plugins: [
     organization({
+      organizationHooks: {
+        afterCreateOrganization: async ({ organization, member, user }) => {
+          // You can perform additional setup here, like creating a default member
+          await prisma.restaurant.create({
+            data: {
+              id: organization.id,
+              name: organization.name
+            }
+          });
+        }
+      },
       schema: {
         organization: {
           additionalFields: {
@@ -25,7 +36,7 @@ export const auth = betterAuth({
             }
           }
         }
-      }
+      },
     })
   ],
   trustedOrigins: ['https://restaurant.singh3y.dev', 'http://localhost:5173'],
